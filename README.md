@@ -8,7 +8,7 @@
 
 ##  Installeren
 1. Download Python van de [website](https://www.python.org/downloads/).
-2. Download [Processing] (https://processing.org/download/).
+2. Download [Processing](https://processing.org/download/).
     * [**Windows** 64-bit](https://download.processing.org/processing-3.5.4-windows64.zip)
     * [**Windows** 32-bit](https://download.processing.org/processing-3.5.4-windows32.zip)
     * [**Linux** 64-bit](https://download.processing.org/processing-3.5.4-linux64.tgz)
