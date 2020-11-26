@@ -5,7 +5,7 @@ def setup():
     global Card
     global TextInput
     size(d.screenSize[0], d.screenSize[1])
-    background(color(255,255,255))
+    background(color(d.palette['white']))
     for i in range(4):
         d.cards.append(d.Card(i, d.screenSize[0]/2, 160, 400, 110, 10, 'white'))
         d.textInputs.append(d.TextInput(i,d.cards[i].x,d.cards[i].y, 200))

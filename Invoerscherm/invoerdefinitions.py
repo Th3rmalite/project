@@ -1,9 +1,14 @@
 palette = {
-    'white'         :   color(248, 249, 250),
+    'white'         :   color(238, 239, 240),
     'gray'          :   color(233, 236, 239),
+    'gray_hover'    :   color(213, 216, 219),
+    'dark_gray'     :   color(203, 206, 209),
     'light_blue'    :   color(234, 246, 253),
-    'blue'          :   color(87, 117, 144),
-    'transparent'   :   color(220,220,220,100)
+    'blue'          :   color(77, 107, 164),
+    'red'           :   color(229, 56, 59),
+    'transparent'   :   color(220, 220, 220, 100),
+    'solid_white'   :   color(255, 255, 255),
+    'player_colors' :   [color(248, 249, 250), color(20, 23, 26), color(164, 22, 26), color(3, 4, 94)]
 }
 
 players = ['','','','']
@@ -28,6 +33,7 @@ def drawCards():
             textInputs[i].draw()
         except:
             print("ERROR: Could not draw card")
+            exit()
 
 
 class Card:
@@ -57,6 +63,10 @@ class Card:
         for i in range(samples):
             rect(self.x + offsetX, self.y + offsetY, self.w + radius - i * .1, self.h + radius - i * .1, self.bevel)
 
+class ColorPicker:
+
+    def __init__(self, index, x, y, extent):
+        pass
 
 class TextInput:
 
@@ -73,12 +83,14 @@ class TextInput:
         self.index = index
         self.forbiddenKeys = [ENTER, TAB, BACKSPACE]
         fill(palette['white'])
+        strokeCap(SQUARE)
 
     def draw(self):
-        stroke(1)
         rectMode(CENTER)
-        self.changeState()
-        rect(self.x, self.y, self.w, self.h, self.bevel)
+        self.changeState('rect')
+        rect(self.x, self.y, self.w, self.h, 3, 3, 0, 0)
+        self.changeState('line')
+        line(self.x - self.w/2, self.y + self.h/2, self.x + self.w/2, self.y + self.h/2)
         self.displayText()
 
     def addText(self, input):
@@ -104,16 +116,30 @@ class TextInput:
         if hover([mouseX,mouseY],[self.x - self.w / 2, self.y - self.h / 2, self.w, self.h]):
             return True
 
-    def changeState(self):
-        if self.hover():
-            fill(palette['light_blue'])
-            cursor(TEXT)
-        else:
-            fill(255,255,255)
-            cursor(ARROW)
-        if self.selected or (self.hover() and mouseButton == LEFT):
-            fill(palette['gray'])
-            self.selected = True
-        if self.selected and mouseButton == LEFT and not self.hover():
-            self.selected = False
-            fill(255,255,255)
+    def changeState(self, type):
+        if type == 'rect':
+            if self.hover():
+                fill(palette['gray_hover'])
+            else:
+                fill(palette['white'])
+            if self.selected or (self.hover() and mouseButton == LEFT):
+                fill(palette['dark_gray'])
+                self.selected = True
+                cursor(TEXT)
+            if self.selected and mouseButton == LEFT and not self.hover():
+                self.selected = False
+                fill(palette['white'])
+                cursor(ARROW)
+        elif type == 'line':
+            if self.hover():
+                stroke(80, 80, 80)
+                strokeWeight(1)
+            else:
+                stroke(130,130,130)
+                strokeWeight(1)
+            if self.selected:
+                stroke(114, 9, 183)
+                strokeWeight(1.3)
+        elif type == 'circle':
+            pass
+            
