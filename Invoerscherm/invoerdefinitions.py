@@ -78,8 +78,7 @@ class ColorPicker:
     def draw(self):
         for i in range(len(palette['player_colors'])):
             stroke(0,0,0)
-            # fill(self.colorNodes[i][1])
-            print(self.colorNodes)
+            fill(self.colorNodes[i][1])
             self.changeState(i)
             circle(self.x + i * self.spacing, self.y, self.extent)
     
