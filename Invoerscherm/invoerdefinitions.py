@@ -14,6 +14,7 @@ palette = {
 players = ['','','','']
 cards = []
 textInputs = []
+colorPickers = []
 
 screenSize = [1080, 720]
 index = 0
@@ -25,15 +26,11 @@ def hover(a,b):
         return True
     return False
 
-def drawCards():
+def drawCards(index):
     global cards
-    for i in range(4):
-        try:
-            cards[i].draw()
-            textInputs[i].draw()
-        except:
-            print("ERROR: Could not draw card")
-            exit()
+    cards[index].draw()
+    textInputs[index].draw()
+    colorPickers[index].draw()
 
 
 class Card:
@@ -52,7 +49,7 @@ class Card:
     
     def draw(self):
         fill(palette[self.cardColor])
-        #self.hover() # Make it so that self.hover() doesn't affect fill when not hovered.
+        # self.hover() # Make it so that self.hover() doesn't affect fill when not hovered.
         noStroke()
         rect(self.x, self.y, self.w, self.h, self.bevel)
     
@@ -65,13 +62,61 @@ class Card:
 
 class ColorPicker:
 
-    def __init__(self, index, x, y, extent):
-        pass
+    def __init__(self, index, x, y, extent, spacing):
+        self.index = index
+        self.x = x + 80
+        self.y = y
+        self.extent = extent
+        self.spacing = spacing
+        self.colorNodes = []
+        self.previousSelected = ''
+        rectMode(CENTER)
+        for i in range(len(palette['player_colors'])):
+            self.colorNodes.append([False, palette['player_colors'][i]])
+        print(self.colorNodes)
+    
+    def draw(self):
+        for i in range(len(palette['player_colors'])):
+            stroke(0,0,0)
+            # fill(self.colorNodes[i][1])
+            print(self.colorNodes)
+            self.changeState(i)
+            circle(self.x + i * self.spacing, self.y, self.extent)
+    
+    def hover(self, index):
+        if hover([mouseX,mouseY],[self.x + index * self.spacing - self.extent / 2, self.y - self.extent / 2, self.extent, self.extent]):
+            return True
+
+    def changeState(self, index):
+        if self.colorNodes[index][0] or self.hover(index) and mouseButton == LEFT:
+            if type(self.previousSelected) == int:
+                self.colorNodes[self.previousSelected][0] = False
+            self.previousSelected = index
+            self.colorNodes[index][0] = True
+            fill(palette['player_colors'][index] - color(0, 0, 0, 150))
+            stroke(0,155,0)
+        elif self.hover(index):
+            if self.colorNodes[index][0]:
+                stroke(155,0,0)
+                strokeWeight(2)
+                fill(palette['player_colors'][index] - color(0, 0, 0, 100))
+            else:
+                stroke(0,155,0)
+                strokeWeight(2)
+                fill(palette['player_colors'][index] - color(0, 0, 0, 100))
+        else:
+            strokeWeight(1)
+            fill(palette['player_colors'][index])
+        
+    
+
+
+
 
 class TextInput:
 
     def __init__(self, index, x, y, w = 300 ,h = 50):
-        self.x = x - 80        #   X position
+        self.x = x - 80         #   X position
         self.y = y              #   Y position
         self.w = w              #   Width
         self.h = h              #   Height
@@ -82,11 +127,11 @@ class TextInput:
         self.maxLength = 15
         self.index = index
         self.forbiddenKeys = [ENTER, TAB, BACKSPACE]
-        fill(palette['white'])
+        fill(palette['gray'])
         strokeCap(SQUARE)
+        rectMode(CENTER)
 
     def draw(self):
-        rectMode(CENTER)
         self.changeState('rect')
         rect(self.x, self.y, self.w, self.h, 3, 3, 0, 0)
         self.changeState('line')
@@ -102,15 +147,23 @@ class TextInput:
             elif input == ENTER and self.selected == True:
                 global players
                 self.selected = False
-                temp = players[self.index]
-                players[self.index] = join(self.text, "")
-                print('Player ' + str(self.index) + '\'s name changed\nfrom: ' + temp + '\nto: ' + str(players[self.index]))
+                self.defineText()
 
     def displayText(self):
         fill(0,0,0)
         textAlign(LEFT, CENTER)
         textSize(20)
-        text(join(self.text, ""), self.x + self.padding - self.w / 2, self.y)
+        if self.text == []:
+            fill(0,0,0,100)
+            text("Naam", self.x + self.padding - self.w / 2, self.y)
+        else:
+            fill(0,0,0)
+            text(join(self.text, ""), self.x + self.padding - self.w / 2, self.y)
+    
+    def defineText(self):
+        temp = players[self.index]
+        players[self.index] = join(self.text, "")
+        print('Player ' + str(self.index) + '\'s name changed\nfrom: ' + temp + '\nto: ' + str(players[self.index]))
     
     def hover(self):
         if hover([mouseX,mouseY],[self.x - self.w / 2, self.y - self.h / 2, self.w, self.h]):
@@ -121,15 +174,16 @@ class TextInput:
             if self.hover():
                 fill(palette['gray_hover'])
             else:
-                fill(palette['white'])
+                fill(palette['gray'])
             if self.selected or (self.hover() and mouseButton == LEFT):
                 fill(palette['dark_gray'])
                 self.selected = True
                 cursor(TEXT)
             if self.selected and mouseButton == LEFT and not self.hover():
                 self.selected = False
-                fill(palette['white'])
+                fill(palette['gray'])
                 cursor(ARROW)
+                self.defineText()
         elif type == 'line':
             if self.hover():
                 stroke(80, 80, 80)
