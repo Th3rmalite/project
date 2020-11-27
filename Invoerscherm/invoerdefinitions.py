@@ -51,6 +51,7 @@ class Card:
         self.h = h    
         self.spacing = spacing
         self.bevel = 7
+        self.shadowRadius = 6
     
     def draw(self):
         fill(palette[self.cardColor])
@@ -58,12 +59,12 @@ class Card:
         noStroke()
         rect(self.x, self.y, self.w, self.h, self.bevel)
     
-    def shadow(self, radius, offsetX, offsetY, samples = 64):
+    def shadow(self, offsetX, offsetY, samples = 64):
         rectMode(CENTER)
         noStroke()
         fill(0,0,0,1)
         for i in range(samples):
-            rect(self.x + offsetX, self.y + offsetY, self.w + radius - i * .1, self.h + radius - i * .1, self.bevel)
+            rect(self.x + offsetX, self.y + offsetY, self.w + self.shadowRadius - i * .1, self.h + self.shadowRadius - i * .1, self.bevel)
 
 class ColorPicker:
 
