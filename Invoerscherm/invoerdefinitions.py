@@ -1,14 +1,20 @@
 palette = {
     'white'         :   color(238, 239, 240),
-    'gray'          :   color(233, 236, 239),
-    'gray_hover'    :   color(213, 216, 219),
-    'dark_gray'     :   color(203, 206, 209),
+    'black'         :   color(50, 50, 50),
+    'gray'          :   color(213, 216, 219),
+    'gray_hover'    :   color(203, 206, 209),
+    'dark_gray'     :   color(193, 196, 199),
     'light_blue'    :   color(234, 246, 253),
     'blue'          :   color(77, 107, 164),
     'red'           :   color(229, 56, 59),
     'transparent'   :   color(220, 220, 220, 100),
     'solid_white'   :   color(255, 255, 255),
-    'player_colors' :   [color(248, 249, 250), color(20, 23, 26), color(164, 22, 26), color(3, 4, 94)]
+    'player_colors' :   [
+                        color(248, 249, 250),   # white
+                        color(20, 23, 26),      # black
+                        color(164, 22, 26),     # red
+                        color(3, 4, 94)         # blue
+                        ]
 }
 
 players = []
@@ -63,7 +69,7 @@ class ColorPicker:
 
     def __init__(self, index, x, y, extent, spacing):
         self.index = index
-        self.x = x + 80
+        self.x = x + (80 - extent)
         self.y = y
         self.extent = extent
         self.spacing = spacing
@@ -72,7 +78,6 @@ class ColorPicker:
         rectMode(CENTER)
         for i in range(len(palette['player_colors'])):
             self.colorNodes.append([False, palette['player_colors'][i]])
-        print(self.colorNodes)
     
     def draw(self):
         for i in range(len(palette['player_colors'])):
@@ -86,16 +91,19 @@ class ColorPicker:
             return True
 
     def changeState(self, index):
-        # If it is clicked then selected
-        # If it is clicked and color is already chosen by other, swap colors
-        
-        if self.colorNodes[index][0] or self.hover(index) and mouseButton == LEFT:
+        if self.colorNodes[index][0] or (self.hover(index) and mouseButton == LEFT):
             if type(self.previousSelected) == int:
                 self.colorNodes[self.previousSelected][0] = False
             self.previousSelected = index
             self.colorNodes[index][0] = True
+            players[self.index][2].cardColor = self.getColor(palette['player_colors'][index])
             fill(palette['player_colors'][index] - color(0, 0, 0, 150))
             stroke(0,155,0)
+            strokeWeight(2)
+            for i in range(4):
+                if players[i][3].colorNodes[index][0] and players[i] != players[self.index]:
+                    players[i][3].colorNodes[index][0] = False
+                    players[i][2].cardColor = 'solid_white'
         elif self.hover(index):
             if self.colorNodes[index][0]:
                 stroke(155,0,0)
@@ -108,7 +116,16 @@ class ColorPicker:
         else:
             strokeWeight(1)
             fill(palette['player_colors'][index])
-        
+    
+    def getColor(self, c):
+        if c == palette['player_colors'][0]:
+            return 'white'
+        elif c == palette['player_colors'][1]:
+            return 'black'
+        elif c == palette['player_colors'][2]:
+            return 'red'
+        elif c == palette['player_colors'][3]:
+            return 'blue'
 
 class TextInput:
 
