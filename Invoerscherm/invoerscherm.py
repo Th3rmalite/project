@@ -13,6 +13,7 @@ def setup():
         d.colorPickers.append(d.ColorPicker(i, d.cards[i].x, d.cards[i].y, 25, 30))
         d.textInputs.append(d.TextInput(i,d.cards[i].x,d.cards[i].y, 200))
         d.cards[i].shadow(6, 1, 1)
+        d.players.append(['','white',d.cards[i],d.colorPickers[i]])
         
 
 def draw():

@@ -11,7 +11,7 @@ palette = {
     'player_colors' :   [color(248, 249, 250), color(20, 23, 26), color(164, 22, 26), color(3, 4, 94)]
 }
 
-players = ['','','','']
+players = []
 cards = []
 textInputs = []
 colorPickers = []
@@ -37,7 +37,6 @@ class Card:
 
     def __init__(self, index, x, y, w, h, spacing, cardColor):
         global players
-        self.name = players[index]
         self.index = index
         self.cardColor = cardColor
         self.x = x
@@ -87,6 +86,9 @@ class ColorPicker:
             return True
 
     def changeState(self, index):
+        # If it is clicked then selected
+        # If it is clicked and color is already chosen by other, swap colors
+        
         if self.colorNodes[index][0] or self.hover(index) and mouseButton == LEFT:
             if type(self.previousSelected) == int:
                 self.colorNodes[self.previousSelected][0] = False
@@ -107,10 +109,6 @@ class ColorPicker:
             strokeWeight(1)
             fill(palette['player_colors'][index])
         
-    
-
-
-
 
 class TextInput:
 
@@ -160,9 +158,9 @@ class TextInput:
             text(join(self.text, ""), self.x + self.padding - self.w / 2, self.y)
     
     def defineText(self):
-        temp = players[self.index]
-        players[self.index] = join(self.text, "")
-        print('Player ' + str(self.index) + '\'s name changed\nfrom: ' + temp + '\nto: ' + str(players[self.index]))
+        temp = players[self.index][0]
+        players[self.index][0] = join(self.text, "")
+        print('Player ' + str(self.index) + '\'s name changed\nfrom: ' + temp + '\nto: ' + str(players[self.index][0]))
     
     def hover(self):
         if hover([mouseX,mouseY],[self.x - self.w / 2, self.y - self.h / 2, self.w, self.h]):
