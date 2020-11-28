@@ -1,7 +1,7 @@
 import drawPlayers as dp
 
-def setup():
-    dp.get_players([("Vincent","zwart"),("beide Dylans","wit"),("beide Dylans","rood"),("beide Dylans","blauw")])
+def setup(playerList):
+    dp.get_players(playerList)
 
 def draw():
     background(255)
