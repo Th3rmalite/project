@@ -32,6 +32,20 @@ def hover(a,b):
         return True
     return False
 
+def setupCards():
+    global screenSize
+    global Card
+    global TextInput
+    global ColorPicker
+    background(color(palette['dark_gray']))
+    textSize(16)
+    for i in range(4):
+        cards.append(Card(i, screenSize[0]/2, 130, 420, 140, 10, 'solid_white'))
+        colorPickers.append(ColorPicker(i, cards[i].x, cards[i].y, 35, 42))
+        textInputs.append(TextInput(i, cards[i].x, cards[i].y, 200))
+        cards[i].shadow(2, 2)
+        players.append(['Name', 'Color', cards[i], colorPickers[i]])
+
 def drawCards(index):
     global cards
     cards[index].draw()
