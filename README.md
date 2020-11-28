@@ -19,4 +19,3 @@
 
 ##  Digitale Component
 Dit project is het digitale component van ons bordspel "Matten". Het digitale component is een uitbreiding van Matten en dient als een hulpmiddel.
-blablabal
