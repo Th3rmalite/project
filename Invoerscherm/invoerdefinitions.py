@@ -4,7 +4,7 @@ palette = {
     'gray'          :   color(213, 216, 219),
     'gray_hover'    :   color(203, 206, 209),
     'dark_gray'     :   color(193, 196, 199),
-    'light_blue'    :   color(234, 246, 253),
+    'light_blue'    :   color(204, 216, 223),
     'blue'          :   color(77, 107, 164),
     'red'           :   color(229, 56, 59),
     'transparent'   :   color(220, 220, 220, 100),
@@ -65,6 +65,7 @@ class Card:
         fill(0,0,0,1)
         for i in range(samples):
             rect(self.x + offsetX, self.y + offsetY, self.w + self.shadowRadius - i * .1, self.h + self.shadowRadius - i * .1, self.bevel)
+
 
 class ColorPicker:
 
@@ -127,6 +128,7 @@ class ColorPicker:
             return 'red'
         elif c == palette['player_colors'][3]:
             return 'blue'
+
 
 class TextInput:
 
@@ -191,7 +193,7 @@ class TextInput:
             else:
                 fill(palette['gray'])
             if self.selected or (self.hover() and mouseButton == LEFT):
-                fill(palette['dark_gray'])
+                fill(palette['light_blue'])
                 self.selected = True
                 cursor(TEXT)
             if self.selected and mouseButton == LEFT and not self.hover():
@@ -208,7 +210,7 @@ class TextInput:
                 strokeWeight(1)
             if self.selected:
                 stroke(114, 9, 183)
-                strokeWeight(1.3)
+                strokeWeight(2)
         elif type == 'circle':
             pass
             
