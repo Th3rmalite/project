@@ -7,6 +7,8 @@ def settings():
 
 def setup():
     invoerscherm.setup()
+    puntenscherm.setup([("Vincent","zwart"),("beide Dylans","wit"),("beide Dylans","rood"),("beide Dylans","blauw")])
         
 def draw():
     invoerscherm.draw()
+    puntenscherm.draw()
