@@ -1,11 +1,12 @@
-import sys
-sys.path.append("/Invoerscherm")
-import Invoerscherm/invoerscherm
+import invoerscherm
+
+screenSize = [1080, 720]
+
+def settings():
+    size(screenSize[0], screenSize[1])
 
 def setup():
-    if invoerSchermActive:
-        invoerscherm.setup()
+    invoerscherm.setup()
         
 def draw():
-    if invoerSchermActive:
-        invoerscherm.draw()
+    invoerscherm.draw()
