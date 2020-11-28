@@ -17,10 +17,10 @@ palette = {
                         ]
 }
 
-players = []
-cards = []
-textInputs = []
-colorPickers = []
+players = [] # table
+cards = [] # table
+textInputs = [] # table
+colorPickers = [] # table
 
 screenSize = [1080, 720]
 index = 0
