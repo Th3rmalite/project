@@ -20,18 +20,19 @@ def draw():
     
     if state == "start":
         invoerscherm.draw()
+        if not invoerscherm.d.navigationButtons[0].selected:
+            invoerscherm.draw()
+        else:
+            state = "createGame"
+            
     elif state == "createGame":
         puntenscherm.setup(invoerscherm.getNames())
-        print(invoerscherm.getNames())
         
-        #state = "startGame"
+        state = "startGame"
+        
     elif state == "startGame":
         puntenscherm.draw()
     
-    if not invoerscherm.d.navigationButtons[0].selected:
-        invoerscherm.draw()
-    else:
-        state = "createGame"
     print(state)
 def keyTyped():
     for i in range(4):
