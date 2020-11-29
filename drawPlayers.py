@@ -14,10 +14,10 @@ palette = {
     'transparent'   :   color(220, 220, 220, 100),
     'solid_white'   :   color(255, 255, 255),
     'player_colors' :   {
-                        "wit": color(248, 249, 250),   # white
-                        "zwart": color(20, 23, 26),      # black
-                        "rood": color(164, 22, 26),     # red
-                        "blauw": color(3, 4, 94)         # blue
+                        "white": color(248, 249, 250),   # white
+                        "black": color(20, 23, 26),      # black
+                        "red": color(164, 22, 26),     # red
+                        "blue": color(3, 4, 94)         # blue
                         }
 }
 
@@ -96,20 +96,20 @@ class Player:
         return temp
     
     def change_to_pawn_color(self, pawn):
-        if(pawn.pawn_color == "zwart"):
+        if(pawn.pawn_color == "black"):
             fill(0)
-        elif(pawn.pawn_color == "wit"):
+        elif(pawn.pawn_color == "white"):
             fill(255)
-        elif(pawn.pawn_color == "rood"):
+        elif(pawn.pawn_color == "red"):
             fill(255,0,0)
-        elif(pawn.pawn_color == "blauw"):
+        elif(pawn.pawn_color == "blue"):
             fill(0,0,255)
             
-        if(pawn.owner_color == "zwart"):
+        if(pawn.owner_color == "black"):
             tint(0)
-        elif(pawn.owner_color == "wit"):
+        elif(pawn.owner_color == "white"):
             tint(255)
-        elif(pawn.owner_color == "rood"):
+        elif(pawn.owner_color == "red"):
             tint(255,0,0)
         else:
             tint(0,0,255)

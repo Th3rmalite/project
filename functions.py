@@ -4,3 +4,9 @@ def hover(a,b):
     if (isBetweenY and isBetweenX):
         return True
     return False
+
+def locationAnchor(anchor):
+    if anchor == 'NONE':
+        return [0, 0]
+    elif anchor == 'BOTTOM_RIGHT':
+        return [1000, 680]

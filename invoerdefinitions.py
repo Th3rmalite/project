@@ -1,3 +1,7 @@
+import functions as f
+import invoerscherm
+import main
+
 palette = {
     'white'         :   color(238, 239, 240),
     'black'         :   color(50, 50, 50),
@@ -9,6 +13,7 @@ palette = {
     'red'           :   color(229, 56, 59),
     'transparent'   :   color(220, 220, 220, 100),
     'solid_white'   :   color(255, 255, 255),
+    'green'         :   color(138, 201, 38),
     'player_colors' :   [
                         color(248, 249, 250),   # white
                         color(20, 23, 26),      # black
@@ -21,23 +26,16 @@ players = [] # table
 cards = [] # table
 textInputs = [] # table
 colorPickers = [] # table
+navigationButtons = [] # table
 
 screenSize = [1080, 720]
 index = 0
-
-def hover(a,b):
-    isBetweenX = a[0] >= b[0] and a[0] <= b[0]+b[2]
-    isBetweenY = a[1] >= b[1] and a[1] <= b[1]+b[3]
-    if (isBetweenY and isBetweenX):
-        return True
-    return False
 
 def setupCards():
     global screenSize
     global Card
     global TextInput
     global ColorPicker
-    background(color(palette['dark_gray']))
     textSize(16)
     for i in range(4):
         cards.append(Card(i, screenSize[0]/2, 130, 420, 140, 10, 'solid_white'))
@@ -46,11 +44,58 @@ def setupCards():
         cards[i].shadow(2, 2)
         players.append(['Name', 'Color', cards[i], colorPickers[i]])
 
+def setupRest():
+    navigationButtons.append(NavigationButton('Puntenscherm', 0, 0, 130, 50, 'BOTTOM_RIGHT'))
+    navigationButtons[0].shadow(1, 1)
+    background(color(palette['gray']))
+
 def drawCards(index):
     global cards
     cards[index].draw()
     textInputs[index].draw()
     colorPickers[index].draw()
+
+def drawRest():
+    navigationButtons[0].draw()
+
+class NavigationButton:
+
+    def __init__(self, referral, x, y, w, h, anchor = 'NONE'):
+        self.ref = referral
+        self.anchor = anchor
+        location = f.locationAnchor(anchor)
+        self.x = location[0] + x
+        self.y = location[1] + y
+        self.w = w
+        self.h = h
+        self.bevel = 20
+        self.shadowRadius = 3
+        self.selected = False
+    
+    def draw(self):
+        fill(palette['green'])
+        noStroke()
+        self.changeState()
+        rect(self.x, self.y, self.w, self.h, self.bevel)
+
+    def hover(self):
+        if f.hover([mouseX,mouseY],[self.x - self.w / 2, self.y - self.h / 2, self.x, self.y]):
+            return True
+    
+    def changeState(self):
+        if self.hover() and not self.selected:
+            fill(palette['green'] + color(10,10,10))
+        if self.selected or (self.hover() and mouseButton == LEFT):
+            self.selected = True
+            fill(palette['green'] - color(30,30,30))
+
+
+    def shadow(self, offsetX, offsetY, samples = 64):
+        rectMode(CENTER)
+        noStroke()
+        fill(0,0,0,1)
+        for i in range(samples):
+            rect(self.x + offsetX, self.y + offsetY, self.w + self.shadowRadius - i * .1, self.h + self.shadowRadius - i * .1, self.bevel)
 
 
 class Card:
@@ -66,6 +111,7 @@ class Card:
         self.spacing = spacing
         self.bevel = 7
         self.shadowRadius = 6
+        
     
     def draw(self):
         fill(palette[self.cardColor])
@@ -103,7 +149,7 @@ class ColorPicker:
             circle(self.x + i * self.spacing, self.y, self.extent)
     
     def hover(self, index):
-        if hover([mouseX,mouseY],[self.x + index * self.spacing - self.extent / 2, self.y - self.extent / 2, self.extent, self.extent]):
+        if f.hover([mouseX,mouseY],[self.x + index * self.spacing - self.extent / 2, self.y - self.extent / 2, self.extent, self.extent]):
             return True
 
     def changeState(self, index):
@@ -178,6 +224,7 @@ class TextInput:
             elif input == ENTER and self.selected == True:
                 global players
                 self.selected = False
+                cursor(ARROW)
                 self.defineText()
 
     def displayText(self):
@@ -197,7 +244,7 @@ class TextInput:
         print('Player ' + str(self.index) + '\'s name changed\nfrom: ' + temp + '\nto: ' + str(players[self.index][0]))
     
     def hover(self):
-        if hover([mouseX,mouseY],[self.x - self.w / 2, self.y - self.h / 2, self.w, self.h]):
+        if f.hover([mouseX,mouseY],[self.x - self.w / 2, self.y - self.h / 2, self.w, self.h]):
             return True
 
     def changeState(self, type):
