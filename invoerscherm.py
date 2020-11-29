@@ -16,5 +16,6 @@ def draw():
 def getNames():
     temp = []
     for i in range(len(d.players)):
-        temp.append([d.players[i][0], d.players[i][1]])
+        if d.players[i][1] != "None":
+            temp.append([d.players[i][0], d.players[i][1]])
     return temp

@@ -42,7 +42,7 @@ def setupCards():
         colorPickers.append(ColorPicker(i, cards[i].x, cards[i].y, 35, 42))
         textInputs.append(TextInput(i, cards[i].x, cards[i].y, 200))
         cards[i].shadow(2, 2)
-        players.append(['Name', 'blue', cards[i], colorPickers[i]])
+        players.append(['None', 'None', cards[i], colorPickers[i]])
 
 def setupRest():
     navigationButtons.append(NavigationButton('Puntenscherm', 0, 0, 130, 50, 'BOTTOM_RIGHT'))

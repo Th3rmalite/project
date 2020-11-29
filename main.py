@@ -29,9 +29,9 @@ def draw():
             state = "createGame"
             
     elif state == "createGame":
-        rectMode(LEFT)
-        #puntenscherm.setup(invoerscherm.getNames())
-        puntenscherm.setup([("Vincent","black"),("beide Dylans","white"),("beide Dylans","red"),("beide Dylans","blue")])
+        rectMode(CORNER)
+        textAlign(BASELINE)
+        puntenscherm.setup(invoerscherm.getNames())
         state = "startGame"
         
     elif state == "startGame":
