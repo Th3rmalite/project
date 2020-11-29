@@ -166,6 +166,7 @@ class ColorPicker:
                 if players[i][3].colorNodes[index][0] and players[i] != players[self.index]:
                     players[i][3].colorNodes[index][0] = False
                     players[i][2].cardColor = 'solid_white'
+            players[self.index][1] = self.getColor(palette['player_colors'][index])
         elif self.hover(index):
             if self.colorNodes[index][0]:
                 stroke(155,0,0)
