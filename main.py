@@ -1,7 +1,6 @@
 import invoerscherm
 import puntenscherm
 screenSize = [1080, 720]
-count = 1
 state = "start"
 
 
