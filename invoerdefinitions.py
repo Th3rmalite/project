@@ -77,6 +77,9 @@ class NavigationButton:
         noStroke()
         self.changeState()
         rect(self.x, self.y, self.w, self.h, self.bevel)
+        fill(palette['black'])
+        textAlign(CENTER, CENTER)
+        text('Klaar', self.x, self.y - 3)
 
     def hover(self):
         if f.hover([mouseX,mouseY],[self.x - self.w / 2, self.y - self.h / 2, self.x, self.y]):
