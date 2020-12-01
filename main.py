@@ -37,7 +37,6 @@ def draw():
     elif state == "startGame":
         puntenscherm.draw()
     
-    
 def keyTyped():
     for i in range(4):
         invoerscherm.d.textInputs[i].addText(key)
