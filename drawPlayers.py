@@ -64,7 +64,7 @@ def draw_player_info():
     textSize(26)
     for idx,i in enumerate(players):
         get_points(i)
-        fill(50)
+        fill(90)
         rect(120, 60 + (cardHeight+20)*idx, cardWidth, cardHeight, 5)
         fill(255)
         text(i.name, 140, 100 + (cardHeight+20)*idx)
