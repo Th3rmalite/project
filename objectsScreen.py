@@ -1,20 +1,20 @@
 from objects import *
 
-rectangle = Rectangle({
+base = Rectangle(False, {
         'width': '50%',
         'height': '70%',
         'x': '25px',
         'y': '20px',
         'color': color(80,0,0),
-        'border': '15px 10px 25px 0px'
+        'border': '5px',
+        'radius': '5px'
     })
 
 def settings():
-    size(screenSize[0], screenSize[1])
+    size(screenSize['x'], screenSize['y'])
 
 def setup():
-    global rectangle
-    print(rectangle.attribute.get)
+    pass
 
 def draw():
-    rectangle.draw()
+    base.draw()

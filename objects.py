@@ -1,8 +1,11 @@
-screenSize = [1280, 720]
+screenSize = {'x': 1280, 'y': 720}
 
-class Attribute:
+class Properties:
 
-    def __init__(self):
+    def __init__(self, content, parent = screenSize):
+
+        self.content = content
+        self.parent = parent
 
         self.default = {
             'width': '50%',
@@ -20,23 +23,30 @@ class Attribute:
             'padding': '1px',
 
             'radius': '0px',
+
+            'inherit': 'absolute'
         }
+
+        self.get = self.default
 
         for key, value in self.default.items():
             if isinstance(value, str):
-                self.default[key] = self.formatForCalculations(key, value)
+                try:
+                    self.default[key] = self.formatForCalculations(key, value)
+                except:
+                    print('<An error has occured> ' + key + ' : ' + value)
         
         self.get = self.default
     
     def __getitem__(self, key):
         '''
-        Returns the table with all current attributes for the object.
+        Returns the table with all current Properties for the object.
         '''
         return self.get[key]
 
     def __setitem__(self, key, value):
         '''
-        Change the attribute of an object easily:
+        Change the Properties of an object easily:
             <objName>[keyName] = value
             table['height'] = '50px'
         '''
@@ -49,7 +59,7 @@ class Attribute:
             except:
                 print(str(value) + ' is not a valid value for ' + str(key) + '.\nWill use default value of ' + str(self.default[key]) + ' instead.\n')
         else:
-            print(str(key) + ' does not exist in Attributes.\n')
+            print(str(key) + ' does not exist in Propertiess.\n')
 
     def multipleValues(self, key, string):
         '''
@@ -97,48 +107,56 @@ class Attribute:
                     t = floor(self.keyFormat(key, float(temp)))
                     return t
                 elif 'px' in string:
-                    return int(temp)
+                    t = self.inheritance(key, int(temp))
+                    return t
         return string
         
     def keyFormat(self, key, value):
         '''
         Division for percentages.
         '''
-        if key == 'width' or key == 'x':
-            return screenSize[0] * (value/100)
-        elif key == 'height' or key == 'y':
-            return screenSize[1] * (value/100)
+        if self.get['inherit'] == 'absolute':
+            if key == 'width' or key == 'x':
+                return screenSize['x'] * (value/100)
+            elif key == 'height' or key == 'y':
+                return screenSize['y'] * (value/100)
+        elif self.get['inherit'] == 'relative':
+            if key == 'width':
+                return self.parent['width'] * (value/100)
+            elif key == 'height':
+                return self.parent['height'] * (value/100)
+    
+    def inheritance(self, key, value):
+        if self.get['inherit'] == 'relative':
+            if key == 'x':
+                return str(int(self.parent['x'] + value))
+            elif key == 'y':
+                return str(int(self.parent['y'] + value))
+            else:
+                return value
+        elif self.get['inherit'] == 'absolute':
+            return value
 
 class Rectangle:
 
-    def __init__(self, dictionary):
-        self.attribute = Attribute()
+    def __init__(self, parent, dictionary, content = False):
+        self.properties = Properties(content, parent)
 
         for key, value in dictionary.items():
             self[key] = value
 
+        self.content = content
+        self.parent = parent
+
+
     def __setitem__(self, key, value):
-        self.attribute[key] = value
+        self.properties[key] = value
 
     def __getitem__(self, key):
-        return self.attribute[key]
+        return self.properties[key]
     
     def draw(self):
         strokeWeight(self['border'])
         stroke(self['border-color'])
         fill(self['background-color'])
         rect(self['x'], self['y'], self['width'], self['height'], self['radius'])
-
-class Table:
-
-    def __init__(self, dictionary):
-        self.attribute = Attribute()
-
-        for key, value in dictionary.items():
-            self[key] = value
-
-    def __setitem__(self, key, value):
-        self.attribute[key] = value
-
-    def __getitem__(self, key):
-        return self.attribute[key]
