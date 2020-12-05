@@ -1,7 +1,8 @@
 import invoerscherm
 import puntenscherm
+import objectsScreen
 screenSize = [1080, 720]
-state = "start"
+state = "objects"
 
 
 def settings():
@@ -35,6 +36,9 @@ def draw():
         
     elif state == "startGame":
         puntenscherm.draw()
+
+    elif state == "objects":
+        objectsScreen.draw()
     
 def keyTyped():
     for i in range(4):
