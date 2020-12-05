@@ -1,5 +1,5 @@
 {
-    "code-runner.customCommand": "java -jar processing-py.jar objectsScreen.py",
+    "code-runner.customCommand": "java -jar processing-py.jar main.py",
     "python.linting.enabled": false,
     "files.associations": {
         "*.py": "python",

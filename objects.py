@@ -1,11 +1,15 @@
-screenSize = {'x': 1280, 'y': 720}
+Screen = {'width': 1280, 'height': 720, 'x': 0, 'y': 0}
+screenSize = [1280, 720]
 
 class Properties:
 
-    def __init__(self, content, parent = screenSize):
-
+    def __init__(self, content, parent):
+        global Screen
         self.content = content
-        self.parent = parent
+        if not parent:
+            self.parent = Screen
+        else:
+            self.parent = parent
 
         self.default = {
             'width': '50%',
@@ -73,6 +77,7 @@ class Properties:
 
         for index in range(len(lis)):
             lis[index] = self.formatForCalculations(key, lis[index])
+        
 
         if len(lis) == 1:
             return lis[0]
@@ -107,35 +112,32 @@ class Properties:
                     t = floor(self.keyFormat(key, float(temp)))
                     return t
                 elif 'px' in string:
-                    t = self.inheritance(key, int(temp))
-                    return t
+                    return self.otherKeyFormat(key, temp)
         return string
         
     def keyFormat(self, key, value):
         '''
         Division for percentages.
         '''
-        if self.get['inherit'] == 'absolute':
+        if self['inherit'] == 'absolute':
             if key == 'width' or key == 'x':
-                return screenSize['x'] * (value/100)
+                return Screen['width'] * (value/100)
             elif key == 'height' or key == 'y':
-                return screenSize['y'] * (value/100)
-        elif self.get['inherit'] == 'relative':
+                return Screen['height'] * (value/100)
+        elif self['inherit'] == 'relative':
             if key == 'width':
                 return self.parent['width'] * (value/100)
             elif key == 'height':
                 return self.parent['height'] * (value/100)
-    
-    def inheritance(self, key, value):
-        if self.get['inherit'] == 'relative':
+
+    def otherKeyFormat(self, key, value):
+        if self['inherit'] == 'absolute':
+            return int(value)
+        else:
             if key == 'x':
-                return str(int(self.parent['x'] + value))
+                return self.parent['x'] + int(value)
             elif key == 'y':
-                return str(int(self.parent['y'] + value))
-            else:
-                return value
-        elif self.get['inherit'] == 'absolute':
-            return value
+                return self.parent['y'] + int(value)
 
 class Rectangle:
 
@@ -147,7 +149,6 @@ class Rectangle:
 
         self.content = content
         self.parent = parent
-
 
     def __setitem__(self, key, value):
         self.properties[key] = value
