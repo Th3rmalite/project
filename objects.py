@@ -168,6 +168,9 @@ class Properties:
                     return self.parent['y'] + self.parent['height'] * (value/100) - self.parent['height'] / 2
  
     def otherKeyFormat(self, key, value):
+        '''
+        Used for calculating the object's screen position relative to the position of the parent.
+        '''
         if self['inherit'] == 'absolute':
             return int(value)
         elif self['inherit'] == 'relative':
