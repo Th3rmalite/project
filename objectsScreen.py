@@ -1,8 +1,8 @@
 from objects import *
 
 Alpha = Rectangle(False, {
-        'width': '40%',
-        'height': '70%',
+        'width': '500px',
+        'height': '500px',
         'x': '25px',
         'y': '20px',
         'background-color': color(0,0,80),
