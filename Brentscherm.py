@@ -1,5 +1,5 @@
-spelers = 3
-colors = ['white','red','black']
+spelers = 4
+colors = ['white','red','black','blue']
 def setup():
     size(1080,720)
     
