@@ -38,6 +38,7 @@ images = {
 
 cardWidth = 1080 - 240
 cardHeight = 150 - 60/4
+cursorImg = ARROW
 
 def get_players(A):
     global players, pawn_colors, cardHeight, cardWidth
@@ -65,7 +66,9 @@ def get_points(target):
                     target.points += pawn.worth
 
 def draw_player_info():
-    global cardHeight, cardWidth
+    global cardHeight, cardWidth, cursorImg
+    
+    cursorImg = ARROW
     
     textSize(26)
     for idx,i in enumerate(players):
@@ -80,6 +83,8 @@ def draw_player_info():
         
     for idx,player in enumerate(players):
         player.draw_pawns(idx)
+    
+    cursor(cursorImg)
 
 class Player:
     def __init__(self, name, player_color):
@@ -122,10 +127,10 @@ class Player:
             tint(0,0,255)
             
     def draw_pawns(self,idx):
-        global pawn_colors, images, alreadyDragging, players
+        global pawn_colors, images, alreadyDragging, players, cursorImg
         mouse = [mouseX,mouseY]
         high = 0
-        cursorImg = ARROW
+        
         for i in range(len(self.pawns)):
             currentPawn = self.pawns[i]
             if i % 4 == 0 and i != 0:
@@ -169,7 +174,6 @@ class Player:
             if currentPawn.pawn_color != currentPawn.owner_color:
                 rect(currentPawn.location[0], currentPawn.location[1], currentPawn.location[2], currentPawn.location[3], 3)
             image(currentPawn.img, currentPawn.location[0], currentPawn.location[1], currentPawn.location[2], currentPawn.location[3])
-        cursor(cursorImg)
         
 class Pawn:
     def __init__(self,type,pawn_color):
