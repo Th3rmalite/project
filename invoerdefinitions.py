@@ -31,6 +31,8 @@ navigationButtons = [] # table
 screenSize = [1080, 720]
 index = 0
 
+tabDebounce = False
+
 def setupCards():
     global screenSize
     global Card
@@ -241,7 +243,7 @@ class TextInput:
         else:
             fill(0,0,0)
             text(join(self.text, ""), self.x + self.padding - self.w / 2, self.y)
-    
+
     def defineText(self):
         temp = players[self.index][0]
         players[self.index][0] = join(self.text, "")
@@ -257,8 +259,7 @@ class TextInput:
                 fill(palette['gray_hover'])
             else:
                 fill(palette['gray'])
-            if self.selected or (self.hover() and mouseButton == LEFT):
-                fill(palette['light_blue'])
+            if self.hover() and mouseButton == LEFT:
                 self.selected = True
                 cursor(TEXT)
             if self.selected and mouseButton == LEFT and not self.hover():

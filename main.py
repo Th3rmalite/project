@@ -39,3 +39,17 @@ def draw():
 def keyTyped():
     for i in range(4):
         invoerscherm.d.textInputs[i].addText(key)
+
+    if key == TAB:
+        textInputs = invoerscherm.d.textInputs
+        for i in range(len(textInputs)):
+            print('i: ' + str(i))
+            print('selected: ' + str(textInputs[i].selected))
+            if textInputs[i].selected == True:
+                textInputs[i].selected = False
+                textInputs[i].defineText()
+                if i + 1 > 3:
+                    textInputs[0].selected = True
+                else:
+                    textInputs[i + 1].selected = True
+                break 
