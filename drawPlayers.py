@@ -125,13 +125,16 @@ class Player:
         global pawn_colors, images, alreadyDragging, players
         mouse = [mouseX,mouseY]
         high = 0
-        
+        cursorImg = ARROW
         for i in range(len(self.pawns)):
             currentPawn = self.pawns[i]
             if i % 4 == 0 and i != 0:
                 high += 1
             self.change_to_pawn_color(currentPawn)
             currentPawn.location = [1080 - 45*4 - 45*(i-(high*4)), 65+45*high + idx*155, 35, 35]
+
+            if currentPawn.drag:
+                cursorImg = MOVE
             # change color to card below
             for player in players:
                 if hover(mouse, player.cardLocation) and currentPawn.drag:
@@ -142,6 +145,7 @@ class Player:
                 currentPawn.drag = False
                 alreadyDragging = False
             if hover(mouse, currentPawn.location) or currentPawn.drag:
+                cursorImg = MOVE
                 fill(20,0)
                 if mousePressed and not alreadyDragging:
                     alreadyDragging = True
@@ -165,7 +169,7 @@ class Player:
             if currentPawn.pawn_color != currentPawn.owner_color:
                 rect(currentPawn.location[0], currentPawn.location[1], currentPawn.location[2], currentPawn.location[3], 3)
             image(currentPawn.img, currentPawn.location[0], currentPawn.location[1], currentPawn.location[2], currentPawn.location[3])
-                
+        cursor(cursorImg)
         
 class Pawn:
     def __init__(self,type,pawn_color):
