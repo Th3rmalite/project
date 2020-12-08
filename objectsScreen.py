@@ -1,5 +1,12 @@
 from objects import *
 
+Background = Rectangle(False, {
+    'width': '100%',
+    'height': '100%',
+    'background-color': color(255,255,255),
+    'border': '0px'
+})
+
 Table = Rectangle(False, {
     'rect-align': CENTER,
     'width': '40%',
@@ -39,9 +46,9 @@ def settings():
     size(screenSize[0], screenSize[1])
 
 def setup():
+    pass
+    
+def draw():
     for index in range(len(content)):
         content[index].drawShadow()
         content[index].draw()
-    
-def draw():
-    pass
