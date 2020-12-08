@@ -1,4 +1,5 @@
 from objects import *
+import time
 
 Background = Rectangle(False, {
     'width': '100%',
@@ -49,6 +50,7 @@ def setup():
     pass
     
 def draw():
+    global i
     for index in range(len(content)):
         content[index].drawShadow()
         content[index].draw()
