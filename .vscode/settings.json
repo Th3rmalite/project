@@ -1,6 +1,6 @@
 {
 
-    "code-runner.customCommand": "java -jar processing-py.jar main.py",
+    "code-runner.customCommand": "java -jar processing-py.jar puntenscherm.py",
     "python.linting.enabled": false,
     "files.associations": {
         "*.py": "python",
