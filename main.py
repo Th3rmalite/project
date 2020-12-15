@@ -43,8 +43,6 @@ def keyTyped():
     if key == TAB:
         textInputs = invoerscherm.d.textInputs
         for i in range(len(textInputs)):
-            print('i: ' + str(i))
-            print('selected: ' + str(textInputs[i].selected))
             if textInputs[i].selected == True:
                 textInputs[i].selected = False
                 textInputs[i].defineText()

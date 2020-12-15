@@ -67,7 +67,8 @@ def get_points(target):
 
 def draw_player_info():
     global cardHeight, cardWidth, cursorImg
-    
+    noTint()
+    Blok = loadImage('blokje (2).png')
     cursorImg = ARROW
     
     textSize(26)
@@ -80,6 +81,18 @@ def draw_player_info():
         text(i.player_color, 140, 130 + (cardHeight+20)*idx)
         text("punten:", 140, 180 + (cardHeight+20)*idx)
         text(i.points, 250, 180 + (cardHeight+20)*idx)
+        text('blokkades:', 140, 155 + (cardHeight+20)*idx)
+        test = i.points // 5
+        if test >= 1:
+            image(Blok, 285, 138 + (cardHeight+20)*idx,20,20)
+        if test >= 2:
+            image(Blok, 310, 138 + (cardHeight+20)*idx,20,20)
+        if test >= 3:
+            image(Blok, 335, 138 + (cardHeight+20)*idx,20,20)
+        if test >= 4:
+            image(Blok, 360, 138 + (cardHeight+20)*idx,20,20)
+        if test >= 5:
+            image(Blok, 385, 138 + (cardHeight+20)*idx,20,20)
         
     for idx,player in enumerate(players):
         player.draw_pawns(idx)
@@ -152,11 +165,19 @@ class Player:
             if hover(mouse, currentPawn.location) or currentPawn.drag:
                 cursorImg = MOVE
                 fill(20,0)
-                if mousePressed and not alreadyDragging:
-                    alreadyDragging = True
-                    currentPawn.drag = True
-                if currentPawn.drag:
-                    currentPawn.location = [mouseX-28, mouseY-32, 35, 35]
+
+                if alreadyDragging or currentPawn.pawn_color == currentPawn.owner_color:
+                    if mousePressed and not alreadyDragging and mouseButton == LEFT:
+                        alreadyDragging = True
+                        currentPawn.drag = True
+                    if currentPawn.drag:
+                        currentPawn.location = [mouseX-28, mouseY-32, 35, 35]
+                else:
+                    cursorImg = HAND
+                    if mousePressed and mouseButton == RIGHT:
+                        currentPawn.pawn_color = currentPawn.owner_color
+                    # hier moet een error msg komen als mouseButton == LEFT
+                        
                 # update color by clicking
                 '''
                 if mousePressed and (mouseButton == LEFT) and not self.clicked:
