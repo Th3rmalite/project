@@ -39,6 +39,8 @@ images = {
 cardWidth = 1080 - 240
 cardHeight = 150 - 60/4
 cursorImg = ARROW
+errorMsgCounter = 0
+errorMsg = ""
 
 def get_players(A):
     global players, pawn_colors, cardHeight, cardWidth
@@ -67,8 +69,8 @@ def get_points(target):
 
 def draw_player_info():
     global cardHeight, cardWidth, cursorImg
-    noTint()
-    # Blok = loadImage('blokje (2).png')
+    #noTint()
+    #Blok = loadImage('blokje (2).png')
     cursorImg = ARROW
     
     textSize(26)
@@ -83,6 +85,7 @@ def draw_player_info():
         text(i.points, 250, 180 + (cardHeight+20)*idx)
         text('blokkades:', 140, 155 + (cardHeight+20)*idx)
         test = i.points // 5
+        '''
         if test >= 1:
             image(Blok, 285, 138 + (cardHeight+20)*idx,20,20)
         if test >= 2:
@@ -93,6 +96,8 @@ def draw_player_info():
             image(Blok, 360, 138 + (cardHeight+20)*idx,20,20)
         if test >= 5:
             image(Blok, 385, 138 + (cardHeight+20)*idx,20,20)
+        '''
+        
         
     for idx,player in enumerate(players):
         player.draw_pawns(idx)
@@ -140,9 +145,16 @@ class Player:
             tint(0,0,255)
             
     def draw_pawns(self,idx):
-        global pawn_colors, images, alreadyDragging, players, cursorImg
+        global pawn_colors, images, alreadyDragging, players, cursorImg, errorMsgCounter, errorMsg
         mouse = [mouseX,mouseY]
         high = 0
+        
+        '''
+        if errorMsgCounter > 0:
+            errorMsgCounter = errorMsgCounter - 1
+            text(500,30,errorMsg)
+        '''
+        
         
         for i in range(len(self.pawns)):
             currentPawn = self.pawns[i]
@@ -177,6 +189,9 @@ class Player:
                     cursorImg = HAND
                     if mousePressed and mouseButton == RIGHT:
                         currentPawn.pawn_color = currentPawn.owner_color
+                    elif mousePressed and mouseButton == LEFT:
+                        errorMsgCounter = 120
+                        errorMsg = "Click with [RMB] to clear color"
                     # hier moet een error msg komen als mouseButton == LEFT
                         
                 # update color by clicking
