@@ -7,8 +7,8 @@ puntenScherm = Screen({})
 namenScherm = Screen({})
 menuScherm = Screen({})
 
-namenScherm.addContents({'speler 1': 'blue','speler 2': 'red', 'speler 3': 'black', 'speler 4': 'white'})
-puntenScherm.addContents(namenScherm.content)
+namenScherm.addContent('appeltaart')
+puntenScherm.addContent(namenScherm.content)
 
 def settings():
     size(screen['w'], screen['h'])

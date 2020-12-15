@@ -110,9 +110,6 @@ class Screen:
     
     def delContent(self, key):
         del self.content[key]
-    
-    def addContents(self, dictionary):
-        self.content = dictionary
 
     def __getitem__(self, key):
         return self.content[key]
