@@ -173,6 +173,7 @@ class Player:
                     if currentPawn.drag:
                         currentPawn.location = [mouseX-28, mouseY-32, 35, 35]
                 else:
+                    # reset color
                     cursorImg = HAND
                     if mousePressed and mouseButton == RIGHT:
                         currentPawn.pawn_color = currentPawn.owner_color
@@ -188,8 +189,7 @@ class Player:
                     except:
                         currentPawn.pawn_color = pawn_colors[0]
                 '''
-                if mousePressed and (mouseButton == RIGHT):
-                    currentPawn.pawn_color = currentPawn.owner_color
+                
                 rect(currentPawn.location[0], currentPawn.location[1], currentPawn.location[2], currentPawn.location[3], 3)
             self.change_to_pawn_color(currentPawn)
             if currentPawn.pawn_color != currentPawn.owner_color:
