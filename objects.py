@@ -98,10 +98,11 @@ class FormObject(object):
     def onClick(self):
         pass
 
-class Screen(FormObject):
+class Screen:
 
-    def __init__(self, properties):
-        FormObject.__init__(None, properties)
+    def __init__(self, properties = None):
+        self.properties = Property(None)
+        self.properties.setProperties(properties)
         self.content = {}
     
     def addContent(self, key, value):
@@ -109,6 +110,9 @@ class Screen(FormObject):
     
     def delContent(self, key):
         del self.content[key]
+    
+    def addContents(self, dictionary):
+        self.content = dictionary
 
     def __getitem__(self, key):
         return self.content[key]

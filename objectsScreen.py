@@ -7,8 +7,8 @@ puntenScherm = Screen({})
 namenScherm = Screen({})
 menuScherm = Screen({})
 
-namenScherm.addContent({'speler 1': 'blue','speler 2': 'red', 'speler 3': 'black', 'speler 4': 'white'})
-puntenScherm.addContent(namenScherm.content)
+namenScherm.addContents({'speler 1': 'blue','speler 2': 'red', 'speler 3': 'black', 'speler 4': 'white'})
+puntenScherm.addContents(namenScherm.content)
 
 def settings():
     size(screen['w'], screen['h'])
@@ -19,6 +19,7 @@ def setup():
         'h': '10%'
     })
     print(test.properties.getProperties())
+    print(test['h'])
     test['h'] = 50
     print(test['h'])
     test['h'] = '20%'
