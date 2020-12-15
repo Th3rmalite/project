@@ -152,6 +152,7 @@ class Player:
             if hover(mouse, currentPawn.location) or currentPawn.drag:
                 cursorImg = MOVE
                 fill(20,0)
+
                 if alreadyDragging or currentPawn.pawn_color == currentPawn.owner_color:
                     if mousePressed and not alreadyDragging and mouseButton == LEFT:
                         alreadyDragging = True
@@ -159,7 +160,11 @@ class Player:
                     if currentPawn.drag:
                         currentPawn.location = [mouseX-28, mouseY-32, 35, 35]
                 else:
-                    cursorImg = ARROW
+                    cursorImg = HAND
+                    if mousePressed and mouseButton == RIGHT:
+                        currentPawn.pawn_color = currentPawn.owner_color
+                    # hier moet een error msg komen als mouseButton == LEFT
+                        
                 # update color by clicking
                 '''
                 if mousePressed and (mouseButton == LEFT) and not self.clicked:
