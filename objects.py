@@ -1,7 +1,10 @@
+environment = []
+
 # Set properties
 # Get properties
 # Convert % and px to correct format
 # Format multiple values to work in practice
+
 
 screen = {
         'w': 1280,
@@ -45,7 +48,7 @@ class Property:
             print("'" + str(propertyType) + "' is not a valid property key!")
             
 
-    def __getitem__(self, propertyType, realValue = False):
+    def __getitem__(self, propertyType, realValue = True):
         if realValue == True:
             return self.toReal(propertyType, self.storage[propertyType])
         else:
@@ -79,37 +82,75 @@ class Property:
         except:
             print('Could not turn ' + str(realValue) + ' into normal value. Probably because the value is not a number.')
 
+class Screen(object):
+
+    def __init__(self, name, properties = None):
+        self.name = name
+        self.properties = Property(None)
+        self.properties.setProperties(properties)
+        self.active = False
+        self.content = []
+        self.data = {}
+    
+    def start(self):
+        global environment
+        if self in environment:
+            print("Error for " + str(self.name) + ": start() has already been initialized.")
+        else:
+            self.active = True
+            environment.append(self)
+    
+    def stop(self):
+        if self.active == False:
+            print("Error for " + str(self.name) + ": you cannot initialize stop() before start().")
+        else:
+            self.active = False
+    
+    def addData(self, key, value):
+        self.data[key] = value
+    
+    def delData(self, key):
+        del self.data[key]
+
+    def getData(self, key = False):
+        if key:
+            return self.data[key]
+        else:
+            return self.data
+
+    
+    def addContent(self, objectToAdd):
+        self.content.append(objectToAdd)
+
+    def drawContent(self):
+        for i in range(len(self.content)):
+            content.draw()
+
 class FormObject(object):
-    global screen
 
     def __init__(self, parent, properties):
+        global environment
         self.properties = Property(parent)
         self.properties.setProperties(properties)
+        for i in range(len(environment)):
+            if environment[i].active == True:
+                self.screen = environment[i]
+        try:
+            self.screen.content.append(self)
+        except:
+            print("Could not find an active screen for " + str(self))
 
     def __setitem__(self, propertyType, propertyValue):
         self.properties[propertyType] = propertyValue
 
     def __getitem__(self, propertyType):
         return self.properties[propertyType]
+    
+    def draw(self):
+        print(self.properties.getProperties)
 
     def onHover(self):
         pass
 
     def onClick(self):
         pass
-
-class Screen:
-
-    def __init__(self, properties = None):
-        self.properties = Property(None)
-        self.properties.setProperties(properties)
-        self.content = {}
-    
-    def addContent(self, key, value):
-        self.content[key] = value
-    
-    def delContent(self, key):
-        del self.content[key]
-
-    def __getitem__(self, key):
-        return self.content[key]
