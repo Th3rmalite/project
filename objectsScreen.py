@@ -11,21 +11,15 @@ def setup():
     # In namenScherm.py
     namenScherm = Screen('namen', {})
     namenScherm.start()
-    test = FormObject(None,{
-        'w': '50%',
-        'h': '10%',
-    })
-    global test
+    test = Instance(None, {})
+    print(test.properties.getProperties())
     namenScherm.addData(namenScherm.name, {'appeltaart': 'dat is lekker'})
     namenScherm.stop()
 
     # In objectsScreen.py
     puntenScherm = Screen('punten', {})
     puntenScherm.start()
-    test2 = FormObject(None,{
-        'w': '20px',
-        'h': '20px'
-    })
+
     puntenScherm.addData(puntenScherm.name, namenScherm.data)
     puntenScherm.stop()
 
@@ -34,3 +28,5 @@ def setup():
 
 def draw():
     pass
+
+setup()

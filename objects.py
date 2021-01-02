@@ -21,10 +21,11 @@ class Property:
             self.parent = parent
 
         self.default = {
-                'w': '50%',
-                'h': '50px',
+                'w': 50,
+                'h': 50,
                 'x': 0,
-                'y': 0
+                'y': 0,
+                'fill': '0 0 255'
             }
 
         self.storage = {}
@@ -32,8 +33,14 @@ class Property:
         self.setDefault()
 
     def setDefault(self, copyValues = True):
+        """Default item duplication to property storage
+
+        Parameters:
+        bool copyValues: If false, setDefault will only export the keys to storage.
+        """
         if copyValues == True:
-            self.storage = self.default
+            for propertyType in self.default.keys():
+                self[propertyType] = self.default[propertyType]
         else:
             for propertyType in self.default.keys():
                 self.storage.update({propertyType: ''})
@@ -41,9 +48,9 @@ class Property:
     def __setitem__(self, propertyType, propertyValue):
         if propertyType in self.default.keys():
             if not isinstance(propertyValue, str):
-                self.storage[propertyType] = self.toNormal(propertyValue)
+                self.storage[propertyType] = self.setMultipleValues(propertyType, self.toNormal(propertyValue))
             else:
-                self.storage[propertyType] = propertyValue
+                self.storage[propertyType] = self.setMultipleValues(propertyType, propertyValue)
         else:
             print("'" + str(propertyType) + "' is not a valid property key!")
             
@@ -64,23 +71,37 @@ class Property:
             temp[propertyKey] = str(self[propertyKey])
         return temp
 
-    def setMultipleItems(self):
-        pass
+    def setMultipleValues(self, propertyType, propertyValue):
+        splitValues = propertyValue.split()
+        for index in range(len(splitValues)):
+            splitValues[index] = self.toReal(propertyType, splitValues[index])
+        return splitValues
 
     def toReal(self, propertyType, normalValue):
-        if isinstance(normalValue, int):
-            return self.toReal(propertyType, self.toNormal(normalValue))
-        elif 'px' in normalValue:
+        if 'px' in normalValue:
             return int(normalValue.replace('px', ''))
         elif '%' in normalValue:
             percentageToPixels = int(self.parent[propertyType] * (float(normalValue.replace('%', '')) / 100))
             return self.toReal(propertyType, self.toNormal(percentageToPixels))
+        else:
+            if isinstance(normalValue, list):
+                temp = []
+                for i in range(len(normalValue)):
+                    temp.append(self.toReal(propertyType, self.toNormal(normalValue[i])))
+                return temp
+            else:
+                return self.toReal(propertyType, self.toNormal(normalValue))
 
     def toNormal(self, realValue):
         try:
             return str(int(realValue)) + 'px'
         except:
-            print('Could not turn ' + str(realValue) + ' into normal value. Probably because the value is not a number.')
+            if isinstance(realValue, list):
+                temp = []
+                for i in range(len(realValue)):
+                    temp.append(self.toNormal(realValue[i]))
+                return temp
+            print('Could not turn ' + str(realValue) + ' into normal value. The value is probably not a number.')
 
 class Screen(object):
 
@@ -103,6 +124,7 @@ class Screen(object):
     def stop(self):
         if self.active == False:
             print("Error for " + str(self.name) + ": you cannot initialize stop() before start().")
+            quit()
         else:
             self.active = False
     
@@ -117,7 +139,6 @@ class Screen(object):
             return self.data[key]
         else:
             return self.data
-
     
     def addContent(self, objectToAdd):
         self.content.append(objectToAdd)
@@ -126,9 +147,9 @@ class Screen(object):
         for i in range(len(self.content)):
             content.draw()
 
-class FormObject(object):
+class Instance(object):
 
-    def __init__(self, parent, properties):
+    def __init__(self, parent, properties = None):
         global environment
         self.properties = Property(parent)
         self.properties.setProperties(properties)
@@ -145,12 +166,15 @@ class FormObject(object):
 
     def __getitem__(self, propertyType):
         return self.properties[propertyType]
-    
+
     def draw(self):
-        print(self.properties.getProperties)
+        pass
 
     def onHover(self):
         pass
 
     def onClick(self):
         pass
+
+class Rectangle(Instance):
+    pass
