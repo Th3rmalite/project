@@ -1,8 +1,9 @@
-spelers = 2
-colors = ['blue','black']
+spelers = 4
+colors = ['red','black','white','blue']
+x = 75
 def setup():
     size(1080,720)
-    
+    frameRate(5)
 def draw():
     global spelers
     bord = loadImage('download.png')
@@ -36,368 +37,381 @@ def draw():
     fill(0)
     textSize(50)
     if spelers > 4:
-        text('Het spel is speelbaar met 4 personen,',100,50)
-        text('U bent over het limiet.',100,100)
+        textSize(25)
+        text('This game is meant to be played with 4 or less players,',100,300)
+        text('You are currently over the required amount of players to play.',100,325)
+        text("I don't even know how you got this message, since it isn't possible, but good job.",100,350)
     if spelers < 2:
-        text('Het spel is speelbaar met 2 personen,',100,50)
-        text('U bent onder het minimale aantal.',100,100)
+        textSize(25)
+        text('This game is meant to be played with 2 or more players,',100,300)
+        text('You are currently under the required amount of players to play.',100,325)
     if spelers == 4:
-        textSize(35)
-        image(bord,400,50,100,100)
-        text('x32, 8 per speler',500,145)
+        fill(50, 50, 50)
+        rect(125, 40, 850, 450)
+        fill(255)
+        textSize(20)
+        image(bord,490,50,100,100)
+        text('Total of 32 pieces, Divide them between all players and place them to your likings.',150,175)
+        textSize(30)
         
         red_used = False
         blue_used = False
         black_used = False
         if 'white' in colors:
-            text('x6',250,245) # pion_wit
-            text('x1',250,300) # koning_wit
-            text('x1',250,350) # koningin_wit
-            text('x2',250,400) # toren_wit
-            text('x2',250,450) # paard_wit
-            image(pion_wit,200,200,40,50)
-            image(koning_wit,195,250,50,60)
-            image(koningin_wit,195,310,50,50)
-            image(toren_wit,200,360,40,50)
-            image(paard_wit,200,410,40,50)
+            text('x6',250+x,245) # pion_wit
+            text('x1',250+x,300) # koning_wit
+            text('x1',250+x,350) # koningin_wit
+            text('x2',250+x,400) # toren_wit
+            text('x2',250+x,450) # paard_wit
+            image(pion_wit,200+x,200,40,50)
+            image(koning_wit,195+x,250,50,60)
+            image(koningin_wit,195+x,310,50,50)
+            image(toren_wit,200+x,360,40,50)
+            image(paard_wit,200+x,410,40,50)
         else:
             if 'red' in colors and red_used == False:
                 red_used = True
-                text('x6',250,245) # pion_rood
-                text('x1',250,300) # koning_rood
-                text('x1',250,350) # koningin_rood
-                text('x2',250,400) # toren_rood
-                text('x2',250,450) # paard_rood
-                image(pion_rood,200,200,40,50)
-                image(koning_rood,195,250,50,60)
-                image(koningin_rood,195,310,50,50)
-                image(toren_rood,200,360,40,50)
-                image(paard_rood,200,410,40,50)
+                text('x6',250+x,245) # pion_rood
+                text('x1',250+x,300) # koning_rood
+                text('x1',250+x,350) # koningin_rood
+                text('x2',250+x,400) # toren_rood
+                text('x2',250+x,450) # paard_rood
+                image(pion_rood,200+x,200,40,50)
+                image(koning_rood,195+x,250,50,60)
+                image(koningin_rood,195+x,310,50,50)
+                image(toren_rood,200+x,360,40,50)
+                image(paard_rood,200+x,410,40,50)
             elif 'blue' in colors and blue_used == False:
                 blue_used = True
-                text('x6',250,245) # pion_blauw
-                text('x1',250,300) # koning_blauw
-                text('x1',250,350) # koningin_blauw
-                text('x2',250,400) # toren_blauw
-                text('x2',250,450) # paard_blauw
-                image(pion_blauw,200,200,40,50)
-                image(koning_blauw,195,250,50,60)
-                image(koningin_blauw,195,310,50,50)
-                image(toren_blauw,200,360,40,50)
-                image(paard_blauw,200,410,40,50)
+                text('x6',250+x,245) # pion_blauw
+                text('x1',250+x,300) # koning_blauw
+                text('x1',250+x,350) # koningin_blauw
+                text('x2',250+x,400) # toren_blauw
+                text('x2',250+x,450) # paard_blauw
+                image(pion_blauw,200+x,200,40,50)
+                image(koning_blauw,195+x,250,50,60)
+                image(koningin_blauw,195+x,310,50,50)
+                image(toren_blauw,200+x,360,40,50)
+                image(paard_blauw,200+x,410,40,50)
 
         if 'red' in colors and red_used == False:
             red_used = True
-            text('x6',390,245) # pion_rood
-            text('x1',390,300) # koning_rood
-            text('x1',390,350) # koningin_rood
-            text('x2',390,400) # toren_rood
-            text('x2',390,450) # paard_rood
-            image(pion_rood,345,200,40,50)
-            image(koning_rood,340,250,50,60)
-            image(koningin_rood,340,310,50,50)
-            image(toren_rood,345,360,40,50)
-            image(paard_rood,345,410,40,50)
+            text('x6',390+x,245) # pion_rood
+            text('x1',390+x,300) # koning_rood
+            text('x1',390+x,350) # koningin_rood
+            text('x2',390+x,400) # toren_rood
+            text('x2',390+x,450) # paard_rood
+            image(pion_rood,345+x,200,40,50)
+            image(koning_rood,340+x,250,50,60)
+            image(koningin_rood,340+x,310,50,50)
+            image(toren_rood,345+x,360,40,50)
+            image(paard_rood,345+x,410,40,50)
         else:
             if 'blue' in colors and blue_used == False:
                 blue_used = True
-                text('x6',390,245) # pion_blauw
-                text('x1',390,300) # koning_blauw
-                text('x1',390,350) # koningin_blauw
-                text('x2',390,400) # toren_blauw
-                text('x2',390,450) # paard_blauw
-                image(pion_blauw,345,200,40,50)
-                image(koning_blauw,340,250,50,60)
-                image(koningin_blauw,340,310,50,50)
-                image(toren_blauw,345,360,40,50)
-                image(paard_blauw,345,410,40,50)
+                text('x6',390+x,245) # pion_blauw
+                text('x1',390+x,300) # koning_blauw
+                text('x1',390+x,350) # koningin_blauw
+                text('x2',390+x,400) # toren_blauw
+                text('x2',390+x,450) # paard_blauw
+                image(pion_blauw,345+x,200,40,50)
+                image(koning_blauw,340+x,250,50,60)
+                image(koningin_blauw,340+x,310,50,50)
+                image(toren_blauw,345+x,360,40,50)
+                image(paard_blauw,345+x,410,40,50)
             elif 'black' in colors and black_used == False:
                 black_used = True
-                text('x6',390,245) # pion_zwart
-                text('x1',390,300) # koning_zwart
-                text('x1',390,350) # koningin_zwart
-                text('x2',390,400) # toren_zwart
-                text('x2',390,450) # paard_zwart
-                image(pion_zwart,345,200,40,50)
-                image(koning_zwart,340,250,50,60)
-                image(koningin_zwart,340,310,50,50)
-                image(toren_zwart,345,360,40,50)
-                image(paard_zwart,345,410,40,50)
+                text('x6',390+x,245) # pion_zwart
+                text('x1',390+x,300) # koning_zwart
+                text('x1',390+x,350) # koningin_zwart
+                text('x2',390+x,400) # toren_zwart
+                text('x2',390+x,450) # paard_zwart
+                image(pion_zwart,345+x,200,40,50)
+                image(koning_zwart,340+x,250,50,60)
+                image(koningin_zwart,340+x,310,50,50)
+                image(toren_zwart,345+x,360,40,50)
+                image(paard_zwart,345+x,410,40,50)
 
         if 'blue' in colors and blue_used == False:
             blue_used = True
-            text('x6',540,245) # pion_blauw
-            text('x1',540,300) # koning_blauw
-            text('x1',540,350) # koningin_blauw
-            text('x2',540,400) # toren_blauw
-            text('x2',540,450) # paard_blauw
-            image(pion_blauw,490,200,40,50)
-            image(koning_blauw,485,250,50,60)
-            image(koningin_blauw,485,310,50,50)
-            image(toren_blauw,490,360,40,50)
-            image(paard_blauw,490,410,40,50)
+            text('x6',540+x,245) # pion_blauw
+            text('x1',540+x,300) # koning_blauw
+            text('x1',540+x,350) # koningin_blauw
+            text('x2',540+x,400) # toren_blauw
+            text('x2',540+x,450) # paard_blauw
+            image(pion_blauw,490+x,200,40,50)
+            image(koning_blauw,485+x,250,50,60)
+            image(koningin_blauw,485+x,310,50,50)
+            image(toren_blauw,490+x,360,40,50)
+            image(paard_blauw,490+x,410,40,50)
         else:
             if 'black' in colors and black_used == False:
                 black_used = True
-                text('x6',540,245) # pion_blauw
-                text('x1',540,300) # koning_blauw
-                text('x1',540,350) # koningin_blauw
-                text('x2',540,400) # toren_blauw
-                text('x2',540,450) # paard_blauw
-                image(pion_zwart,490,200,40,50)
-                image(koning_zwart,485,250,50,60)
-                image(koningin_zwart,485,310,50,50)
-                image(toren_zwart,490,360,40,50)
-                image(paard_zwart,490,410,40,50)
+                text('x6',540+x,245) # pion_blauw
+                text('x1',540+x,300) # koning_blauw
+                text('x1',540+x,350) # koningin_blauw
+                text('x2',540+x,400) # toren_blauw
+                text('x2',540+x,450) # paard_blauw
+                image(pion_zwart,490+x,200,40,50)
+                image(koning_zwart,485+x,250,50,60)
+                image(koningin_zwart,485+x,310,50,50)
+                image(toren_zwart,490+x,360,40,50)
+                image(paard_zwart,490+x,410,40,50)
         if 'black' in colors and black_used == False:
             black_used = True
-            text('x6',685,245) # pion_zwart
-            text('x1',685,300) # koning_zwart
-            text('x1',685,350) # koningin_zwart
-            text('x2',685,400) # toren_zwart
-            text('x2',685,450) # paard_zwart
-            image(pion_zwart,635,200,40,50)
-            image(koning_zwart,630,250,50,60)
-            image(koningin_zwart,630,310,50,50)
-            image(toren_zwart,635,360,40,50)
-            image(paard_zwart,635,410,40,50)
+            text('x6',685+x,245) # pion_zwart
+            text('x1',685+x,300) # koning_zwart
+            text('x1',685+x,350) # koningin_zwart
+            text('x2',685+x,400) # toren_zwart
+            text('x2',685+x,450) # paard_zwart
+            image(pion_zwart,635+x,200,40,50)
+            image(koning_zwart,630+x,250,50,60)
+            image(koningin_zwart,630+x,310,50,50)
+            image(toren_zwart,635+x,360,40,50)
+            image(paard_zwart,635+x,410,40,50)
     if spelers == 3:
-        textSize(35)
-        image(bord,400,50,100,100)
-        text('x27, 9 per speler',500,145)
-        
+        fill(127)
+        rect(125, 40, 850, 150)
+        fill(0)
+        textSize(20)
+        image(bord,490,50,100,100)
+        text('Total of 27 pieces, Divide them between all players and place them to your likings.',150,175)
+        textSize(30)
         red_used = False
         blue_used = False
         black_used = False
         if 'white' in colors:
-            text('x6',250,245) # pion_wit
-            text('x1',250,300) # koning_wit
-            text('x1',250,350) # koningin_wit
-            text('x2',250,400) # toren_wit
-            text('x2',250,450) # paard_wit
-            image(pion_wit,200,200,40,50)
-            image(koning_wit,195,250,50,60)
-            image(koningin_wit,195,310,50,50)
-            image(toren_wit,200,360,40,50)
-            image(paard_wit,200,410,40,50)
+            text('x6',250+x,245) # pion_wit
+            text('x1',250+x,300) # koning_wit
+            text('x1',250+x,350) # koningin_wit
+            text('x2',250+x,400) # toren_wit
+            text('x2',250+x,450) # paard_wit
+            image(pion_wit,200+x,200,40,50)
+            image(koning_wit,195+x,250,50,60)
+            image(koningin_wit,195+x,310,50,50)
+            image(toren_wit,200+x,360,40,50)
+            image(paard_wit,200+x,410,40,50)
         else:
             if 'red' in colors and red_used == False:
                 red_used = True
-                text('x6',250,245) # pion_rood
-                text('x1',250,300) # koning_rood
-                text('x1',250,350) # koningin_rood
-                text('x2',250,400) # toren_rood
-                text('x2',250,450) # paard_rood
-                image(pion_rood,200,200,40,50)
-                image(koning_rood,195,250,50,60)
-                image(koningin_rood,195,310,50,50)
-                image(toren_rood,200,360,40,50)
-                image(paard_rood,200,410,40,50)
+                text('x6',250+x,245) # pion_rood
+                text('x1',250+x,300) # koning_rood
+                text('x1',250+x,350) # koningin_rood
+                text('x2',250+x,400) # toren_rood
+                text('x2',250+x,450) # paard_rood
+                image(pion_rood,200+x,200,40,50)
+                image(koning_rood,195+x,250,50,60)
+                image(koningin_rood,195+x,310,50,50)
+                image(toren_rood,200+x,360,40,50)
+                image(paard_rood,200+x,410,40,50)
             elif 'blue' in colors and blue_used == False:
                 blue_used = True
-                text('x6',250,245) # pion_blauw
-                text('x1',250,300) # koning_blauw
-                text('x1',250,350) # koningin_blauw
-                text('x2',250,400) # toren_blauw
-                text('x2',250,450) # paard_blauw
-                image(pion_blauw,200,200,40,50)
-                image(koning_blauw,195,250,50,60)
-                image(koningin_blauw,195,310,50,50)
-                image(toren_blauw,200,360,40,50)
-                image(paard_blauw,200,410,40,50)
+                text('x6',250+x,245) # pion_blauw
+                text('x1',250+x,300) # koning_blauw
+                text('x1',250+x,350) # koningin_blauw
+                text('x2',250+x,400) # toren_blauw
+                text('x2',250+x,450) # paard_blauw
+                image(pion_blauw,200+x,200,40,50)
+                image(koning_blauw,195+x,250,50,60)
+                image(koningin_blauw,195+x,310,50,50)
+                image(toren_blauw,200+x,360,40,50)
+                image(paard_blauw,200+x,410,40,50)
 
         if 'red' in colors and red_used == False:
             red_used = True
-            text('x6',390,245) # pion_rood
-            text('x1',390,300) # koning_rood
-            text('x1',390,350) # koningin_rood
-            text('x2',390,400) # toren_rood
-            text('x2',390,450) # paard_rood
-            image(pion_rood,345,200,40,50)
-            image(koning_rood,340,250,50,60)
-            image(koningin_rood,340,310,50,50)
-            image(toren_rood,345,360,40,50)
-            image(paard_rood,345,410,40,50)
+            text('x6',390+x,245) # pion_rood
+            text('x1',390+x,300) # koning_rood
+            text('x1',390+x,350) # koningin_rood
+            text('x2',390+x,400) # toren_rood
+            text('x2',390+x,450) # paard_rood
+            image(pion_rood,345+x,200,40,50)
+            image(koning_rood,340+x,250,50,60)
+            image(koningin_rood,340+x,310,50,50)
+            image(toren_rood,345+x,360,40,50)
+            image(paard_rood,345+x,410,40,50)
         else:
             if 'blue' in colors and blue_used == False:
                 blue_used = True
-                text('x6',390,245) # pion_blauw
-                text('x1',390,300) # koning_blauw
-                text('x1',390,350) # koningin_blauw
-                text('x2',390,400) # toren_blauw
-                text('x2',390,450) # paard_blauw
-                image(pion_blauw,345,200,40,50)
-                image(koning_blauw,340,250,50,60)
-                image(koningin_blauw,340,310,50,50)
-                image(toren_blauw,345,360,40,50)
-                image(paard_blauw,345,410,40,50)
+                text('x6',390+x,245) # pion_blauw
+                text('x1',390+x,300) # koning_blauw
+                text('x1',390+x,350) # koningin_blauw
+                text('x2',390+x,400) # toren_blauw
+                text('x2',390+x,450) # paard_blauw
+                image(pion_blauw,345+x,200,40,50)
+                image(koning_blauw,340+x,250,50,60)
+                image(koningin_blauw,340+x,310,50,50)
+                image(toren_blauw,345+x,360,40,50)
+                image(paard_blauw,345+x,410,40,50)
             elif 'black' in colors and black_used == False:
                 black_used = True
-                text('x6',390,245) # pion_zwart
-                text('x1',390,300) # koning_zwart
-                text('x1',390,350) # koningin_zwart
-                text('x2',390,400) # toren_zwart
-                text('x2',390,450) # paard_zwart
-                image(pion_zwart,345,200,40,50)
-                image(koning_zwart,340,250,50,60)
-                image(koningin_zwart,340,310,50,50)
-                image(toren_zwart,345,360,40,50)
-                image(paard_zwart,345,410,40,50)
+                text('x6',390+x,245) # pion_zwart
+                text('x1',390+x,300) # koning_zwart
+                text('x1',390+x,350) # koningin_zwart
+                text('x2',390+x,400) # toren_zwart
+                text('x2',390+x,450) # paard_zwart
+                image(pion_zwart,345+x,200,40,50)
+                image(koning_zwart,340+x,250,50,60)
+                image(koningin_zwart,340+x,310,50,50)
+                image(toren_zwart,345+x,360,40,50)
+                image(paard_zwart,345+x,410,40,50)
 
         if 'blue' in colors and blue_used == False:
             blue_used = True
-            text('x6',540,245) # pion_blauw
-            text('x1',540,300) # koning_blauw
-            text('x1',540,350) # koningin_blauw
-            text('x2',540,400) # toren_blauw
-            text('x2',540,450) # paard_blauw
-            image(pion_blauw,490,200,40,50)
-            image(koning_blauw,485,250,50,60)
-            image(koningin_blauw,485,310,50,50)
-            image(toren_blauw,490,360,40,50)
-            image(paard_blauw,490,410,40,50)
+            text('x6',540+x,245) # pion_blauw
+            text('x1',540+x,300) # koning_blauw
+            text('x1',540+x,350) # koningin_blauw
+            text('x2',540+x,400) # toren_blauw
+            text('x2',540+x,450) # paard_blauw
+            image(pion_blauw,490+x,200,40,50)
+            image(koning_blauw,485+x,250,50,60)
+            image(koningin_blauw,485+x,310,50,50)
+            image(toren_blauw,490+x,360,40,50)
+            image(paard_blauw,490+x,410,40,50)
         else:
             if 'black' in colors and black_used == False:
                 black_used = True
-                text('x6',540,245) # pion_blauw
-                text('x1',540,300) # koning_blauw
-                text('x1',540,350) # koningin_blauw
-                text('x2',540,400) # toren_blauw
-                text('x2',540,450) # paard_blauw
-                image(pion_zwart,490,200,40,50)
-                image(koning_zwart,485,250,50,60)
-                image(koningin_zwart,485,310,50,50)
-                image(toren_zwart,490,360,40,50)
-                image(paard_zwart,490,410,40,50)
+                text('x6',540+x,245) # pion_blauw
+                text('x1',540+x,300) # koning_blauw
+                text('x1',540+x,350) # koningin_blauw
+                text('x2',540+x,400) # toren_blauw
+                text('x2',540+x,450) # paard_blauw
+                image(pion_zwart,490+x,200,40,50)
+                image(koning_zwart,485+x,250,50,60)
+                image(koningin_zwart,485+x,310,50,50)
+                image(toren_zwart,490+x,360,40,50)
+                image(paard_zwart,490+x,410,40,50)
         if 'black' in colors and black_used == False:
             black_used = True
-            text('x6',685,245) # pion_zwart
-            text('x1',685,300) # koning_zwart
-            text('x1',685,350) # koningin_zwart
-            text('x2',685,400) # toren_zwart
-            text('x2',685,450) # paard_zwart
-            image(pion_zwart,635,200,40,50)
-            image(koning_zwart,630,250,50,60)
-            image(koningin_zwart,630,310,50,50)
-            image(toren_zwart,635,360,40,50)
-            image(paard_zwart,635,410,40,50)
+            text('x6',685+x,245) # pion_zwart
+            text('x1',685+x,300) # koning_zwart
+            text('x1',685+x,350) # koningin_zwart
+            text('x2',685+x,400) # toren_zwart
+            text('x2',685+x,450) # paard_zwart
+            image(pion_zwart,635+x,200,40,50)
+            image(koning_zwart,630+x,250,50,60)
+            image(koningin_zwart,630+x,310,50,50)
+            image(toren_zwart,635+x,360,40,50)
+            image(paard_zwart,635+x,410,40,50)
     if spelers == 2:
-        textSize(35)
-        image(bord,400,50,100,100)
-        text('x20, 10 per speler',500,145)
-        
+        fill(127)
+        rect(125, 40, 850, 150)
+        fill(0)
+        textSize(20)
+        image(bord,490,50,100,100)
+        text('Total of 20 pieces, Divide them between all players and place them to your likings.',150,175)
+        textSize(30)
         red_used = False
         blue_used = False
         black_used = False
         if 'white' in colors:
-            text('x6',250,245) # pion_wit
-            text('x1',250,300) # koning_wit
-            text('x1',250,350) # koningin_wit
-            text('x2',250,400) # toren_wit
-            text('x2',250,450) # paard_wit
-            image(pion_wit,200,200,40,50)
-            image(koning_wit,195,250,50,60)
-            image(koningin_wit,195,310,50,50)
-            image(toren_wit,200,360,40,50)
-            image(paard_wit,200,410,40,50)
+            text('x6',250+x,245) # pion_wit
+            text('x1',250+x,300) # koning_wit
+            text('x1',250+x,350) # koningin_wit
+            text('x2',250+x,400) # toren_wit
+            text('x2',250+x,450) # paard_wit
+            image(pion_wit,200+x,200,40,50)
+            image(koning_wit,195+x,250,50,60)
+            image(koningin_wit,195+x,310,50,50)
+            image(toren_wit,200+x,360,40,50)
+            image(paard_wit,200+x,410,40,50)
         else:
             if 'red' in colors and red_used == False:
                 red_used = True
-                text('x6',250,245) # pion_rood
-                text('x1',250,300) # koning_rood
-                text('x1',250,350) # koningin_rood
-                text('x2',250,400) # toren_rood
-                text('x2',250,450) # paard_rood
-                image(pion_rood,200,200,40,50)
-                image(koning_rood,195,250,50,60)
-                image(koningin_rood,195,310,50,50)
-                image(toren_rood,200,360,40,50)
-                image(paard_rood,200,410,40,50)
+                text('x6',250+x,245) # pion_rood
+                text('x1',250+x,300) # koning_rood
+                text('x1',250+x,350) # koningin_rood
+                text('x2',250+x,400) # toren_rood
+                text('x2',250+x,450) # paard_rood
+                image(pion_rood,200+x,200,40,50)
+                image(koning_rood,195+x,250,50,60)
+                image(koningin_rood,195+x,310,50,50)
+                image(toren_rood,200+x,360,40,50)
+                image(paard_rood,200+x,410,40,50)
             elif 'blue' in colors and blue_used == False:
                 blue_used = True
-                text('x6',250,245) # pion_blauw
-                text('x1',250,300) # koning_blauw
-                text('x1',250,350) # koningin_blauw
-                text('x2',250,400) # toren_blauw
-                text('x2',250,450) # paard_blauw
-                image(pion_blauw,200,200,40,50)
-                image(koning_blauw,195,250,50,60)
-                image(koningin_blauw,195,310,50,50)
-                image(toren_blauw,200,360,40,50)
-                image(paard_blauw,200,410,40,50)
+                text('x6',250+x,245) # pion_blauw
+                text('x1',250+x,300) # koning_blauw
+                text('x1',250+x,350) # koningin_blauw
+                text('x2',250+x,400) # toren_blauw
+                text('x2',250+x,450) # paard_blauw
+                image(pion_blauw,200+x,200,40,50)
+                image(koning_blauw,195+x,250,50,60)
+                image(koningin_blauw,195+x,310,50,50)
+                image(toren_blauw,200+x,360,40,50)
+                image(paard_blauw,200+x,410,40,50)
 
         if 'red' in colors and red_used == False:
             red_used = True
-            text('x6',390,245) # pion_rood
-            text('x1',390,300) # koning_rood
-            text('x1',390,350) # koningin_rood
-            text('x2',390,400) # toren_rood
-            text('x2',390,450) # paard_rood
-            image(pion_rood,345,200,40,50)
-            image(koning_rood,340,250,50,60)
-            image(koningin_rood,340,310,50,50)
-            image(toren_rood,345,360,40,50)
-            image(paard_rood,345,410,40,50)
+            text('x6',390+x,245) # pion_rood
+            text('x1',390+x,300) # koning_rood
+            text('x1',390+x,350) # koningin_rood
+            text('x2',390+x,400) # toren_rood
+            text('x2',390+x,450) # paard_rood
+            image(pion_rood,345+x,200,40,50)
+            image(koning_rood,340+x,250,50,60)
+            image(koningin_rood,340+x,310,50,50)
+            image(toren_rood,345+x,360,40,50)
+            image(paard_rood,345+x,410,40,50)
         else:
             if 'blue' in colors and blue_used == False:
                 blue_used = True
-                text('x6',390,245) # pion_blauw
-                text('x1',390,300) # koning_blauw
-                text('x1',390,350) # koningin_blauw
-                text('x2',390,400) # toren_blauw
-                text('x2',390,450) # paard_blauw
-                image(pion_blauw,345,200,40,50)
-                image(koning_blauw,340,250,50,60)
-                image(koningin_blauw,340,310,50,50)
-                image(toren_blauw,345,360,40,50)
-                image(paard_blauw,345,410,40,50)
+                text('x6',390+x,245) # pion_blauw
+                text('x1',390+x,300) # koning_blauw
+                text('x1',390+x,350) # koningin_blauw
+                text('x2',390+x,400) # toren_blauw
+                text('x2',390+x,450) # paard_blauw
+                image(pion_blauw,345+x,200,40,50)
+                image(koning_blauw,340+x,250,50,60)
+                image(koningin_blauw,340+x,310,50,50)
+                image(toren_blauw,345+x,360,40,50)
+                image(paard_blauw,345+x,410,40,50)
             elif 'black' in colors and black_used == False:
                 black_used = True
-                text('x6',390,245) # pion_zwart
-                text('x1',390,300) # koning_zwart
-                text('x1',390,350) # koningin_zwart
-                text('x2',390,400) # toren_zwart
-                text('x2',390,450) # paard_zwart
-                image(pion_zwart,345,200,40,50)
-                image(koning_zwart,340,250,50,60)
-                image(koningin_zwart,340,310,50,50)
-                image(toren_zwart,345,360,40,50)
-                image(paard_zwart,345,410,40,50)
+                text('x6',390+x,245) # pion_zwart
+                text('x1',390+x,300) # koning_zwart
+                text('x1',390+x,350) # koningin_zwart
+                text('x2',390+x,400) # toren_zwart
+                text('x2',390+x,450) # paard_zwart
+                image(pion_zwart,345+x,200,40,50)
+                image(koning_zwart,340+x,250,50,60)
+                image(koningin_zwart,340+x,310,50,50)
+                image(toren_zwart,345+x,360,40,50)
+                image(paard_zwart,345+x,410,40,50)
 
         if 'blue' in colors and blue_used == False:
             blue_used = True
-            text('x6',540,245) # pion_blauw
-            text('x1',540,300) # koning_blauw
-            text('x1',540,350) # koningin_blauw
-            text('x2',540,400) # toren_blauw
-            text('x2',540,450) # paard_blauw
-            image(pion_blauw,490,200,40,50)
-            image(koning_blauw,485,250,50,60)
-            image(koningin_blauw,485,310,50,50)
-            image(toren_blauw,490,360,40,50)
-            image(paard_blauw,490,410,40,50)
+            text('x6',540+x,245) # pion_blauw
+            text('x1',540+x,300) # koning_blauw
+            text('x1',540+x,350) # koningin_blauw
+            text('x2',540+x,400) # toren_blauw
+            text('x2',540+x,450) # paard_blauw
+            image(pion_blauw,490+x,200,40,50)
+            image(koning_blauw,485+x,250,50,60)
+            image(koningin_blauw,485+x,310,50,50)
+            image(toren_blauw,490+x,360,40,50)
+            image(paard_blauw,490+x,410,40,50)
         else:
             if 'black' in colors and black_used == False:
                 black_used = True
-                text('x6',540,245) # pion_zwart
-                text('x1',540,300) # koning_zwart
-                text('x1',540,350) # koningin_zwart
-                text('x2',540,400) # toren_zwart
-                text('x2',540,450) # paard_zwart
-                image(pion_zwart,490,200,40,50)
-                image(koning_zwart,485,250,50,60)
-                image(koningin_zwart,485,310,50,50)
-                image(toren_zwart,490,360,40,50)
-                image(paard_zwart,490,410,40,50)
+                text('x6',540+x,245) # pion_blauw
+                text('x1',540+x,300) # koning_blauw
+                text('x1',540+x,350) # koningin_blauw
+                text('x2',540+x,400) # toren_blauw
+                text('x2',540+x,450) # paard_blauw
+                image(pion_zwart,490+x,200,40,50)
+                image(koning_zwart,485+x,250,50,60)
+                image(koningin_zwart,485+x,310,50,50)
+                image(toren_zwart,490+x,360,40,50)
+                image(paard_zwart,490+x,410,40,50)
         if 'black' in colors and black_used == False:
             black_used = True
-            text('x6',685,245) # pion_zwart
-            text('x1',685,300) # koning_zwart
-            text('x1',685,350) # koningin_zwart
-            text('x2',685,400) # toren_zwart
-            text('x2',685,450) # paard_zwart
-            image(pion_zwart,635,200,40,50)
-            image(koning_zwart,630,250,50,60)
-            image(koningin_zwart,630,310,50,50)
-            image(toren_zwart,635,360,40,50)
-            image(paard_zwart,635,410,40,50)
+            text('x6',685+x,245) # pion_zwart
+            text('x1',685+x,300) # koning_zwart
+            text('x1',685+x,350) # koningin_zwart
+            text('x2',685+x,400) # toren_zwart
+            text('x2',685+x,450) # paard_zwart
+            image(pion_zwart,635+x,200,40,50)
+            image(koning_zwart,630+x,250,50,60)
+            image(koningin_zwart,630+x,310,50,50)
+            image(toren_zwart,635+x,360,40,50)
+            image(paard_zwart,635+x,410,40,50)
