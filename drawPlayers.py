@@ -39,6 +39,8 @@ images = {
 cardWidth = 1080 - 240
 cardHeight = 150 - 60/4
 cursorImg = ARROW
+errorMsgCounter = 0
+errorMsg = ""
 
 def get_players(A):
     global players, pawn_colors, cardHeight, cardWidth
@@ -66,8 +68,8 @@ def get_points(target):
                     target.points += pawn.worth
 
 def draw_player_info():
-    global cardHeight, cardWidth, cursorImg
-    noTint()
+    global cardHeight, cardWidth, cursorImg, errorMsgCounter, errorMsg
+    #noTint()
     Blok = loadImage('blokje (2).png')
     cursorImg = ARROW
     
@@ -75,7 +77,7 @@ def draw_player_info():
     for idx,i in enumerate(players):
         get_points(i)
         fill(90)
-        rect(i.cardLocation[0], i.cardLocation[1], i.cardLocation[2], i.cardLocation[3])
+        rect(i.cardLocation[0], i.cardLocation[1], i.cardLocation[2], i.cardLocation[3], 5)
         fill(255)
         text(i.name, 140, 100 + (cardHeight+20)*idx)
         text(i.player_color, 140, 130 + (cardHeight+20)*idx)
@@ -83,6 +85,7 @@ def draw_player_info():
         text(i.points, 250, 180 + (cardHeight+20)*idx)
         text('blokkades:', 140, 155 + (cardHeight+20)*idx)
         test = i.points // 5
+
         if test >= 1:
             image(Blok, 285, 138 + (cardHeight+20)*idx,20,20)
         if test >= 2:
@@ -98,6 +101,14 @@ def draw_player_info():
         player.draw_pawns(idx)
     
     cursor(cursorImg)
+    # draw error message when there is one
+    if errorMsgCounter > 0:
+        textSize(24)
+        errorMsgCounter -= 1
+        fill(229, 56, 59, errorMsgCounter*10)
+        textAlign(CENTER)
+        text(errorMsg,len(errorMsg*18),30) 	
+        textAlign(LEFT)
 
 class Player:
     def __init__(self, name, player_color):
@@ -140,9 +151,10 @@ class Player:
             tint(0,0,255)
             
     def draw_pawns(self,idx):
-        global pawn_colors, images, alreadyDragging, players, cursorImg
+        global pawn_colors, images, alreadyDragging, players, cursorImg, errorMsgCounter, errorMsg
         mouse = [mouseX,mouseY]
         high = 0
+        
         
         for i in range(len(self.pawns)):
             currentPawn = self.pawns[i]
@@ -177,6 +189,9 @@ class Player:
                     cursorImg = HAND
                     if mousePressed and mouseButton == RIGHT:
                         currentPawn.pawn_color = currentPawn.owner_color
+                    elif mousePressed and mouseButton == LEFT:
+                        errorMsgCounter = 120
+                        errorMsg = "Click with [RMB] to clear color"
                     # hier moet een error msg komen als mouseButton == LEFT
                         
                 # update color by clicking
