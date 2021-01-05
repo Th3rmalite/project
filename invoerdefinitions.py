@@ -277,6 +277,4 @@ class TextInput:
             if self.selected:
                 stroke(114, 9, 183)
                 strokeWeight(2)
-        elif type == 'circle':
-            pass
             
