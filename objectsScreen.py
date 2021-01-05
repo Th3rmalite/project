@@ -9,24 +9,16 @@ def settings():
 
 def setup():
     # In namenScherm.py
+    global namenScherm
     namenScherm = Screen('namen', {})
     namenScherm.start()
-    test = Instance(None, {})
-    print(test.properties.getProperties())
+    global test
+    test = Rectangle(None, {
+        'fill': '255 0 0 0'
+    })
+    print(test.properties.getItems())
     namenScherm.addData(namenScherm.name, {'appeltaart': 'dat is lekker'})
     namenScherm.stop()
 
-    # In objectsScreen.py
-    puntenScherm = Screen('punten', {})
-    puntenScherm.start()
-
-    puntenScherm.addData(puntenScherm.name, namenScherm.data)
-    puntenScherm.stop()
-
-    # In main.py
-    print(namenScherm.getData(), puntenScherm.getData())
-
 def draw():
-    pass
-
-setup()
+    test.draw()

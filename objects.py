@@ -25,7 +25,9 @@ class Property:
                 'h': 50,
                 'x': 0,
                 'y': 0,
-                'fill': '0 0 255'
+                'fill': '0 0 0 1',
+                'stroke': '0 0 0',
+                'rectMode': CORNER
             }
 
         self.storage = {}
@@ -57,18 +59,21 @@ class Property:
 
     def __getitem__(self, propertyType, realValue = True):
         if realValue == True:
-            return self.toReal(propertyType, self.storage[propertyType])
+            try:
+                return self.toReal(propertyType, self.storage[propertyType])
+            except:
+                return None
         else:
             return self.storage[propertyType]
 
-    def setProperties(self, properties):
+    def setItems(self, properties):
         for propertyKey, propertyType in properties.items():
             self[propertyKey] = propertyType
     
-    def getProperties(self):
+    def getItems(self):
         temp = {}
         for propertyKey in self.storage.keys():
-            temp[propertyKey] = str(self[propertyKey])
+            temp[propertyKey] = self[propertyKey]
         return temp
 
     def setMultipleValues(self, propertyType, propertyValue):
@@ -79,7 +84,7 @@ class Property:
 
     def toReal(self, propertyType, normalValue):
         if 'px' in normalValue:
-            return int(normalValue.replace('px', ''))
+            return float(normalValue.replace('px', ''))
         elif '%' in normalValue:
             percentageToPixels = int(self.parent[propertyType] * (float(normalValue.replace('%', '')) / 100))
             return self.toReal(propertyType, self.toNormal(percentageToPixels))
@@ -90,25 +95,30 @@ class Property:
                     temp.append(self.toReal(propertyType, self.toNormal(normalValue[i])))
                 return temp
             else:
-                return self.toReal(propertyType, self.toNormal(normalValue))
+                try:
+                    if isinstance(float(normalValue), float):
+                        return self.toReal(propertyType, self.toNormal(normalValue))
+                except:
+                    return normalValue
 
     def toNormal(self, realValue):
         try:
-            return str(int(realValue)) + 'px'
+            return str(float(realValue)) + 'px'
         except:
             if isinstance(realValue, list):
                 temp = []
                 for i in range(len(realValue)):
                     temp.append(self.toNormal(realValue[i]))
                 return temp
-            print('Could not turn ' + str(realValue) + ' into normal value. The value is probably not a number.')
+            else:
+                return realValue
 
 class Screen(object):
 
     def __init__(self, name, properties = None):
         self.name = name
         self.properties = Property(None)
-        self.properties.setProperties(properties)
+        self.properties.setItems(properties)
         self.active = False
         self.content = []
         self.data = {}
@@ -124,7 +134,6 @@ class Screen(object):
     def stop(self):
         if self.active == False:
             print("Error for " + str(self.name) + ": you cannot initialize stop() before start().")
-            quit()
         else:
             self.active = False
     
@@ -152,7 +161,7 @@ class Instance(object):
     def __init__(self, parent, properties = None):
         global environment
         self.properties = Property(parent)
-        self.properties.setProperties(properties)
+        self.properties.setItems(properties)
         for i in range(len(environment)):
             if environment[i].active == True:
                 self.screen = environment[i]
@@ -167,14 +176,5 @@ class Instance(object):
     def __getitem__(self, propertyType):
         return self.properties[propertyType]
 
-    def draw(self):
-        pass
-
-    def onHover(self):
-        pass
-
-    def onClick(self):
-        pass
-
-class Rectangle(Instance):
-    pass
+    def drawInstance(self):
+        self.setting()
