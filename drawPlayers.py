@@ -43,9 +43,9 @@ errorMsgCounter = 0
 errorMsg = ""
 
 def get_players(A):
-    global players, pawn_colors, cardHeight, cardWidth
+    global players, pawn_colors, cardHeight, cardWidth, alivePlayers
     player_list = []
-    
+    alivePlayers = len(A)
     for i in range(len(A)):
         player_list.append(Player(A[i][0],A[i][1]))
         pawn_colors.append(A[i][1])
@@ -54,6 +54,9 @@ def get_players(A):
         player_list[i].cardLocation = [120, 60 + (cardHeight+20)*i, cardWidth, cardHeight, 5]
         
     players = player_list
+    
+def getAlivePlayers(): # returns list of player objects that still have their king
+    return alivePlayers
     
 def get_points(target):
     global players
@@ -68,13 +71,13 @@ def get_points(target):
                     target.points += pawn.worth
 
 def draw_player_info():
-    global cardHeight, cardWidth, cursorImg, errorMsgCounter, errorMsg
+    global cardHeight, cardWidth, cursorImg, errorMsgCounter, errorMsg, alivePlayers
     #noTint()
     Blok = loadImage('blokje (2).png')
     cursorImg = ARROW
     
     textSize(26)
-    for idx,i in enumerate(players):
+    for idx,i in enumerate(players):   
         get_points(i)
         fill(90)
         rect(i.cardLocation[0], i.cardLocation[1], i.cardLocation[2], i.cardLocation[3], 5)
@@ -86,6 +89,7 @@ def draw_player_info():
         text('blokkades:', 140, 155 + (cardHeight+20)*idx)
         test = i.points // 5
 
+        i.change_to_pawn_color(i.pawns[-1])
         if test >= 1:
             image(Blok, 285, 138 + (cardHeight+20)*idx,20,20)
         if test >= 2:
@@ -97,8 +101,16 @@ def draw_player_info():
         if test >= 5:
             image(Blok, 385, 138 + (cardHeight+20)*idx,20,20)
         
+    
     for idx,player in enumerate(players):
         player.draw_pawns(idx)
+        
+    if not mousePressed:
+        alivePlayers = []
+        for player in players:
+            if player.isAlive():
+                alivePlayers.append(player)
+        
     
     cursor(cursorImg)
     # draw error message when there is one
@@ -149,9 +161,15 @@ class Player:
             tint(255,0,0)
         else:
             tint(0,0,255)
-            
+    
+    def isAlive(self):
+        if self.pawns[-1].pawn_color == self.player_color:
+            return True
+        else:
+            return False      
+    
     def draw_pawns(self,idx):
-        global pawn_colors, images, alreadyDragging, players, cursorImg, errorMsgCounter, errorMsg
+        global pawn_colors, images, alreadyDragging, players, cursorImg, errorMsgCounter, errorMsg, alivePlayers
         mouse = [mouseX,mouseY]
         high = 0
         
