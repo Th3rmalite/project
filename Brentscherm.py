@@ -1,5 +1,5 @@
-spelers = 4
-colors = ['red','black','white','blue']
+spelers = 2
+colors = ['red','black']
 x = 75
 def setup():
     size(1080,720)
@@ -49,11 +49,15 @@ def draw():
         fill(50, 50, 50)
         rect(125, 40, 850, 450)
         fill(255)
-        textSize(20)
-        image(bord,490,50,100,100)
-        text('Total of 32 pieces, Divide them between all players and place them to your likings.',150,175)
         textSize(30)
-        
+        image(bord,490,50,100,100)
+        text('Welcome to Matten!',150,125)
+        textSize(35)
+        text('Have fun!',650,135)
+        textSize(20)
+        text("There's a total of 32 boardpieces",150,150)
+        text('And you may divide them between all players and place them to your likings!',150,175)
+        textSize(30)        
         red_used = False
         blue_used = False
         black_used = False
@@ -170,12 +174,17 @@ def draw():
             image(toren_zwart,635+x,360,40,50)
             image(paard_zwart,635+x,410,40,50)
     if spelers == 3:
-        fill(127)
-        rect(125, 40, 850, 150)
-        fill(0)
-        textSize(20)
+        fill(50, 50, 50)
+        rect(125, 40, 850, 450)
+        fill(255)
+        textSize(30)
         image(bord,490,50,100,100)
-        text('Total of 27 pieces, Divide them between all players and place them to your likings.',150,175)
+        text('Welcome to Matten!',150,125)
+        textSize(35)
+        text('Have fun!',650,135)
+        textSize(20)
+        text("There's a total of 27 boardpieces",150,150)
+        text('And you may divide them between all players and place them to your likings!',150,175)
         textSize(30)
         red_used = False
         blue_used = False
@@ -293,12 +302,18 @@ def draw():
             image(toren_zwart,635+x,360,40,50)
             image(paard_zwart,635+x,410,40,50)
     if spelers == 2:
-        fill(127)
-        rect(125, 40, 850, 150)
-        fill(0)
-        textSize(20)
+        fill(50, 50, 50)
+        rect(125, 40, 850, 450)
+        fill(255)
+        textSize(30)
         image(bord,490,50,100,100)
-        text('Total of 20 pieces, Divide them between all players and place them to your likings.',150,175)
+        text('Welcome to Matten!',150,125)
+        textSize(20)
+        text("There's a total of 20 boardpieces",150,150)
+        textSize(35)
+        text('Have fun!',650,135)
+        textSize(20)
+        text('And you may divide them between all players and place them to your likings!',150,175)
         textSize(30)
         red_used = False
         blue_used = False
