@@ -1,5 +1,8 @@
-spelers = 2
-colors = ['red','black']
+# score moet hier komen te staan
+spelers = len(score)
+colors = []
+for i in range(0,spelers):
+    colors.append(score[i][1])
 x = 75
 def setup():
     size(1080,720)
