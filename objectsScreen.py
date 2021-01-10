@@ -12,13 +12,17 @@ def setup():
     global namenScherm
     namenScherm = Screen('namen', {})
     namenScherm.start()
-    global test
-    test = Rectangle(None, {
-        'fill': '255 0 0 0'
+    a = Button(None, {
+        'x': 50,
+        'y': 50
     })
-    print(test.properties.getItems())
+    b = Button(None, {
+        'x': 100,
+        'y': 50
+    })
     namenScherm.addData(namenScherm.name, {'appeltaart': 'dat is lekker'})
     namenScherm.stop()
 
 def draw():
-    test.draw()
+    for i in range(len(namenScherm.content)):
+        namenScherm.content[i].draw()

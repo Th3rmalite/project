@@ -10,3 +10,4 @@ def locationAnchor(anchor):
         return [0, 0]
     elif anchor == 'BOTTOM_RIGHT':
         return [1000, 680]
+

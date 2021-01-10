@@ -25,7 +25,7 @@ class Property:
                 'h': 50,
                 'x': 0,
                 'y': 0,
-                'fill': '0 0 0 1',
+                'fill': '0 0 0 255',
                 'stroke': '0 0 0',
                 'rectMode': CORNER
             }
@@ -84,7 +84,7 @@ class Property:
 
     def toReal(self, propertyType, normalValue):
         if 'px' in normalValue:
-            return float(normalValue.replace('px', ''))
+            return int(float(normalValue.replace('px', '')))
         elif '%' in normalValue:
             percentageToPixels = int(self.parent[propertyType] * (float(normalValue.replace('%', '')) / 100))
             return self.toReal(propertyType, self.toNormal(percentageToPixels))
@@ -178,3 +178,68 @@ class Instance(object):
 
     def drawInstance(self):
         self.setting()
+
+    def hover(self):
+        a = [mouseX,mouseY]
+        b = [self['x'][0], self['y'][0], self['w'][0], self['h'][0]]
+        isBetweenX = a[0] >= b[0] and a[0] <= b[0]+b[2]
+        isBetweenY = a[1] >= b[1] and a[1] <= b[1]+b[3]
+        if (isBetweenY and isBetweenX):
+            return True
+        return False
+
+    def click(self):
+        pass
+
+    def setting(self):
+        if self['fill'][0] == 'None':
+            noFill()
+        else:
+            fill(
+                self['fill'][0],
+                self['fill'][1],
+                self['fill'][2],
+                self['fill'][3]
+            )
+        if self['stroke'][0] == 'None':
+            noStroke()
+        else:
+            stroke(
+                self['stroke'][0],
+                self['stroke'][1],
+                self['stroke'][2]
+            )
+        
+
+class Rectangle(Instance):
+
+    def __init__(self, parent, properties = None):
+        super(Rectangle, self).__init__(parent, properties)
+    
+    def shape(self):
+        rectMode(int(self['rectMode'][0]))
+        rect(
+            self['x'][0],
+            self['y'][0],
+            self['w'][0],
+            self['h'][0]
+        )
+
+    def draw(self):
+        self.drawInstance()
+        self.shape()
+
+class Button(Rectangle):
+
+    def __init__(self, parent, properties = None):
+        super(Button, self).__init__(parent, properties)
+        self.goTo = self.screen
+        self.selected = False
+    
+    def draw(self):
+        if self.hover() and not self.selected:
+            self['fill'] = '230 100 10 255'
+        else:
+            self['fill'] = '100 50 50 255'
+        self.drawInstance()
+        self.shape()
