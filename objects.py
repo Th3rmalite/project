@@ -5,10 +5,16 @@ environment = []
 # Convert % and px to correct format
 # Format multiple values to work in practice
 
+CORNER = 1
+CENTER = 3
+SQUARE = 1
 
 screen = {
-        'w': 1280,
-        'h': 720
+        'w': [1280],
+        'h': [720],
+        'x': [0],
+        'y': [0],
+        'rectMode': [CORNER]
     }
 
 class Property:
@@ -25,9 +31,14 @@ class Property:
                 'h': 50,
                 'x': 0,
                 'y': 0,
-                'fill': '0 0 0 255',
+                'fill': '255 255 255 255',
                 'stroke': '0 0 0',
-                'rectMode': CORNER
+                'strokeWeight': 1,
+                'strokeCap': SQUARE,
+                'rectMode': CORNER,
+                'textSize': 16,
+                'placeholder': '',
+                'textColor': '0 0 0 255'
             }
 
         self.storage = {}
@@ -50,25 +61,22 @@ class Property:
     def __setitem__(self, propertyType, propertyValue):
         if propertyType in self.default.keys():
             if not isinstance(propertyValue, str):
-                self.storage[propertyType] = self.setMultipleValues(propertyType, self.toNormal(propertyValue))
+                if isinstance(propertyValue, list):
+                    self.storage[propertyType] = propertyValue
+                else:
+                    self.storage[propertyType] = self.setMultipleValues(propertyType, self.toNormal(propertyValue))
             else:
                 self.storage[propertyType] = self.setMultipleValues(propertyType, propertyValue)
         else:
             print("'" + str(propertyType) + "' is not a valid property key!")
             
 
-    def __getitem__(self, propertyType, realValue = True):
-        if realValue == True:
-            try:
-                return self.toReal(propertyType, self.storage[propertyType])
-            except:
-                return None
-        else:
-            return self.storage[propertyType]
+    def __getitem__(self, propertyType):
+        return self.storage[propertyType]
 
     def setItems(self, properties):
-        for propertyKey, propertyType in properties.items():
-            self[propertyKey] = propertyType
+        for propertyKey, propertyValue in properties.items():
+            self[propertyKey] = propertyValue
     
     def getItems(self):
         temp = {}
@@ -81,37 +89,38 @@ class Property:
         for index in range(len(splitValues)):
             splitValues[index] = self.toReal(propertyType, splitValues[index])
         return splitValues
-
+    
     def toReal(self, propertyType, normalValue):
-        if 'px' in normalValue:
-            return int(float(normalValue.replace('px', '')))
-        elif '%' in normalValue:
-            percentageToPixels = int(self.parent[propertyType] * (float(normalValue.replace('%', '')) / 100))
-            return self.toReal(propertyType, self.toNormal(percentageToPixels))
-        else:
-            if isinstance(normalValue, list):
-                temp = []
-                for i in range(len(normalValue)):
-                    temp.append(self.toReal(propertyType, self.toNormal(normalValue[i])))
-                return temp
+        if '%'in normalValue:
+            percent = float(normalValue.replace('%', '')) / 100
+            if propertyType in 'wh':
+                return self.parent[propertyType][0] * percent
+            if self.parent['rectMode'][0] == CORNER:
+                if propertyType == 'x':
+                    return self.parent['x'][0] + self.parent['w'][0] * percent
+                elif propertyType == 'y':
+                    return self.parent['y'][0] + self.parent['h'][0] * percent
+            elif self.parent['rectMode'][0] == CENTER:
+                if propertyType == 'x':
+                    return self.parent['x'][0] + self.parent['w'][0] * percent - self.parent['w'][0] / 2
+                elif propertyType == 'y':
+                    return self.parent['y'][0] + self.parent['h'][0] * percent - self.parent['h'][0] / 2
+        if str(int(normalValue)).isnumeric():
+            if propertyType == 'x' or propertyType == 'y':
+                return self.parent[propertyType][0] + int(normalValue)
             else:
-                try:
-                    if isinstance(float(normalValue), float):
-                        return self.toReal(propertyType, self.toNormal(normalValue))
-                except:
-                    return normalValue
+                print(propertyType,normalValue)
+                return int(normalValue)
+        return normalValue
 
     def toNormal(self, realValue):
-        try:
-            return str(float(realValue)) + 'px'
-        except:
-            if isinstance(realValue, list):
-                temp = []
-                for i in range(len(realValue)):
-                    temp.append(self.toNormal(realValue[i]))
-                return temp
-            else:
-                return realValue
+        if isinstance(realValue, list):
+            temp = []
+            for i in range(len(realValue)):
+                temp.append(self.toNormal(realValue[i]))
+            return temp
+        else:
+            return str(realValue)
 
 class Screen(object):
 
@@ -160,8 +169,15 @@ class Instance(object):
 
     def __init__(self, parent, properties = None):
         global environment
+        self.parent = parent
+        self.default = properties
         self.properties = Property(parent)
+        self.hover = Property(parent)
+        self.selected = Property(parent)
+        self.hover.setItems(properties)
+        self.selected.setItems(properties)
         self.properties.setItems(properties)
+        self.isSelected = False
         for i in range(len(environment)):
             if environment[i].active == True:
                 self.screen = environment[i]
@@ -177,19 +193,35 @@ class Instance(object):
         return self.properties[propertyType]
 
     def drawInstance(self):
+        if self.isHover() and not self.isSelected:
+            self.hoverEvent()
+        elif not self.isSelected:
+            self.properties.setItems(self.default)
         self.setting()
+    
+    def hoverEvent(self):
+        self.properties.setItems(self.hover.getItems())
+    
+    def mousePressedEvent(self):
+        self.isSelected = True
+        self.properties.setItems(self.selected.getItems())
+    
+    def mouseReleasedEvent(self):
+        self.isSelected = False
+        self.properties.setItems(self.default)
 
-    def hover(self):
+    def isHover(self):
         a = [mouseX,mouseY]
-        b = [self['x'][0], self['y'][0], self['w'][0], self['h'][0]]
+        if self['rectMode'][0] == CORNER:
+            b = [self['x'][0], self['y'][0], self['w'][0], self['h'][0]]
+        else:
+            b = [self['x'][0] - self['w'][0] / 2, self['y'][0] - self['h'][0] / 2, self['w'][0], self['h'][0]]
         isBetweenX = a[0] >= b[0] and a[0] <= b[0]+b[2]
         isBetweenY = a[1] >= b[1] and a[1] <= b[1]+b[3]
         if (isBetweenY and isBetweenX):
             return True
         return False
 
-    def click(self):
-        pass
 
     def setting(self):
         if self['fill'][0] == 'None':
@@ -229,17 +261,32 @@ class Rectangle(Instance):
         self.drawInstance()
         self.shape()
 
+
 class Button(Rectangle):
 
     def __init__(self, parent, properties = None):
         super(Button, self).__init__(parent, properties)
         self.goTo = self.screen
-        self.selected = False
     
     def draw(self):
-        if self.hover() and not self.selected:
-            self['fill'] = '230 100 10 255'
-        else:
-            self['fill'] = '100 50 50 255'
         self.drawInstance()
         self.shape()
+
+class TextField(Rectangle):
+
+    def __init__(self, parent, properties = None):
+        super(TextField, self).__init(parent, properties)
+        self.placeholder
+        self.text
+        self.forbidden = [ENTER, TAB, BACKSPACE]
+    
+    def draw(self):
+        self.drawInstance()
+        self.shape()
+        self.drawText()
+    
+    def drawText(self):
+        pass
+    
+    def keyTypedEvent(self):
+        pass
