@@ -66,7 +66,7 @@ def drawRest():
         errorMsgCounter -= 1
         fill(229, 56, 59, errorMsgCounter*10)
         textAlign(CENTER)
-        text(errorMsg,len(errorMsg*18),30) 	
+        text(errorMsg,540,30) 	
         textAlign(LEFT)
     navigationButtons[0].draw()
 
@@ -108,8 +108,13 @@ class NavigationButton:
                     errorMsgCounter = 120
                     errorMsg = players[i][0] + ' does not have a color!'
                     return
+                elif players[i][0] == '' and players[i][1] != '' and playerCount > 2:
+                    errorMsgCounter = 120
+                    errorMsg = players[i][1] + ' does not have a name!'
+                    return
                 if players[i][0] != '':
                     playerCount += 1
+                    print(playerCount)
             if playerCount < 2:
                 errorMsgCounter = 120
                 errorMsg = players[i][0] + 'You need at least 2 people to play!'
@@ -272,7 +277,6 @@ class TextInput:
     def defineText(self):
         temp = players[self.index][0]
         players[self.index][0] = join(self.text, "")
-        print('Player ' + str(self.index) + '\'s name changed\nfrom: ' + temp + '\nto: ' + str(players[self.index][0]))
     
     def hover(self):
         if f.hover([mouseX,mouseY],[self.x - self.w / 2, self.y - self.h / 2, self.w, self.h]):

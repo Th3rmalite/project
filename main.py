@@ -19,30 +19,26 @@ def setup():
         
 def draw():
     global state
-    phase = 0
-
+    
     if state == "start":
-        if phase == 0:
-            invoerscherm.setup()
-            phase = 1
+        invoerscherm.draw()
+        
+        if not invoerscherm.d.navigationButtons[0].selected:
+            invoerscherm.draw()
         else:
-            if not invoerscherm.d.navigationButtons[0].selected:
-                invoerscherm.draw()
-            else:
-                state = "startGame"
-                phase = 0
+            state = "createGame"
             
+    elif state == "createGame":
+        rectMode(CORNER)
+        textAlign(BASELINE)
+        puntenscherm.setup(invoerscherm.getNames())
+        state = "startGame"
+        
     elif state == "startGame":
-        if phase == 0:
-            rectMode(CORNER)
-            textAlign(BASELINE)
-            puntenscherm.setup(invoerscherm.getNames())
-            phase = 1
-        else:
-            puntenscherm.draw()
+        puntenscherm.draw()
     
     elif state == "endGame":
-        pass
+        eindscherm.setup()
     
 def keyTyped():
     for i in range(4):
