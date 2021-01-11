@@ -35,6 +35,10 @@ def draw():
         
     elif state == "startGame":
         puntenscherm.draw()
+        if len(getAlivePlayers()) == 1:
+            state = "endGame"
+    elif state = "endGame":
+        pass
     
 def keyTyped():
     for i in range(4):
