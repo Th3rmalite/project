@@ -22,7 +22,6 @@ def draw():
     
     if state == "start":
         invoerscherm.draw()
-        
         if not invoerscherm.d.navigationButtons[0].selected:
             invoerscherm.draw()
         else:
@@ -36,10 +35,15 @@ def draw():
         
     elif state == "startGame":
         puntenscherm.draw()
-        if len(puntenscherm.dp.getAlivePlayers()) == 1:
-            state = "endGameSetup"
+        if type(puntenscherm.dp.getAlivePlayers()) != type(0):
+            if len(puntenscherm.dp.getAlivePlayers()) == 1:
+                state = "endGameSetup"
+        else:
+            if puntenscherm.dp.getAlivePlayers() == 1:
+                state = "endGameSetup"
     
-    elif state == "endGameSetup":
+    elif state == "endGameSetup":	
+        noTint()
         eindscherm.setup()
         state = "endGame"
     elif state == "endGame":

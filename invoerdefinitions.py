@@ -87,6 +87,7 @@ class NavigationButton:
     def hover(self):
         if f.hover([mouseX,mouseY],[self.x - self.w / 2, self.y - self.h / 2, self.x, self.y]):
             return True
+        return False
     
     def changeState(self):
         if self.hover() and not self.selected:
@@ -95,19 +96,22 @@ class NavigationButton:
             global errorMsgCounter, errorMsg
             playerCount = 0
             for i in range(len(players)):
-                if players[i][1] == 'None' and players[i][0] != '':
+                if players[i][1] == 'None' and players[i][0] != '' and players[i][0] != 'None':
                     errorMsgCounter = 120
                     errorMsg = players[i][0] + ' does not have a color!'
+                    print("[ERROR] {} does not have a color!".format(players[i][0]))
                     return
                 elif players[i][0] == '' and players[i][1] != '' and playerCount > 2:
                     errorMsgCounter = 120
                     errorMsg = players[i][1] + ' does not have a name!'
+                    print("[ERROR] {} does not have a name!".format(players[i][0]))
                     return
                 if players[i][0] != '':
                     playerCount += 1
             if playerCount < 2:
                 errorMsgCounter = 120
-                errorMsg = players[i][0] + 'You need at least 2 people to play!'
+                errorMsg = 'You need at least 2 people to play!'
+                print("[ERROR] You need at least 2 people to play!")
                 return
             self.selected = True
             fill(palette['green'] - color(30,30,30))
