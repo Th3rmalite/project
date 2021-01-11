@@ -1,6 +1,7 @@
 import invoerscherm
 import puntenscherm
 import eindscherm
+from objects import *
 screenSize = [1080, 720]
 state = "start"
 
@@ -11,14 +12,24 @@ def settings():
 
 
 def setup():
-    global state
+    global state, background
     
     if state == "start":
         invoerscherm.setup()
+    
+    main = Screen(None, {})
+    main.start()
+    background = Rectangle(None, {
+        'fill': '245 245 245 255',
+        'w': '1080',
+        'h': '720'
+    })
+    main.stop()
       
         
 def draw():
     global state
+    background.draw()
     
     if state == "start":
         invoerscherm.draw()
@@ -37,10 +48,15 @@ def draw():
         puntenscherm.draw()
         if type(puntenscherm.dp.getAlivePlayers()) != type(0):
             if len(puntenscherm.dp.getAlivePlayers()) == 1:
-                state = "endGameSetup"
+                puntenscherm.toEnd.draw()
         else:
             if puntenscherm.dp.getAlivePlayers() == 1:
-                state = "endGameSetup"
+                puntenscherm.toEnd.draw()
+        if puntenscherm.toEnd.isSelected:
+            state = "endGameSetup"
+        font = loadFont('OpenSans-48.vlw')
+        textFont(font, 16)
+        
                 
         puntenscherm.dp.getPlayers()
     
