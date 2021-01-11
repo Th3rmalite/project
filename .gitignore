@@ -1,10 +1,12 @@
 .vscode/processing.code-snippets
 processing-py.jar
+invoerdefinitions$py.class
+invoerscherm$py.class
 drawPlayers$py.class
 main$py.class
 puntenscherm$py.class
 functions$py.class
 invoerscherm$py.class
 .vscode/settings.json
-invoerdefinitions$py.class
-invoerscherm$py.class
+.vscode/settings.json
+.vscode/settings.json
