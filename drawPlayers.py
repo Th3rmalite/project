@@ -90,6 +90,7 @@ def draw_player_info():
         test = i.points // 5
 
         i.change_to_pawn_color(i.pawns[-1])
+        noTint()
         if test >= 1:
             image(Blok, 285, 138 + (cardHeight+20)*idx,20,20)
         if test >= 2:
