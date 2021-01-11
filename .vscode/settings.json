@@ -1,5 +1,5 @@
 {
-    "code-runner.customCommand": "java -jar processing-py.jar main.py",
+    "code-runner.customCommand": "java -jar processing-py.jar handleiding/handleidingding.pyde",
     "python.linting.enabled": false,
     "files.associations": {
         "*.py": "python",
