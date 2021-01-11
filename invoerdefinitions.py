@@ -1,6 +1,5 @@
 import functions as f
 import invoerscherm
-import main
 
 palette = {
     'white'         :   color(238, 239, 240),
