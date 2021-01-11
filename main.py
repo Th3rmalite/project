@@ -50,4 +50,4 @@ def keyTyped():
                     textInputs[0].selected = True
                 else:
                     textInputs[i + 1].selected = True
-                break 
+                break

@@ -33,6 +33,9 @@ index = 0
 
 tabDebounce = False
 
+errorMsgCounter = 0
+errorMsg = ""
+
 def setupCards():
     global screenSize
     global Card
@@ -58,6 +61,14 @@ def drawCards(index):
     colorPickers[index].draw()
 
 def drawRest():
+    global errorMsgCounter
+    if errorMsgCounter > 0:
+        textSize(24)
+        errorMsgCounter -= 1
+        fill(229, 56, 59, errorMsgCounter*10)
+        textAlign(CENTER)
+        text(errorMsg,len(errorMsg*18),30) 	
+        textAlign(LEFT)
     navigationButtons[0].draw()
 
 class NavigationButton:
@@ -81,7 +92,7 @@ class NavigationButton:
         rect(self.x, self.y, self.w, self.h, self.bevel)
         fill(palette['black'])
         textAlign(CENTER, CENTER)
-        text('Klaar', self.x, self.y - 3)
+        text('Done', self.x, self.y - 3)
 
     def hover(self):
         if f.hover([mouseX,mouseY],[self.x - self.w / 2, self.y - self.h / 2, self.x, self.y]):
@@ -91,9 +102,21 @@ class NavigationButton:
         if self.hover() and not self.selected:
             fill(palette['green'] + color(10,10,10))
         if self.selected or (self.hover() and mouseButton == LEFT):
+            global errorMsgCounter, errorMsg
+            playerCount = 0
+            for i in range(len(players)):
+                if players[i][1] == 'None' and players[i][0] != '':
+                    errorMsgCounter = 120
+                    errorMsg = players[i][0] + ' does not have a color!'
+                    return
+                if players[i][0] != '':
+                    playerCount += 1
+            if playerCount < 2:
+                errorMsgCounter = 120
+                errorMsg = players[i][0] + 'You need at least 2 people to play!'
+                return
             self.selected = True
             fill(palette['green'] - color(30,30,30))
-
 
     def shadow(self, offsetX, offsetY, samples = 64):
         rectMode(CENTER)
@@ -171,6 +194,7 @@ class ColorPicker:
                 if players[i][3].colorNodes[index][0] and players[i] != players[self.index]:
                     players[i][3].colorNodes[index][0] = False
                     players[i][2].cardColor = 'solid_white'
+                    players[i][1] = 'None'
             players[self.index][1] = self.getColor(palette['player_colors'][index])
         elif self.hover(index):
             if self.colorNodes[index][0]:
@@ -215,6 +239,8 @@ class TextInput:
         rectMode(CENTER)
 
     def draw(self):
+        if mousePressed:
+            self.mousePressedEvent()
         self.changeState('rect')
         rect(self.x, self.y, self.w, self.h, 3, 3, 0, 0)
         self.changeState('line')
@@ -252,6 +278,16 @@ class TextInput:
     def hover(self):
         if f.hover([mouseX,mouseY],[self.x - self.w / 2, self.y - self.h / 2, self.w, self.h]):
             return True
+    
+    def mousePressedEvent(self):
+        if self.hover():
+            self.selected = True
+            cursor(TEXT)
+        else:
+            self.selected = False
+            fill(palette['gray'])
+            cursor(ARROW)
+            self.defineText()
 
     def changeState(self, type):
         if type == 'rect':
@@ -259,14 +295,9 @@ class TextInput:
                 fill(palette['gray_hover'])
             else:
                 fill(palette['gray'])
-            if self.hover() and mouseButton == LEFT:
+            if self.hover() and self.selected:
                 self.selected = True
                 cursor(TEXT)
-            if self.selected and mouseButton == LEFT and not self.hover():
-                self.selected = False
-                fill(palette['gray'])
-                cursor(ARROW)
-                self.defineText()
         elif type == 'line':
             if self.hover():
                 stroke(80, 80, 80)
@@ -277,4 +308,3 @@ class TextInput:
             if self.selected:
                 stroke(114, 9, 183)
                 strokeWeight(2)
-            
