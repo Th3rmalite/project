@@ -13,24 +13,28 @@ def setup():
     namenScherm = Screen('namen', {})
     namenScherm.start()
     a = Rectangle(None, {
-        'x': '150',
-        'y': '250',
+        'x': '50%',
+        'y': '50%',
         'w': '500',
-        'h': '300',
-        'rectMode': CORNER
+        'h': '200',
+        'rectMode': CENTER,
+        'fill': '220 220 220 255',
+        'stroke': 'None'
     })
 
-    b = Button(a, {
-        'x': '0',
-        'y': '0',
-        'fill': '255 0 100 255',
-        'rectMode': CORNER
-    })
-    b.hover.setItems({
-        'fill': '255 100 10 255'
-    })
-    b.selected.setItems({
-        'fill': '0 255 0 255'
+    b = TextField(a, {
+        'x': '50%',
+        'y': '50%',
+        'w': '170',
+        'h': '40',
+        'rectMode': CORNER,
+        'stroke': '50 50 50',
+        'strokeWeight': '3',
+        'placeholder': 'Naam',
+        'textSize': '18',
+        'textAlign': [LEFT, CENTER],
+        'radius': '5',
+        'textMargin': '5 0'
     })
 
     namenScherm.addData(namenScherm.name, {'appeltaart': 'dat is lekker'})
@@ -48,5 +52,3 @@ def mousePressed():
 def mouseReleased():
     for i in range(len(namenScherm.content)):
         namenScherm.content[i].mouseReleasedEvent()
-
-setup()

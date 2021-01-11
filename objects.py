@@ -5,10 +5,6 @@ environment = []
 # Convert % and px to correct format
 # Format multiple values to work in practice
 
-CORNER = 1
-CENTER = 3
-SQUARE = 1
-
 screen = {
         'w': [1280],
         'h': [720],
@@ -31,6 +27,7 @@ class Property:
                 'h': 50,
                 'x': 0,
                 'y': 0,
+                'radius': 0,
                 'fill': '255 255 255 255',
                 'stroke': '0 0 0',
                 'strokeWeight': 1,
@@ -38,7 +35,10 @@ class Property:
                 'rectMode': CORNER,
                 'textSize': 16,
                 'placeholder': '',
-                'textColor': '0 0 0 255'
+                'textColor': '0 0 0 255',
+                'textAlign': [LEFT, BOTTOM],
+                'textMargin': '0 0',
+                'selectType': 'hold'
             }
 
         self.storage = {}
@@ -101,17 +101,16 @@ class Property:
                 elif propertyType == 'y':
                     return self.parent['y'][0] + self.parent['h'][0] * percent
             elif self.parent['rectMode'][0] == CENTER:
-                if propertyType == 'x':
-                    return self.parent['x'][0] + self.parent['w'][0] * percent - self.parent['w'][0] / 2
-                elif propertyType == 'y':
-                    return self.parent['y'][0] + self.parent['h'][0] * percent - self.parent['h'][0] / 2
-        if str(int(normalValue)).isnumeric():
-            if propertyType == 'x' or propertyType == 'y':
-                return self.parent[propertyType][0] + int(normalValue)
-            else:
-                print(propertyType,normalValue)
-                return int(normalValue)
-        return normalValue
+                if propertyType in 'xy':
+                    return self.parent[propertyType][0] + self.parent['w'][0] * percent - self.parent['w'][0] / 2
+        try:
+            if str(int(normalValue)).isnumeric():
+                if propertyType == 'x' or propertyType == 'y':
+                    return self.parent[propertyType][0] + int(normalValue)
+                else:
+                    return int(normalValue)
+        except:
+            return normalValue
 
     def toNormal(self, realValue):
         if isinstance(realValue, list):
@@ -254,7 +253,8 @@ class Rectangle(Instance):
             self['x'][0],
             self['y'][0],
             self['w'][0],
-            self['h'][0]
+            self['h'][0],
+            self['radius'][0]
         )
 
     def draw(self):
@@ -275,9 +275,8 @@ class Button(Rectangle):
 class TextField(Rectangle):
 
     def __init__(self, parent, properties = None):
-        super(TextField, self).__init(parent, properties)
-        self.placeholder
-        self.text
+        super(TextField, self).__init__(parent, properties)
+        self.text = ''
         self.forbidden = [ENTER, TAB, BACKSPACE]
     
     def draw(self):
@@ -286,7 +285,15 @@ class TextField(Rectangle):
         self.drawText()
     
     def drawText(self):
-        pass
+        fill(self['textColor'][0], self['textColor'][1], self['textColor'][2], self['textColor'][3])
+        textAlign(self['textAlign'][0], self['textAlign'][1])
+        textSize(self['textSize'][0])
+        if not self.isSelected and self.text == '':
+            text(self['placeholder'][0], self['x'][0] + self['textMargin'][0], self['y'][0] + self['textMargin'][1] + self['h'][0] / 2, self['textMargin'][1])
+        else:
+            text(self.text, self['x'][0] + self['textMargin'][0], self['y'][0], self['textMargin'][1])
+
+
     
     def keyTypedEvent(self):
         pass
