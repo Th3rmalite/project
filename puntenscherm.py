@@ -1,5 +1,5 @@
 import drawPlayers as dp
-
+from objects import *
 #players: [['Dylan', 'white'], ['Vincent', 'black], ['mohammed', 'blue'], ['brent', 'red']]
 
 def setup(playerList):
