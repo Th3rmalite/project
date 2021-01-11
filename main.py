@@ -36,6 +36,10 @@ def draw():
         
     elif state == "startGame":
         puntenscherm.draw()
+        if len(getAlivePlayers()) == 1:
+            state == "endGame"
+    elif state = "endGame":
+        pass
     
     elif state == "endGame":
         eindscherm.setup()
