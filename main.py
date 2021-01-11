@@ -36,9 +36,14 @@ def draw():
         
     elif state == "startGame":
         puntenscherm.draw()
+        if len(puntenscherm.dp.getAlivePlayers()) == 1:
+            state = "endGameSetup"
     
-    elif state == "endGame":
+    elif state == "endGameSetup":
         eindscherm.setup()
+        state = "endGame"
+    elif state == "endGame":
+        eindscherm.draw()
     
 def keyTyped():
     for i in range(4):

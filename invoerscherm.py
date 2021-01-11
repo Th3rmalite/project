@@ -9,11 +9,6 @@ def setup():
     d.setupRest()
         
 def draw():
-    noStroke()
-    fill(225,225,225)
-    rectMode(CORNER)
-    rect(0,0,1080,720)
-    rectMode(CENTER)
     for i in range(4):
         d.drawCards(i)
     d.drawRest()
