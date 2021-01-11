@@ -38,7 +38,8 @@ class Property:
                 'textColor': '0 0 0 255',
                 'textAlign': [LEFT, BOTTOM],
                 'textMargin': '0 0',
-                'selectType': 'hold'
+                'selectType': 'hold',
+                'font': 'OpenSans-48.vlw'
             }
 
         self.storage = {}
@@ -194,7 +195,9 @@ class Instance(object):
         return self.properties[propertyType]
 
     def drawInstance(self):
-        if self.isHover() and not self.isSelected:
+        if mousePressed and self.isHover():
+            self.mousePressedEvent()
+        elif self.isHover() and not self.isSelected:
             self.hoverEvent()
         elif not self.isSelected:
             self.properties.setItems(self.default)
@@ -276,6 +279,8 @@ class Button(Rectangle):
         self.drawText()
     
     def drawText(self):
+        font = loadFont(self['font'][0])
+        textFont(font, 48)
         fill(self['textColor'][0], self['textColor'][1], self['textColor'][2], self['textColor'][3])
         textAlign(self['textAlign'][0], self['textAlign'][1])
         textSize(self['textSize'][0])
@@ -294,6 +299,8 @@ class TextField(Rectangle):
         self.drawText()
     
     def drawText(self):
+        font = loadFont(self['font'][0])
+        textFont(font, 48)
         fill(self['textColor'][0], self['textColor'][1], self['textColor'][2], self['textColor'][3])
         textAlign(self['textAlign'][0], self['textAlign'][1])
         textSize(self['textSize'][0])

@@ -113,7 +113,7 @@ class NavigationButton:
                     errorMsgCounter = 120
                     errorMsg = players[i][0] + ' does not have a color!'
                     return
-                elif players[i][0] == '' and players[i][1] != '' and playerCount > 2:
+                elif players[i][0] == '' and players[i][1] != '' and playerCount > 2 and players[i][1] != 'None':
                     errorMsgCounter = 120
                     errorMsg = players[i][1] + ' does not have a name!'
                     return
