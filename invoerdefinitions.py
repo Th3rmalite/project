@@ -82,11 +82,7 @@ class NavigationButton:
         rect(self.x, self.y, self.w, self.h, self.bevel)
         fill(palette['black'])
         textAlign(CENTER, CENTER)
-<<<<<<< HEAD
         text(self.text, self.x, self.y - 3)
-=======
-        text('Klaar', self.x, self.y - 3)
->>>>>>> 819cac6bd657f34b322faafdde259bbc8eeb5bad
 
     def hover(self):
         if f.hover([mouseX,mouseY],[self.x - self.w / 2, self.y - self.h / 2, self.x, self.y]):
@@ -96,7 +92,6 @@ class NavigationButton:
         if self.hover() and not self.selected:
             fill(palette['green'] + color(10,10,10))
         if self.selected or (self.hover() and mouseButton == LEFT):
-<<<<<<< HEAD
             global errorMsgCounter, errorMsg
             playerCount = 0
             for i in range(len(players)):
@@ -114,8 +109,6 @@ class NavigationButton:
                 errorMsgCounter = 120
                 errorMsg = players[i][0] + 'You need at least 2 people to play!'
                 return
-=======
->>>>>>> 819cac6bd657f34b322faafdde259bbc8eeb5bad
             self.selected = True
             fill(palette['green'] - color(30,30,30))
 
