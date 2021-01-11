@@ -7,11 +7,10 @@ cursor.resize(100, 100)
 
 screenSize = [1080, 720]
 
-def settings():
-    size(screenSize[0], screenSize[1])
-
 def draw():  
     global offset, mul
+    
+    textAlign(CENTER)
     
     if offset > 200:
         mul = -1.5
@@ -21,6 +20,6 @@ def draw():
     background(90)
     image(piece, 450, 100 + offset)
     image(cursor, 500, 130 + offset)
-    text(message, 450, 50)
+    text(message, 540, 50)
     
     offset += mul

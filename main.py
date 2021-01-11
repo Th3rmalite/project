@@ -2,6 +2,8 @@ import invoerscherm
 import puntenscherm
 import eindscherm
 from objects import *
+import uitleg
+
 screenSize = [1080, 720]
 state = "start"
 
@@ -72,7 +74,12 @@ def draw():
         rectMode(CORNER)
         textAlign(BASELINE)
         puntenscherm.setup(invoerscherm.getNames())
-        state = "startGame"
+        state = "preStartGame"
+        
+    elif state == "preStartGame":
+        uitleg.draw()
+        if frameCount % 500 == 0:
+            state = "startGame"
         
     elif state == "startGame":
         puntenscherm.draw()
