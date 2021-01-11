@@ -69,7 +69,7 @@ def drawRest():
         errorMsgCounter -= 1
         fill(229, 56, 59, errorMsgCounter*10)
         textAlign(CENTER)
-        text(errorMsg,len(errorMsg*18),30) 	
+        text(errorMsg,540,30) 	
         textAlign(LEFT)
 
 class NavigationButton:
@@ -113,11 +113,11 @@ class NavigationButton:
                     errorMsgCounter = 120
                     errorMsg = players[i][0] + ' does not have a color!'
                     return
-                elif players[i][0] == '' and players[i][1] != '' and playerCount > 2 and players[i][1] != 'None':
+                elif players[i][0] in ['', 'None'] and players[i][1] not in ['', 'None']:
                     errorMsgCounter = 120
                     errorMsg = players[i][1] + ' does not have a name!'
                     return
-                if players[i][0] != '':
+                elif players[i][0] not in ['', 'None']:
                     playerCount += 1
             if playerCount < 2:
                 errorMsgCounter = 120
