@@ -26,7 +26,6 @@ players = [] # table
 cards = [] # table
 textInputs = [] # table
 colorPickers = [] # table
-navigationButtons = [] # table
 
 screenSize = [1080, 720]
 index = 0
@@ -50,8 +49,6 @@ def setupCards():
         players.append(['None', 'None', cards[i], colorPickers[i]])
 
 def setupRest():
-    navigationButtons.append(NavigationButton(0, 0, 130, 50, 'BOTTOM_RIGHT'))
-    navigationButtons[0].shadow(1, 1)
     background(color(palette['gray']))
     
 
@@ -63,7 +60,6 @@ def drawCards(index):
 
 def drawRest():
     global errorMsgCounter, errorMsg
-    navigationButtons[0].draw()
     if errorMsgCounter > 0:
         textSize(24)
         errorMsgCounter -= 1
@@ -71,69 +67,6 @@ def drawRest():
         textAlign(CENTER)
         text(errorMsg,540,30) 	
         textAlign(LEFT)
-
-class NavigationButton:
-
-    def __init__(self, x, y, w, h, anchor = 'NONE', text = 'Done'):
-        self.text = text
-        self.anchor = anchor
-        location = f.locationAnchor(anchor)
-        self.x = location[0] + x
-        self.y = location[1] + y
-        self.w = w
-        self.h = h
-        self.bevel = 20
-        self.shadowRadius = 3
-        self.selected = False
-    
-    def draw(self):
-        rectMode(CENTER)
-        fill(palette['green'])
-        noStroke()
-        self.changeState()
-        rect(self.x, self.y, self.w, self.h, self.bevel)
-        fill(palette['black'])
-        textAlign(CENTER, CENTER)
-        text(self.text, self.x, self.y - 3)
-
-    def hover(self):
-        if f.hover([mouseX,mouseY],[self.x - self.w / 2, self.y - self.h / 2, self.x, self.y]):
-            return True
-        return False
-    
-    def changeState(self):
-        if self.hover() and not self.selected:
-            fill(palette['green'] + color(10,10,10))
-        if self.selected or (self.hover() and mouseButton == LEFT):
-            global errorMsgCounter, errorMsg
-            playerCount = 0
-            for i in range(len(players)):
-                # print(players[i][0],players[i][1],playerCount)
-                if players[i][1] == 'None' and players[i][0] != '' and players[i][0] != 'None':
-                    errorMsgCounter = 120
-                    errorMsg = players[i][0] + ' does not have a color!'
-                    return
-                elif players[i][0] in ['', 'None'] and players[i][1] not in ['', 'None']:
-                    errorMsgCounter = 120
-                    errorMsg = players[i][1] + ' does not have a name!'
-                    return
-                elif players[i][0] not in ['', 'None']:
-                    playerCount += 1
-            if playerCount < 2:
-                errorMsgCounter = 120
-                errorMsg = 'You need at least 2 people to play!'
-                return
-            self.selected = True
-            fill(palette['green'] - color(30,30,30))
-
-
-    def shadow(self, offsetX, offsetY, samples = 64):
-        rectMode(CENTER)
-        noStroke()
-        fill(0,0,0,1)
-        for i in range(samples):
-            rect(self.x + offsetX, self.y + offsetY, self.w + self.shadowRadius - i * .1, self.h + self.shadowRadius - i * .1, self.bevel)
-
 
 class Card:
 

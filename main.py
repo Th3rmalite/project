@@ -5,6 +5,9 @@ from objects import *
 screenSize = [1080, 720]
 state = "start"
 
+errorMsgCounter = 0
+errorMsg = ""
+
 
 def settings():
     if state == "start":
@@ -12,17 +15,40 @@ def settings():
 
 
 def setup():
-    global state, background
+    global state, background, toManual
     
     if state == "start":
         invoerscherm.setup()
     
-    main = Screen(None, {})
+    main = Screen('main', {})
     main.start()
     background = Rectangle(None, {
         'fill': '245 245 245 255',
         'w': '1080',
-        'h': '720'
+        'h': '720',
+        'stroke': 'None'
+    })
+    toManual = Button(None, {
+        'x': 840,
+        'y': 690,
+        'w': 170,
+        'h': 50,
+        'stroke': '205 205 205',
+        'strokeWeight': 1,
+        'fill': '77 107 234 255',
+        'placeholder': 'Handleiding',
+        'radius': 5,
+        'textSize': 20,
+        'rectMode': CENTER,
+        'textAlign': [CENTER, CENTER],
+        'font': 'OpenSans-Bold-48.vlw',
+        'textColor': '255 255 255 255'
+    })
+    toManual.hover.setItems({
+        'fill': '77 107 234 200',
+        'w': 175,
+        'h': 55,
+        'textSize': 21
     })
     main.stop()
       
@@ -33,11 +59,15 @@ def draw():
     
     if state == "start":
         invoerscherm.draw()
-        if not invoerscherm.d.navigationButtons[0].selected:
+        if not invoerscherm.toNext.isSelected:
             invoerscherm.draw()
+            toManual.draw()
         else:
-            state = "createGame"
-            
+            invoerscherm.draw()
+            toManual.draw()
+            if not errorHandler():
+                state = "createGame"
+            invoerscherm.toNext.isSelected = False
     elif state == "createGame":
         rectMode(CORNER)
         textAlign(BASELINE)
@@ -54,6 +84,8 @@ def draw():
                 puntenscherm.toEnd.draw()
         if puntenscherm.toEnd.isSelected:
             state = "endGameSetup"
+        elif puntenscherm.goBack.isSelected:
+            state = "start"
         font = loadFont('OpenSans-48.vlw')
         textFont(font, 16)
         
@@ -67,6 +99,11 @@ def draw():
         state = "endGame"
     elif state == "endGame":
         eindscherm.draw()
+
+    if toManual.isSelected:
+        toManual.isSelected = False
+
+    showError()
     
 def keyTyped():
     for i in range(4):
@@ -83,3 +120,37 @@ def keyTyped():
                 else:
                     textInputs[i + 1].selected = True
                 break
+
+def showError():
+    global errorMsg, errorMsgCounter
+    if errorMsgCounter > 0:
+        textSize(24)
+        errorMsgCounter -= 1
+        fill(229, 56, 59, errorMsgCounter*10)
+        textAlign(CENTER)
+        text(errorMsg,540,30) 	
+        textAlign(LEFT)
+
+def errorHandler():
+    global errorMsg, errorMsgCounter
+    if state == 'start':
+        players = invoerscherm.d.players
+        errorMsgCounter = invoerscherm.d.errorMsgCounter
+        errorMsg = invoerscherm.d.errorMsg
+        playerCount = 0
+        for i in range(len(players)):
+            # print(players[i][0],players[i][1],playerCount)
+            if players[i][1] == 'None' and players[i][0] != '' and players[i][0] != 'None':
+                errorMsgCounter = 120
+                errorMsg = players[i][0] + ' does not have a color!'
+                return True
+            elif players[i][0] in ['', 'None'] and players[i][1] not in ['', 'None']:
+                errorMsgCounter = 120
+                errorMsg = players[i][1] + ' does not have a name!'
+                return True
+            elif players[i][0] not in ['', 'None']:
+                playerCount += 1
+        if playerCount < 2:
+            errorMsgCounter = 120
+            errorMsg = 'You need at least 2 people to play!'
+            return True
