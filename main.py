@@ -38,7 +38,7 @@ def draw():
         puntenscherm.draw()
         if len(getAlivePlayers()) == 1:
             state == "endGame"
-    elif state = "endGame":
+    elif state == "endGame":
         pass
     
     elif state == "endGame":
