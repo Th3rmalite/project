@@ -1,5 +1,6 @@
 import invoerscherm
 import puntenscherm
+import eindscherm
 screenSize = [1080, 720]
 state = "start"
 
@@ -40,6 +41,9 @@ def draw():
     elif state = "endGame":
         pass
     
+    elif state == "endGame":
+        eindscherm.setup()
+    
 def keyTyped():
     for i in range(4):
         invoerscherm.d.textInputs[i].addText(key)
@@ -54,4 +58,4 @@ def keyTyped():
                     textInputs[0].selected = True
                 else:
                     textInputs[i + 1].selected = True
-                break 
+                break
