@@ -207,8 +207,9 @@ class Instance(object):
         self.properties.setItems(self.hover.getItems())
     
     def mousePressedEvent(self):
-        self.isSelected = True
-        self.properties.setItems(self.selected.getItems())
+        if not self.isSelected:
+            self.isSelected = True
+            self.properties.setItems(self.selected.getItems())
     
     def mouseReleasedEvent(self):
         self.isSelected = False

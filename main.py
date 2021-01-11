@@ -17,7 +17,7 @@ def settings():
 
 
 def setup():
-    global state, background, toManual1, toManual2, toNext
+    global state, background, toManual1, toManual2, toNext, goBack
     
     if state == "start":
         invoerscherm.setup()
@@ -96,6 +96,29 @@ def setup():
         'h': 55,
         'textSize': 21
     })
+    goBack = Button(None, {
+        'x': 80,
+        'y': 690,
+        'w': 130,
+        'h': 50,
+        'stroke': '205 205 205',
+        'strokeWeight': 1,
+        'fill': '201 138 38 255',
+        'placeholder': 'Ga terug',
+        'radius': 5,
+        'textSize': 20,
+        'rectMode': CENTER,
+        'textAlign': [CENTER, CENTER],
+        'textColor': '255 255 255 255',
+        'font': 'OpenSans-Bold-48.vlw'
+    })
+    goBack.hover.setItems({
+        'fill': '201 138 38 200',
+        'w': 135,
+        'h': 55,
+        'textSize': 21
+    })
+    
     main.stop()
       
         
@@ -115,19 +138,27 @@ def draw():
             toNext.draw()
             if not errorHandler():
                 state = "createGame"
-            toNext.isSelected = False
 
     elif state == "createGame":
         rectMode(CORNER)
         textAlign(BASELINE)
         puntenscherm.setup(invoerscherm.getNames())
+        toNext.isSelected = False
+        goBack.isSelected = False
         state = "preStartGame"
         uitleg.setup()
         
     elif state == "preStartGame":
-        uitleg.draw()
-        if frameCount % 100 == 0:
+        print(toNext.isSelected, goBack.isSelected)
+        if not toNext.isSelected and not goBack.isSelected:
+            uitleg.draw()
+            toNext.draw()
+        elif toNext.isSelected:
             state = "startGame"
+            toNext.isSelected = False
+        elif goBack.isSelected:
+            state = "start"
+            goBack.isSelected = False
         
     elif state == "startGame":
         puntenscherm.draw()
@@ -144,8 +175,6 @@ def draw():
             state = "start"
         font = loadFont('OpenSans-48.vlw')
         textFont(font, 16)
-        
-                
         puntenscherm.dp.getPlayers()
     
     elif state == "endGameSetup":	
