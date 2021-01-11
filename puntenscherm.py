@@ -23,7 +23,8 @@ def setup(playerList):
     toEnd.hover.setItems({
         'fill': '138 201 38 200',
         'w': 135,
-        'h': 55
+        'h': 55,
+        'textSize': 22
     })
 
     invoerScherm.stop()
