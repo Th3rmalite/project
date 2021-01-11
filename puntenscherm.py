@@ -1,8 +1,13 @@
-import objects
+from objects import *
 import drawPlayers as dp
 
 def setup(playerList):
     dp.get_players(playerList)
+    invoerScherm = Screen('namen', {})
+    invoerScherm.start()
+    toEnd = Button(None, {
+        'x': 1000
+    })
     
 
 def draw():
