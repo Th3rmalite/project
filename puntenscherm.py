@@ -3,10 +3,10 @@ from objects import *
 import drawPlayers as dp
 
 def setup(playerList):
-    global invoerScherm
+    global puntenScherm
     dp.get_players(playerList)
-    invoerScherm = Screen('namen', {})
-    invoerScherm.start()
+    puntenScherm = Screen('punten', {})
+    puntenScherm.start()
     toEnd = Button(None, {
         'x': 980,
         'y': 670,
@@ -27,15 +27,15 @@ def setup(playerList):
         'textSize': 22
     })
 
-    invoerScherm.stop()
+    puntenScherm.stop()
     
 
 def draw():
     fill(225,225,225)
     rectMode(CORNER)
     rect(0,0,1080,720)
-    for i in range(len(invoerScherm.content)):
-        invoerScherm.content[i].draw()
+    for i in range(len(puntenScherm.content)):
+        puntenScherm.content[i].draw()
     rectMode(CORNER)
     textAlign(LEFT, BOTTOM)
     dp.draw_player_info()
