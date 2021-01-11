@@ -47,7 +47,7 @@ def setupCards():
         players.append(['None', 'None', cards[i], colorPickers[i]])
 
 def setupRest():
-    navigationButtons.append(NavigationButton('Puntenscherm', 0, 0, 130, 50, 'BOTTOM_RIGHT'))
+    navigationButtons.append(NavigationButton(0, 0, 130, 50, 'BOTTOM_RIGHT'))
     navigationButtons[0].shadow(1, 1)
     background(color(palette['gray']))
 
@@ -62,8 +62,8 @@ def drawRest():
 
 class NavigationButton:
 
-    def __init__(self, referral, x, y, w, h, anchor = 'NONE'):
-        self.ref = referral
+    def __init__(self, x, y, w, h, anchor = 'NONE', text = 'Done'):
+        self.text = text
         self.anchor = anchor
         location = f.locationAnchor(anchor)
         self.x = location[0] + x
@@ -75,13 +75,14 @@ class NavigationButton:
         self.selected = False
     
     def draw(self):
+        rectMode(CENTER)
         fill(palette['green'])
         noStroke()
         self.changeState()
         rect(self.x, self.y, self.w, self.h, self.bevel)
         fill(palette['black'])
         textAlign(CENTER, CENTER)
-        text('Klaar', self.x, self.y - 3)
+        text(self.text, self.x, self.y - 3)
 
     def hover(self):
         if f.hover([mouseX,mouseY],[self.x - self.w / 2, self.y - self.h / 2, self.x, self.y]):
@@ -91,6 +92,23 @@ class NavigationButton:
         if self.hover() and not self.selected:
             fill(palette['green'] + color(10,10,10))
         if self.selected or (self.hover() and mouseButton == LEFT):
+            global errorMsgCounter, errorMsg
+            playerCount = 0
+            for i in range(len(players)):
+                if players[i][1] == 'None' and players[i][0] != '':
+                    errorMsgCounter = 120
+                    errorMsg = players[i][0] + ' does not have a color!'
+                    return
+                elif players[i][0] == '' and players[i][1] != '' and playerCount > 2:
+                    errorMsgCounter = 120
+                    errorMsg = players[i][1] + ' does not have a name!'
+                    return
+                if players[i][0] != '':
+                    playerCount += 1
+            if playerCount < 2:
+                errorMsgCounter = 120
+                errorMsg = players[i][0] + 'You need at least 2 people to play!'
+                return
             self.selected = True
             fill(palette['green'] - color(30,30,30))
 
