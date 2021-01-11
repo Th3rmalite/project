@@ -41,10 +41,13 @@ def draw():
         else:
             if puntenscherm.dp.getAlivePlayers() == 1:
                 state = "endGameSetup"
+                
+        puntenscherm.dp.getPlayers()
     
     elif state == "endGameSetup":	
         noTint()
-        eindscherm.setup()
+        eindscherm.setup(puntenscherm.dp.getPlayers())
+        cursor(ARROW)
         state = "endGame"
     elif state == "endGame":
         eindscherm.draw()

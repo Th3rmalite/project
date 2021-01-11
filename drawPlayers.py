@@ -57,6 +57,11 @@ def get_players(A):
     
 def getAlivePlayers(): # returns list of player objects that still have their king
     return alivePlayers
+
+def getPlayers():
+    sortedList = sorted(players, key=lambda x: x.points, reverse=True)
+
+    return sortedList
     
 def get_points(target):
     global players
