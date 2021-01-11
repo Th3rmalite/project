@@ -10,7 +10,8 @@ screenSize = [1080, 720]
 def setup():
     textFont(loadFont('OpenSans-Bold-48.vlw'), 36)
 
-def draw():  
+def draw():
+    textFont(loadFont('OpenSans-Bold-48.vlw'), 36)
     global offset, mul
     
     textAlign(CENTER)

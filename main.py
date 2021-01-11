@@ -82,7 +82,7 @@ def setup():
         'stroke': '205 205 205',
         'strokeWeight': 1,
         'fill': '67 204 37 255',
-        'placeholder': 'Klaar',
+        'placeholder': 'Ga verder',
         'radius': 5,
         'textSize': 20,
         'rectMode': CENTER,
@@ -136,8 +136,9 @@ def draw():
             invoerscherm.draw()
             toManual1.draw()
             toNext.draw()
-            if not errorHandler():
-                state = "createGame"
+            if not mousePressed:
+                if not errorHandler():
+                    state = "createGame"
 
     elif state == "createGame":
         rectMode(CORNER)
@@ -149,10 +150,10 @@ def draw():
         uitleg.setup()
         
     elif state == "preStartGame":
-        print(toNext.isSelected, goBack.isSelected)
         if not toNext.isSelected and not goBack.isSelected:
             uitleg.draw()
             toNext.draw()
+            goBack.draw()
         elif toNext.isSelected:
             state = "startGame"
             toNext.isSelected = False
@@ -172,7 +173,8 @@ def draw():
         if puntenscherm.toEnd.isSelected:
             state = "endGameSetup"
         elif puntenscherm.goBack.isSelected:
-            state = "start"
+            if not mousePressed:
+                state = "createGame"
         font = loadFont('OpenSans-48.vlw')
         textFont(font, 16)
         puntenscherm.dp.getPlayers()
