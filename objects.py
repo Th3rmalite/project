@@ -85,10 +85,12 @@ class Property:
         return temp
 
     def setMultipleValues(self, propertyType, propertyValue):
-        splitValues = propertyValue.split()
-        for index in range(len(splitValues)):
-            splitValues[index] = self.toReal(propertyType, splitValues[index])
-        return splitValues
+        if propertyType != 'placeholder':
+            splitValues = propertyValue.split()
+            for index in range(len(splitValues)):
+                splitValues[index] = self.toReal(propertyType, splitValues[index])
+            return splitValues
+        return [propertyValue]
     
     def toReal(self, propertyType, normalValue):
         if '%'in normalValue:
@@ -173,9 +175,9 @@ class Instance(object):
         self.properties = Property(parent)
         self.hover = Property(parent)
         self.selected = Property(parent)
-        self.hover.setItems(properties)
-        self.selected.setItems(properties)
         self.properties.setItems(properties)
+        self.hover.setItems(self.properties.getItems())
+        self.selected.setItems(self.properties.getItems())
         self.isSelected = False
         for i in range(len(environment)):
             if environment[i].active == True:
@@ -265,10 +267,19 @@ class Button(Rectangle):
     def __init__(self, parent, properties = None):
         super(Button, self).__init__(parent, properties)
         self.goTo = self.screen
+        self.text = ''
+        self.forbidden = [ENTER, TAB, BACKSPACE]
     
     def draw(self):
         self.drawInstance()
         self.shape()
+        self.drawText()
+    
+    def drawText(self):
+        fill(self['textColor'][0], self['textColor'][1], self['textColor'][2], self['textColor'][3])
+        textAlign(self['textAlign'][0], self['textAlign'][1])
+        textSize(self['textSize'][0])
+        text(self['placeholder'][0], self['x'][0] + self['textMargin'][0], self['y'][0] + self['textMargin'][1], self['textMargin'][1])
 
 class TextField(Rectangle):
 
