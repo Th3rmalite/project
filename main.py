@@ -17,7 +17,7 @@ def settings():
 
 
 def setup():
-    global state, background, toManual
+    global state, background, toManual1, toManual2, toNext
     
     if state == "start":
         invoerscherm.setup()
@@ -30,8 +30,8 @@ def setup():
         'h': '720',
         'stroke': 'None'
     })
-    toManual = Button(None, {
-        'x': 840,
+    toManual1 = Button(None, {
+        'x': 100,
         'y': 690,
         'w': 170,
         'h': 50,
@@ -46,9 +46,53 @@ def setup():
         'font': 'OpenSans-Bold-48.vlw',
         'textColor': '255 255 255 255'
     })
-    toManual.hover.setItems({
+    toManual1.hover.setItems({
         'fill': '77 107 234 200',
         'w': 175,
+        'h': 55,
+        'textSize': 21
+    })
+    toManual2 = Button(None, {
+        'x': 240,
+        'y': 690,
+        'w': 170,
+        'h': 50,
+        'stroke': '205 205 205',
+        'strokeWeight': 1,
+        'fill': '77 107 234 255',
+        'placeholder': 'Handleiding',
+        'radius': 5,
+        'textSize': 20,
+        'rectMode': CENTER,
+        'textAlign': [CENTER, CENTER],
+        'font': 'OpenSans-Bold-48.vlw',
+        'textColor': '255 255 255 255'
+    })
+    toManual2.hover.setItems({
+        'fill': '77 107 234 200',
+        'w': 175,
+        'h': 55,
+        'textSize': 21
+    })
+    toNext = Button(None, {
+        'x': 1000,
+        'y': 690,
+        'w': 130,
+        'h': 50,
+        'stroke': '205 205 205',
+        'strokeWeight': 1,
+        'fill': '67 204 37 255',
+        'placeholder': 'Klaar',
+        'radius': 5,
+        'textSize': 20,
+        'rectMode': CENTER,
+        'textAlign': [CENTER, CENTER],
+        'font': 'OpenSans-Bold-48.vlw',
+        'textColor': '255 255 255 255'
+    })
+    toNext.hover.setItems({
+        'fill': '67 204 37 200',
+        'w': 135,
         'h': 55,
         'textSize': 21
     })
@@ -61,28 +105,33 @@ def draw():
     
     if state == "start":
         invoerscherm.draw()
-        if not invoerscherm.toNext.isSelected:
+        if not toNext.isSelected:
             invoerscherm.draw()
-            toManual.draw()
+            toManual1.draw()
+            toNext.draw()
         else:
             invoerscherm.draw()
-            toManual.draw()
+            toManual1.draw()
+            toNext.draw()
             if not errorHandler():
                 state = "createGame"
-            invoerscherm.toNext.isSelected = False
+            toNext.isSelected = False
+
     elif state == "createGame":
         rectMode(CORNER)
         textAlign(BASELINE)
         puntenscherm.setup(invoerscherm.getNames())
         state = "preStartGame"
+        uitleg.setup()
         
     elif state == "preStartGame":
         uitleg.draw()
-        if frameCount % 500 == 0:
+        if frameCount % 100 == 0:
             state = "startGame"
         
     elif state == "startGame":
         puntenscherm.draw()
+        toManual2.draw()
         if type(puntenscherm.dp.getAlivePlayers()) != type(0):
             if len(puntenscherm.dp.getAlivePlayers()) == 1:
                 puntenscherm.toEnd.draw()
@@ -107,8 +156,8 @@ def draw():
     elif state == "endGame":
         eindscherm.draw()
 
-    if toManual.isSelected:
-        toManual.isSelected = False
+    if toManual1.isSelected:
+        toManual1.isSelected = False
 
     showError()
     

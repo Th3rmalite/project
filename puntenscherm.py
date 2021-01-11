@@ -9,30 +9,31 @@ def setup(playerList):
     puntenScherm = Screen('punten', {})
     puntenScherm.start()
     toEnd = Button(None, {
-        'x': 980,
-        'y': 670,
+        'x': 1000,
+        'y': 690,
         'w': 130,
         'h': 50,
         'stroke': '205 205 205',
         'strokeWeight': 1,
-        'fill': '138 201 38 255',
+        'fill': '67 204 37 255',
         'placeholder': 'Einde spel',
         'radius': 5,
         'textSize': 20,
         'rectMode': CENTER,
         'textAlign': [CENTER, CENTER],
+        'textColor': '255 255 255 255',
         'font': 'OpenSans-Bold-48.vlw'
     })
     toEnd.hover.setItems({
-        'fill': '138 201 38 200',
+        'fill': '67 204 37 200',
         'w': 135,
         'h': 55,
         'textSize': 21
     })
     toEnd.goTo = eindscherm
     goBack = Button(None, {
-        'x': 90,
-        'y': 670,
+        'x': 80,
+        'y': 690,
         'w': 130,
         'h': 50,
         'stroke': '205 205 205',
@@ -43,6 +44,7 @@ def setup(playerList):
         'textSize': 20,
         'rectMode': CENTER,
         'textAlign': [CENTER, CENTER],
+        'textColor': '255 255 255 255',
         'font': 'OpenSans-Bold-48.vlw'
     })
     goBack.hover.setItems({
