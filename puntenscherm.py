@@ -3,6 +3,7 @@ from objects import *
 import drawPlayers as dp
 
 def setup(playerList):
+    global invoerScherm
     dp.get_players(playerList)
     invoerScherm = Screen('namen', {})
     invoerScherm.start()
@@ -12,7 +13,7 @@ def setup(playerList):
         'w': 130,
         'h': 50,
         'stroke': 'None',
-        'fill': d.palette['green']
+        'fill': '138 201 38 255'
     })
     invoerScherm.stop()
     
