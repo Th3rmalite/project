@@ -39,6 +39,7 @@ def get_players(A):
         
         # playercard info
         player_list[i].cardLocation = [120, 60 + (cardHeight+10)*i - 20, cardWidth, cardHeight, 5]
+        print(120, 60 + (cardHeight+10)*i - 20, cardWidth, cardHeight, 5)
         
     players = player_list
 
