@@ -25,7 +25,7 @@ def setup():
     main = Screen('main', {})
     main.start()
     background = Rectangle(None, {
-        'fill': '245 245 245 255',
+        'fill': '225 225 225 255',
         'w': '1080',
         'h': '720',
         'stroke': 'None'
@@ -188,11 +188,17 @@ def draw():
         state = "endGame"
     elif state == "endGame":
         eindscherm.draw()
+    
+    elif state == "manualSetup":
+        pass
 
     if toManual1.isSelected or toManual2.isSelected:
-        toManual1.isSelected = False
-        toManual2.isSelected = False
-        
+        if not mousePressed:
+            toManual1.isSelected = False
+            toManual2.isSelected = False
+            state = "manualSetup"
+    
+
 
     showError()
     

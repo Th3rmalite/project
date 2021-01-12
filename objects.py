@@ -5,6 +5,27 @@ environment = []
 # Convert % and px to correct format
 # Format multiple values to work in practice
 
+# Gemaakt door Dylan Noorland
+
+palette = {
+    'white'         :   color(238, 239, 240),
+    'black'         :   color(50, 50, 50),
+    'gray'          :   color(213, 216, 219),
+    'gray_hover'    :   color(203, 206, 209),
+    'dark_gray'     :   color(193, 196, 199),
+    'light_blue'    :   color(204, 216, 223),
+    'blue'          :   color(77, 107, 164),
+    'red'           :   color(229, 56, 59),
+    'transparent'   :   color(220, 220, 220, 100),
+    'solid_white'   :   color(255, 255, 255),
+    'player_colors' :   [
+                        color(248, 249, 250),   # white
+                        color(20, 23, 26),      # black
+                        color(204, 42, 66),     # red
+                        color(63, 84, 174)      # blue
+                        ]
+}
+
 screen = {
         'w': [1280],
         'h': [720],

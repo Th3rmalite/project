@@ -1,25 +1,10 @@
 from functions import hover
+import objects as obj
 
 players = []
 pawn_colors = []
-palette = {
-    'white'         :   color(238, 239, 240),
-    'black'         :   color(50, 50, 50),
-    'gray'          :   color(213, 216, 219),
-    'gray_hover'    :   color(203, 206, 209),
-    'dark_gray'     :   color(193, 196, 199),
-    'light_blue'    :   color(204, 216, 223),
-    'blue'          :   color(77, 107, 164),
-    'red'           :   color(229, 56, 59),
-    'transparent'   :   color(220, 220, 220, 100),
-    'solid_white'   :   color(255, 255, 255),
-    'player_colors' :   {
-                        "white": color(248, 249, 250),   # white
-                        "black": color(20, 23, 26),      # black
-                        "red": color(164, 22, 26),     # red
-                        "blue": color(3, 4, 94)         # blue
-                        }
-}
+cards = []
+palette = obj.palette
 
 point_worth = {
     "pawn": 1,
@@ -36,11 +21,13 @@ images = {
     "king": loadImage("king.png")
 }
 
-cardWidth = 1080 - 240
+cardWidth = 1080 - 200
 cardHeight = 150 - 60/4
 cursorImg = ARROW
 errorMsgCounter = 0
 errorMsg = ""
+openSans = loadFont("OpenSans-48.vlw")
+openSansBold = loadFont("OpenSans-Bold-48.vlw")
 
 def get_players(A):
     global players, pawn_colors, cardHeight, cardWidth, alivePlayers
@@ -82,30 +69,40 @@ def draw_player_info():
     cursorImg = ARROW
     
     textSize(26)
-    for idx,i in enumerate(players):   
+    for idx,i in enumerate(players):
         get_points(i)
-        fill(90)
-        rect(i.cardLocation[0], i.cardLocation[1], i.cardLocation[2], i.cardLocation[3], 5)
         fill(255)
+        if hover([mouseX,mouseY], i.cardLocation):
+            stroke(20, 200, 50)
+            strokeWeight(1)
+            fill(248)
+        rect(i.cardLocation[0], i.cardLocation[1], i.cardLocation[2], i.cardLocation[3], 7)
+        noStroke()
+        strokeWeight(0)
+        fill(130)
+        textFont(openSansBold, 28)
         text(i.name, 140, 100 + (cardHeight+20)*idx)
-        text(i.player_color, 140, 130 + (cardHeight+20)*idx)
-        text("punten:", 140, 180 + (cardHeight+20)*idx)
-        text(i.points, 250, 180 + (cardHeight+20)*idx)
-        text('blokkades:', 140, 155 + (cardHeight+20)*idx)
+        fill(50)
+        textFont(openSansBold, 20)
+        text('punten:', 140, 155 + (cardHeight+20)*idx)
+        textFont(openSans, 20)
+        text(i.points, 250, 155 + (cardHeight+20)*idx)
+        textFont(openSansBold, 20)
+        text('blokkades:', 140, 180 + (cardHeight+20)*idx)
         test = i.points // 5
 
         i.change_to_pawn_color(i.pawns[-1])
         noTint()
         if test >= 1:
-            image(Blok, 285, 138 + (cardHeight+20)*idx,20,20)
+            image(Blok, 250, 155 + (cardHeight+20)*idx,20,20)
         if test >= 2:
-            image(Blok, 310, 138 + (cardHeight+20)*idx,20,20)
+            image(Blok, 270, 155 + (cardHeight+20)*idx,20,20)
         if test >= 3:
-            image(Blok, 335, 138 + (cardHeight+20)*idx,20,20)
+            image(Blok, 290, 155 + (cardHeight+20)*idx,20,20)
         if test >= 4:
-            image(Blok, 360, 138 + (cardHeight+20)*idx,20,20)
+            image(Blok, 310, 155 + (cardHeight+20)*idx,20,20)
         if test >= 5:
-            image(Blok, 385, 138 + (cardHeight+20)*idx,20,20)
+            image(Blok, 330, 155 + (cardHeight+20)*idx,20,20)
         
     
     for idx,player in enumerate(players):
@@ -125,7 +122,7 @@ def draw_player_info():
         errorMsgCounter -= 1
         fill(229, 56, 59, errorMsgCounter*10)
         textAlign(CENTER)
-        text(errorMsg,len(errorMsg*18),30) 	
+        text(errorMsg,540,30) 	
         textAlign(LEFT)
 
 class Player:
@@ -135,6 +132,8 @@ class Player:
         self.player_color = player_color
         self.pawns = self.setup_pawns()
         self.cardLocation = []
+        self.isActive = False
+        cards.append(self)
 
         
     def add_points(self, points):
@@ -150,23 +149,24 @@ class Player:
         return temp
     
     def change_to_pawn_color(self, pawn):
+        alpha = 200
         if(pawn.pawn_color == "black"):
-            fill(0)
+            fill(palette['player_colors'][1], alpha)
         elif(pawn.pawn_color == "white"):
-            fill(255)
+            fill(palette['player_colors'][0], alpha)
         elif(pawn.pawn_color == "red"):
-            fill(255,0,0)
+            fill(palette['player_colors'][2], alpha)
         elif(pawn.pawn_color == "blue"):
-            fill(0,0,255)
+            fill(palette['player_colors'][3], alpha)
             
         if(pawn.owner_color == "black"):
-            tint(0)
+            tint(palette['player_colors'][1])
         elif(pawn.owner_color == "white"):
-            tint(255)
+            tint(palette['player_colors'][0])
         elif(pawn.owner_color == "red"):
-            tint(255,0,0)
+            tint(palette['player_colors'][2])
         else:
-            tint(0,0,255)
+            tint(palette['player_colors'][3])
     
     def isAlive(self):
         if self.pawns[-1].pawn_color == self.player_color:
@@ -203,6 +203,7 @@ class Player:
                 fill(20,0)
 
                 if alreadyDragging or currentPawn.pawn_color == currentPawn.owner_color:
+                    self.isActive = True
                     if mousePressed and not alreadyDragging and mouseButton == LEFT:
                         alreadyDragging = True
                         currentPawn.drag = True
@@ -215,7 +216,7 @@ class Player:
                         currentPawn.pawn_color = currentPawn.owner_color
                     elif mousePressed and mouseButton == LEFT:
                         errorMsgCounter = 120
-                        errorMsg = "Click with [RMB] to clear color"
+                        errorMsg = "Press right mouse button to clear color"
                     # hier moet een error msg komen als mouseButton == LEFT
                         
                 # update color by clicking
@@ -229,10 +230,10 @@ class Player:
                         currentPawn.pawn_color = pawn_colors[0]
                 '''
                 
-                rect(currentPawn.location[0], currentPawn.location[1], currentPawn.location[2], currentPawn.location[3], 3)
+                rect(currentPawn.location[0], currentPawn.location[1], currentPawn.location[2], currentPawn.location[3], 20)
             self.change_to_pawn_color(currentPawn)
             if currentPawn.pawn_color != currentPawn.owner_color:
-                rect(currentPawn.location[0], currentPawn.location[1], currentPawn.location[2], currentPawn.location[3], 3)
+                rect(currentPawn.location[0], currentPawn.location[1], currentPawn.location[2], currentPawn.location[3], 20)
             image(currentPawn.img, currentPawn.location[0], currentPawn.location[1], currentPawn.location[2], currentPawn.location[3])
         
 class Pawn:

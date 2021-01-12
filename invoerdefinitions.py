@@ -1,26 +1,9 @@
 import functions as f
 import invoerscherm
 import main
+import objects as obj
 
-palette = {
-    'white'         :   color(238, 239, 240),
-    'black'         :   color(50, 50, 50),
-    'gray'          :   color(213, 216, 219),
-    'gray_hover'    :   color(203, 206, 209),
-    'dark_gray'     :   color(193, 196, 199),
-    'light_blue'    :   color(204, 216, 223),
-    'blue'          :   color(77, 107, 164),
-    'red'           :   color(229, 56, 59),
-    'transparent'   :   color(220, 220, 220, 100),
-    'solid_white'   :   color(255, 255, 255),
-    'green'         :   color(138, 201, 38),
-    'player_colors' :   [
-                        color(248, 249, 250),   # white
-                        color(20, 23, 26),      # black
-                        color(164, 22, 26),     # red
-                        color(3, 4, 94)         # blue
-                        ]
-}
+palette = obj.palette
 
 players = [] # table
 cards = [] # table
@@ -86,7 +69,7 @@ class Card:
     def draw(self):
         fill(palette[self.cardColor])
         # self.hover() # Make it so that self.hover() doesn't affect fill when not hovered.
-        stroke(225, 225, 225)
+        stroke(195, 195, 195)
         strokeWeight(1)
         rect(self.x, self.y, self.w, self.h, self.bevel)
         noStroke()
@@ -178,7 +161,7 @@ class TextInput:
         self.maxLength = 15
         self.index = index
         self.forbiddenKeys = [ENTER, TAB, BACKSPACE]
-        fill(palette['gray'])
+        fill(205)
         strokeCap(SQUARE)
         rectMode(CENTER)
 
