@@ -38,7 +38,7 @@ def get_players(A):
         pawn_colors.append(A[i][1])
         
         # playercard info
-        player_list[i].cardLocation = [120, 60 + (cardHeight+20)*i, cardWidth, cardHeight, 5]
+        player_list[i].cardLocation = [120, 60 + (cardHeight+10)*i - 20, cardWidth, cardHeight, 5]
         
     players = player_list
     
@@ -79,14 +79,14 @@ def draw_player_info():
         strokeWeight(0)
         fill(130)
         textFont(openSansBold, 28)
-        text(i.name, 140, 100 + (cardHeight+20)*idx)
+        text(i.name, i.cardLocation[0]+20, 80 + (cardHeight+10)*idx)
         fill(50)
         textFont(openSansBold, 20)
-        text('punten:', 140, 155 + (cardHeight+20)*idx)
+        text('punten:', i.cardLocation[0]+20, 135 + (cardHeight+10)*idx)
         textFont(openSans, 20)
-        text(i.points, 250, 155 + (cardHeight+20)*idx)
+        text(i.points, i.cardLocation[0]+130, 135 + (cardHeight+10)*idx)
         textFont(openSansBold, 20)
-        text('blokkades:', 140, 180 + (cardHeight+20)*idx)
+        text('blokkades:', i.cardLocation[0]+20, 160 + (cardHeight+10)*idx)
         test = i.points // 5
 
         i.change_to_pawn_color(i.pawns[-1])
@@ -183,7 +183,7 @@ class Player:
             if i % 4 == 0 and i != 0:
                 high += 1
             self.change_to_pawn_color(currentPawn)
-            currentPawn.location = [1080 - 45*4 - 45*(i-(high*4)), 65+45*high + idx*155, 35, 35]
+            currentPawn.location = [1080 - 45*4 - 45*(i-(high*4)), 50+40*high + idx*145, 35, 35]
 
             if currentPawn.drag:
                 cursorImg = MOVE
