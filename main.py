@@ -3,6 +3,7 @@ import puntenscherm
 import eindscherm
 from objects import *
 import uitleg
+import handleidingding as handleiding
 
 screenSize = [1080, 720]
 state = "start"
@@ -190,7 +191,13 @@ def draw():
         eindscherm.draw()
     
     elif state == "manualSetup":
-        pass
+        handleiding.setup()
+        state = "manual"
+    elif state == "manual":
+        handleiding.draw()
+        if goBack.isSelected:
+            goBack.isSelected = False
+            state = "start"
 
     if toManual1.isSelected or toManual2.isSelected:
         if not mousePressed:
@@ -198,6 +205,7 @@ def draw():
             toManual2.isSelected = False
             state = "manualSetup"
     
+
 
 
     showError()

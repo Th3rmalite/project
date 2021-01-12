@@ -1,12 +1,40 @@
-
+from objects import *
 
 def setup():
-    global imageAll, count, texti, mouse, rect1, rect2
+    global imageAll, count, texti, mouse, rect1, rect2, goBack
     size(1080, 720)
     background(190)
+    manual = Screen(None, {})
+    manual.start()
+    goBack = Button(None, {
+        'x': 80,
+        'y': 705,
+        'w': 130,
+        'h': 40,
+        'stroke': '205 205 205',
+        'strokeWeight': 1,
+        'fill': '201 138 38 255',
+        'placeholder': 'Ga terug',
+        'radius': 5,
+        'textSize': 20,
+        'rectMode': CENTER,
+        'textAlign': [CENTER, CENTER],
+        'textColor': '255 255 255 255',
+        'font': 'OpenSans-Bold-48.vlw'
+    })
+    goBack.hover.setItems({
+        'fill': '201 138 38 200',
+        'w': 135,
+        'h': 45,
+        'textSize': 21
+    })
+    manual.stop()
+
     noStroke()
     fontList = PFont.list()
-
+    noTint()
+    textAlign(LEFT, CENTER)
+    rectMode(CORNER)
     image0 = loadImage('whitepage.png')
     image1 = loadImage('handleidingpag1.png')
     image2 = loadImage('handleidingpag2.png')
@@ -59,7 +87,7 @@ def inhoudsopgave():
     font1 = createFont("Georgia", 40)
     textFont(font1)
     fill(155,50,50)
-    rect(595, 65, 150, 45)
+    rect(595, 65, 150, 65)
     fill(255,255,255)
     text('Inhoud', 600, 100)
     textFont(pagefont)     
@@ -72,7 +100,9 @@ def inhoudsopgave():
 
 def draw():
     global pagefont, imageAll, count, a, b, texti, mouse
-    
+    goBack.draw()
+    textAlign(LEFT, CENTER)
+    rectMode(CORNER)
     pagefont = createFont("Droid Serif", 12)
     
     mouse = [mouseX, mouseY]
@@ -254,6 +284,36 @@ def draw():
             text('- Wat is matten', 600, 450)
             text('- Bordsjablonnen', 600, 500)
             text('- Onderdelen', 600, 550)
+    global mouseUp   
+    if not mousePressed:
+        mouseUp = True
+    if mousePressed and mouseUp:
+        mouseUp = False
+        global count, rect1, texti, mouse, rect1, rect2
+    
+
+
+        #navigatie
+        if hover(mouse, rect1):
+            if count != 6:
+                count = count + 1
+        if hover(mouse, rect2):
+            if count != 0:
+                count = count - 1
+        
+        if count != 100:
+            if hover(mouse, texti[0]) or hover(mouse, texti[1]):
+                count = 1
+            elif hover(mouse, texti[2]):
+                count = 2
+            elif hover(mouse, texti[3]) or hover(mouse, texti[4]):
+                count = 3
+            elif hover(mouse, texti[5]):
+                count = 4
+            elif hover(mouse, texti[6]) or hover(mouse, texti[7]):
+                count = 5
+            elif hover(mouse, texti[8]):
+                count = 6
 
 
 
@@ -267,29 +327,3 @@ def hover(a,b):
     return False
     
     # muis klik functie
-def mousePressed():
-    global count, rect1, texti, mouse, rect1, rect2
-    
-
-
-    #navigatie
-    if hover(mouse, rect1):
-        if count != 6:
-            count = count + 1
-    if hover(mouse, rect2):
-        if count != 0:
-            count = count - 1
-    
-    if count != 100:
-        if hover(mouse, texti[0]) or hover(mouse, texti[1]):
-            count = 1
-        elif hover(mouse, texti[2]):
-            count = 2
-        elif hover(mouse, texti[3]) or hover(mouse, texti[4]):
-            count = 3
-        elif hover(mouse, texti[5]):
-            count = 4
-        elif hover(mouse, texti[6]) or hover(mouse, texti[7]):
-            count = 5
-        elif hover(mouse, texti[8]):
-            count = 6
