@@ -1,37 +1,22 @@
 import functions as f
 import invoerscherm
 import main
+import objects as obj
 
-palette = {
-    'white'         :   color(238, 239, 240),
-    'black'         :   color(50, 50, 50),
-    'gray'          :   color(213, 216, 219),
-    'gray_hover'    :   color(203, 206, 209),
-    'dark_gray'     :   color(193, 196, 199),
-    'light_blue'    :   color(204, 216, 223),
-    'blue'          :   color(77, 107, 164),
-    'red'           :   color(229, 56, 59),
-    'transparent'   :   color(220, 220, 220, 100),
-    'solid_white'   :   color(255, 255, 255),
-    'green'         :   color(138, 201, 38),
-    'player_colors' :   [
-                        color(248, 249, 250),   # white
-                        color(20, 23, 26),      # black
-                        color(164, 22, 26),     # red
-                        color(3, 4, 94)         # blue
-                        ]
-}
+palette = obj.palette
 
 players = [] # table
 cards = [] # table
 textInputs = [] # table
 colorPickers = [] # table
-navigationButtons = [] # table
 
 screenSize = [1080, 720]
 index = 0
 
 tabDebounce = False
+
+errorMsgCounter = 0
+errorMsg = ""
 
 def setupCards():
     global screenSize
@@ -47,9 +32,8 @@ def setupCards():
         players.append(['None', 'None', cards[i], colorPickers[i]])
 
 def setupRest():
-    navigationButtons.append(NavigationButton('Puntenscherm', 0, 0, 130, 50, 'BOTTOM_RIGHT'))
-    navigationButtons[0].shadow(1, 1)
     background(color(palette['gray']))
+    
 
 def drawCards(index):
     global cards
@@ -58,50 +42,14 @@ def drawCards(index):
     colorPickers[index].draw()
 
 def drawRest():
-    navigationButtons[0].draw()
-
-class NavigationButton:
-
-    def __init__(self, referral, x, y, w, h, anchor = 'NONE'):
-        self.ref = referral
-        self.anchor = anchor
-        location = f.locationAnchor(anchor)
-        self.x = location[0] + x
-        self.y = location[1] + y
-        self.w = w
-        self.h = h
-        self.bevel = 20
-        self.shadowRadius = 3
-        self.selected = False
-    
-    def draw(self):
-        fill(palette['green'])
-        noStroke()
-        self.changeState()
-        rect(self.x, self.y, self.w, self.h, self.bevel)
-        fill(palette['black'])
-        textAlign(CENTER, CENTER)
-        text('Klaar', self.x, self.y - 3)
-
-    def hover(self):
-        if f.hover([mouseX,mouseY],[self.x - self.w / 2, self.y - self.h / 2, self.x, self.y]):
-            return True
-    
-    def changeState(self):
-        if self.hover() and not self.selected:
-            fill(palette['green'] + color(10,10,10))
-        if self.selected or (self.hover() and mouseButton == LEFT):
-            self.selected = True
-            fill(palette['green'] - color(30,30,30))
-
-
-    def shadow(self, offsetX, offsetY, samples = 64):
-        rectMode(CENTER)
-        noStroke()
-        fill(0,0,0,1)
-        for i in range(samples):
-            rect(self.x + offsetX, self.y + offsetY, self.w + self.shadowRadius - i * .1, self.h + self.shadowRadius - i * .1, self.bevel)
-
+    global errorMsgCounter, errorMsg
+    if errorMsgCounter > 0:
+        textSize(24)
+        errorMsgCounter -= 1
+        fill(229, 56, 59, errorMsgCounter*10)
+        textAlign(CENTER)
+        text(errorMsg,540,30) 	
+        textAlign(LEFT)
 
 class Card:
 
@@ -121,8 +69,10 @@ class Card:
     def draw(self):
         fill(palette[self.cardColor])
         # self.hover() # Make it so that self.hover() doesn't affect fill when not hovered.
-        noStroke()
+        stroke(195, 195, 195)
+        strokeWeight(1)
         rect(self.x, self.y, self.w, self.h, self.bevel)
+        noStroke()
     
     def shadow(self, offsetX, offsetY, samples = 64):
         rectMode(CENTER)
@@ -171,6 +121,7 @@ class ColorPicker:
                 if players[i][3].colorNodes[index][0] and players[i] != players[self.index]:
                     players[i][3].colorNodes[index][0] = False
                     players[i][2].cardColor = 'solid_white'
+                    players[i][1] = 'None'
             players[self.index][1] = self.getColor(palette['player_colors'][index])
         elif self.hover(index):
             if self.colorNodes[index][0]:
@@ -210,7 +161,7 @@ class TextInput:
         self.maxLength = 15
         self.index = index
         self.forbiddenKeys = [ENTER, TAB, BACKSPACE]
-        fill(palette['gray'])
+        fill(205)
         strokeCap(SQUARE)
         rectMode(CENTER)
 
@@ -259,10 +210,10 @@ class TextInput:
                 fill(palette['gray_hover'])
             else:
                 fill(palette['gray'])
-            if self.hover() and mouseButton == LEFT:
+            if self.hover() and mousePressed:
                 self.selected = True
                 cursor(TEXT)
-            if self.selected and mouseButton == LEFT and not self.hover():
+            if self.selected and mousePressed and not self.hover():
                 self.selected = False
                 fill(palette['gray'])
                 cursor(ARROW)
@@ -277,6 +228,4 @@ class TextInput:
             if self.selected:
                 stroke(114, 9, 183)
                 strokeWeight(2)
-        elif type == 'circle':
-            pass
             
