@@ -30,6 +30,7 @@ openSans = loadFont("OpenSans-48.vlw")
 openSansBold = loadFont("OpenSans-Bold-48.vlw")
 
 def get_players(A):
+    print("ah")
     global players, pawn_colors, cardHeight, cardWidth, alivePlayers
     player_list = []
     alivePlayers = len(A)
@@ -39,7 +40,6 @@ def get_players(A):
         
         # playercard info
         player_list[i].cardLocation = [120, 60 + (cardHeight+10)*i - 20, cardWidth, cardHeight, 5]
-        print(120, 60 + (cardHeight+10)*i - 20, cardWidth, cardHeight, 5)
         
     players = player_list
 
@@ -76,6 +76,7 @@ def draw_player_info():
     cursorImg = ARROW
     
     textSize(26)
+    print(players[0].pawns[0].location)
     for idx,i in enumerate(players):
         get_points(i)
         fill(255)
@@ -182,6 +183,8 @@ class Player:
             return False      
     
     def draw_pawns(self,idx):
+        rectMode(CORNER)
+        imageMode(CORNER)
         global pawn_colors, images, alreadyDragging, players, cursorImg, errorMsgCounter, errorMsg, alivePlayers
         mouse = [mouseX,mouseY]
         high = 0
@@ -245,7 +248,6 @@ class Player:
                 rect(currentPawn.location[0], currentPawn.location[1], currentPawn.location[2], currentPawn.location[3], 15)
             image(currentPawn.img, currentPawn.location[0], currentPawn.location[1], currentPawn.location[2], currentPawn.location[3])
             noStroke()
-        
 class Pawn:
     def __init__(self,type,pawn_color):
         self.drag = False
