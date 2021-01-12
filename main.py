@@ -136,9 +136,11 @@ def draw():
             invoerscherm.draw()
             toManual1.draw()
             toNext.draw()
-            if not mousePressed:
-                if not errorHandler():
+            if not errorHandler():
+                if not mousePressed:
                     state = "createGame"
+            else:
+                toNext.isSelected = False
 
     elif state == "createGame":
         rectMode(CORNER)
@@ -187,8 +189,10 @@ def draw():
     elif state == "endGame":
         eindscherm.draw()
 
-    if toManual1.isSelected:
+    if toManual1.isSelected or toManual2.isSelected:
         toManual1.isSelected = False
+        toManual2.isSelected = False
+        
 
     showError()
     

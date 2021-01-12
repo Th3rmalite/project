@@ -15,28 +15,6 @@ def setup():
         'w': '1080',
         'h': '720'
     })
-    toNext = Button(None, {
-        'x': 1000,
-        'y': 690,
-        'w': 130,
-        'h': 50,
-        'stroke': '205 205 205',
-        'strokeWeight': 1,
-        'fill': '67 204 37 255',
-        'placeholder': 'Klaar',
-        'radius': 5,
-        'textSize': 20,
-        'rectMode': CENTER,
-        'textAlign': [CENTER, CENTER],
-        'font': 'OpenSans-Bold-48.vlw',
-        'textColor': '255 255 255 255'
-    })
-    toNext.hover.setItems({
-        'fill': '67 204 37 200',
-        'w': 135,
-        'h': 55,
-        'textSize': 21
-    })
     invoerScherm.stop()
     d.setupCards()
     d.setupRest()
