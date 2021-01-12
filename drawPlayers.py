@@ -73,8 +73,6 @@ def draw_player_info():
         get_points(i)
         fill(255)
         if hover([mouseX,mouseY], i.cardLocation):
-            stroke(20, 200, 50)
-            strokeWeight(1)
             fill(248)
         rect(i.cardLocation[0], i.cardLocation[1], i.cardLocation[2], i.cardLocation[3], 7)
         noStroke()
@@ -230,10 +228,10 @@ class Player:
                         currentPawn.pawn_color = pawn_colors[0]
                 '''
                 
-                rect(currentPawn.location[0], currentPawn.location[1], currentPawn.location[2], currentPawn.location[3], 20)
+                rect(currentPawn.location[0], currentPawn.location[1], currentPawn.location[2], currentPawn.location[3], 15)
             self.change_to_pawn_color(currentPawn)
             if currentPawn.pawn_color != currentPawn.owner_color:
-                rect(currentPawn.location[0], currentPawn.location[1], currentPawn.location[2], currentPawn.location[3], 20)
+                rect(currentPawn.location[0], currentPawn.location[1], currentPawn.location[2], currentPawn.location[3], 15)
             image(currentPawn.img, currentPawn.location[0], currentPawn.location[1], currentPawn.location[2], currentPawn.location[3])
         
 class Pawn:
