@@ -65,7 +65,7 @@ def get_points(target):
 def draw_player_info():
     global cardHeight, cardWidth, cursorImg, errorMsgCounter, errorMsg, alivePlayers
     #noTint()
-    Blok = loadImage('blokje (2).png')
+    Blok = loadImage('Blokje.png')
     cursorImg = ARROW
     
     textSize(26)
@@ -92,15 +92,15 @@ def draw_player_info():
         i.change_to_pawn_color(i.pawns[-1])
         noTint()
         if test >= 1:
-            image(Blok, 250, 155 + (cardHeight+20)*idx,20,20)
+            image(Blok, 250, 140 + (cardHeight+10)*idx,20,20)
         if test >= 2:
-            image(Blok, 270, 155 + (cardHeight+20)*idx,20,20)
+            image(Blok, 270, 140 + (cardHeight+10)*idx,20,20)
         if test >= 3:
-            image(Blok, 290, 155 + (cardHeight+20)*idx,20,20)
+            image(Blok, 290, 140 + (cardHeight+10)*idx,20,20)
         if test >= 4:
-            image(Blok, 310, 155 + (cardHeight+20)*idx,20,20)
+            image(Blok, 310, 140 + (cardHeight+10)*idx,20,20)
         if test >= 5:
-            image(Blok, 330, 155 + (cardHeight+20)*idx,20,20)
+            image(Blok, 330, 140 + (cardHeight+10)*idx,20,20)
         
     
     for idx,player in enumerate(players):
