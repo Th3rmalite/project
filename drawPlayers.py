@@ -65,7 +65,7 @@ def get_points(target):
 def draw_player_info():
     global cardHeight, cardWidth, cursorImg, errorMsgCounter, errorMsg, alivePlayers
     #noTint()
-    Blok = loadImage('blokje (2).png')
+    Blok = loadImage('Blokje.png')
     cursorImg = ARROW
     
     textSize(26)
