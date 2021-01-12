@@ -4,6 +4,9 @@ import drawPlayers as dp
 import eindscherm
 
 def reset(playerList):
+    dp.players = []
+    dp.pawn_colors = []
+    dp.cards = []
     return dp.get_players(playerList)
 
 def setup():

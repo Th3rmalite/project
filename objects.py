@@ -1,5 +1,4 @@
 environment = []
-
 # Set properties
 # Get properties
 # Convert % and px to correct format

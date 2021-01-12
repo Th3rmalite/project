@@ -199,6 +199,7 @@ def draw():
         eindscherm.draw()
         if eindscherm.playAgain.isSelected:
             invoerscherm.setup()
+            puntenscherm.reset(invoerscherm.getNames())
             state = "start"
     
     elif state == "manualSetup":
