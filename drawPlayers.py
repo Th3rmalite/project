@@ -41,6 +41,12 @@ def get_players(A):
         player_list[i].cardLocation = [120, 60 + (cardHeight+10)*i - 20, cardWidth, cardHeight, 5]
         
     players = player_list
+
+def getNames():
+    temp = []
+    for i in range(len(players)):
+        temp.append([players[i].name, players[i].player_color])
+    return temp
     
 def getAlivePlayers(): # returns list of player objects that still have their king
     return alivePlayers
@@ -90,6 +96,7 @@ def draw_player_info():
         test = i.points // 5
 
         i.change_to_pawn_color(i.pawns[-1])
+        noStroke()
         noTint()
         if test >= 1:
             image(Blok, 250, 140 + (cardHeight+10)*idx,20,20)
@@ -148,6 +155,8 @@ class Player:
     
     def change_to_pawn_color(self, pawn):
         alpha = 200
+        stroke(100)
+        strokeWeight(1)
         if(pawn.pawn_color == "black"):
             fill(palette['player_colors'][1], alpha)
         elif(pawn.pawn_color == "white"):
@@ -156,7 +165,6 @@ class Player:
             fill(palette['player_colors'][2], alpha)
         elif(pawn.pawn_color == "blue"):
             fill(palette['player_colors'][3], alpha)
-            
         if(pawn.owner_color == "black"):
             tint(palette['player_colors'][1])
         elif(pawn.owner_color == "white"):
@@ -183,6 +191,8 @@ class Player:
             if i % 4 == 0 and i != 0:
                 high += 1
             self.change_to_pawn_color(currentPawn)
+            noStroke()
+            strokeWeight(0)
             currentPawn.location = [1080 - 45*4 - 45*(i-(high*4)), 50+40*high + idx*145, 35, 35]
 
             if currentPawn.drag:
@@ -214,7 +224,7 @@ class Player:
                         currentPawn.pawn_color = currentPawn.owner_color
                     elif mousePressed and mouseButton == LEFT:
                         errorMsgCounter = 120
-                        errorMsg = "Press right mouse button to clear color"
+                        errorMsg = "Klik op rechtermuisknop om de kleur te wissen."
                     # hier moet een error msg komen als mouseButton == LEFT
                         
                 # update color by clicking
@@ -233,6 +243,7 @@ class Player:
             if currentPawn.pawn_color != currentPawn.owner_color:
                 rect(currentPawn.location[0], currentPawn.location[1], currentPawn.location[2], currentPawn.location[3], 15)
             image(currentPawn.img, currentPawn.location[0], currentPawn.location[1], currentPawn.location[2], currentPawn.location[3])
+            noStroke()
         
 class Pawn:
     def __init__(self,type,pawn_color):

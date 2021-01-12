@@ -7,16 +7,16 @@ def setup():
     manual = Screen(None, {})
     manual.start()
     goBack = Button(None, {
-        'x': 80,
-        'y': 705,
-        'w': 130,
+        'x': 95,
+        'y': 690,
+        'w': 160,
         'h': 40,
         'stroke': '205 205 205',
         'strokeWeight': 1,
         'fill': '201 138 38 255',
-        'placeholder': 'Ga terug',
+        'placeholder': 'Teruggaan',
         'radius': 5,
-        'textSize': 20,
+        'textSize': 18,
         'rectMode': CENTER,
         'textAlign': [CENTER, CENTER],
         'textColor': '255 255 255 255',
@@ -24,9 +24,9 @@ def setup():
     })
     goBack.hover.setItems({
         'fill': '201 138 38 200',
-        'w': 135,
+        'w': 175,
         'h': 45,
-        'textSize': 21
+        'textSize': 19
     })
     manual.stop()
 
@@ -49,29 +49,29 @@ def setup():
     image11 = loadImage('handleidingpag11.png')
     image12 = loadImage('handleidingpag12.png')
     
-    cover = image0.resize(470, 670)
-    cover = image1.resize(470, 670)
-    cover = image2.resize(470, 670)
-    cover = image3.resize(470, 670)
-    cover = image4.resize(470, 670)
-    cover = image5.resize(470, 670)
-    cover = image6.resize(470, 670)
-    cover = image7.resize(470, 670)
-    cover = image8.resize(470, 670)
-    cover = image9.resize(470, 670)
-    cover = image10.resize(470, 670)
-    cover = image11.resize(470, 670)
-    cover = image12.resize(470, 670)
+    cover = image0.resize(449, 640)
+    cover = image1.resize(449, 640)
+    cover = image2.resize(449, 640)
+    cover = image3.resize(449, 640)
+    cover = image4.resize(449, 640)
+    cover = image5.resize(449, 640)
+    cover = image6.resize(449, 640)
+    cover = image7.resize(449, 640)
+    cover = image8.resize(449, 640)
+    cover = image9.resize(449, 640)
+    cover = image10.resize(449, 640)
+    cover = image11.resize(449, 640)
+    cover = image12.resize(449, 640)
     
-    text1 = [600, 130, 135, 25]
-    text2 = [600, 180, 160, 25]
-    text3 = [600, 230, 100, 25]
-    text4 = [600, 280, 290, 25]
-    text5 = [600, 330, 105, 25]
-    text6 = [600, 380, 190, 25]
-    text7 = [600, 430, 135, 25]
-    text8 = [600, 480, 150, 25]
-    text9 = [600, 530, 115, 25]
+    text1 = [600, 150, 135, 25]
+    text2 = [600, 200, 160, 25]
+    text3 = [600, 250, 100, 25]
+    text4 = [600, 300, 290, 25]
+    text5 = [600, 350, 105, 25]
+    text6 = [600, 400, 190, 25]
+    text7 = [600, 450, 135, 25]
+    text8 = [600, 500, 150, 25]
+    text9 = [600, 550, 115, 25]
     
     imageAll = [image1, image2, image3, image4, image5, image6, image7, image8, image9, image10, image11, image12, image0]
    
@@ -92,9 +92,9 @@ def inhoudsopgave():
     text('Inhoud', 600, 100)
     textFont(pagefont)     
     fill(0)
-    text('page 1', 460, 670)
+    text('pagina 1', 480, 670)
     fill(0)
-    text('page 2', 960, 670)
+    text('pagina 2', 960, 670)
 
     
 
@@ -109,7 +109,7 @@ def draw():
     
     # pagina schermen
     if count == 0:
-        image(imageAll[10], 55, 15)
+        image(imageAll[10], 75, 15)
         image(imageAll[-1], 555,15)
         inhoudsopgave()
         if hover(mouse, rect2):
@@ -119,74 +119,72 @@ def draw():
 
 
     if count == 1:
-        image(imageAll[0], 55, 15)
+        image(imageAll[0], 75, 15)
         image(imageAll[1], 555, 15)
         textFont(pagefont)
         fill(0)
-        text('page 3', 460, 670)
+        text('pagina 3', 480, 670)
         fill(0)
-        text('page 4', 960, 670)
+        text('pagina 4', 960, 670)
         textFont(pagefont)
         if hover(mouse, rect2) or hover(mouse, rect1):
             cursor(HAND)
         else:
             cursor(ARROW)   
     if count == 2:
-        image(imageAll[2], 55, 15)
+        image(imageAll[2], 75, 15)
         image(imageAll[3], 555, 15)
         textFont(pagefont)
         fill(0)
-        text('page 5', 460, 670)
+        text('pagina 5', 480, 670)
         fill(0)
-        text('page 6', 960, 670)
+        text('pagina 6', 960, 670)
         if hover(mouse, rect2) or hover(mouse, rect1):
             cursor(HAND)
         else:
             cursor(ARROW) 
     if count == 3:
-        image(imageAll[4], 55, 15)
+        image(imageAll[4], 75, 15)
         image(imageAll[5], 555, 15)
         textFont(pagefont)
         fill(0)
-        text('page 7', 460, 670)
+        text('pagina 7', 480, 670)
         fill(0)
-        text('page 8', 960, 670)
+        text('pagina 8', 960, 670)
         if hover(mouse, rect2) or hover(mouse, rect1):
             cursor(HAND)
         else:
             cursor(ARROW) 
     if count == 4:
-        image(imageAll[6], 55, 15)
+        image(imageAll[6], 75, 15)
         image(imageAll[7], 555, 15)
         textFont(pagefont)
         fill(0)
-        text('page 9', 460, 670)
+        text('pagina 9', 480, 670)
         fill(0)
-        text('page 10', 960, 670)
+        text('pagina 10', 960, 670)
         if hover(mouse, rect2) or hover(mouse, rect1):
             cursor(HAND)
         else:
             cursor(ARROW) 
     if count == 5:
-        image(imageAll[8], 55, 15)
+        image(imageAll[8], 75, 15)
         image(imageAll[9], 555, 15)
         textFont(pagefont)
         fill(0)
-        text('page 11', 460, 670)
-        fill(255)
-        text('page 12', 960, 670)
+        text('pagina 11', 480, 670)
+        text('pagina 12', 960, 670)
         if hover(mouse, rect2) or hover(mouse, rect1):
             cursor(HAND)
         else:
             cursor(ARROW) 
     if count == 6:
-        image(imageAll[10], 55, 15)
+        image(imageAll[10], 75, 15)
         image(imageAll[11], 555, 15)
         textFont(pagefont)
         fill(0)
-        text('page 13', 460, 670)
-        fill(255)
-        text('page 14', 960, 670)
+        text('pagina 13', 480, 670)
+        text('pagina 14', 960, 670)
         if hover(mouse, rect2):
             cursor(HAND)
         else:
@@ -289,7 +287,7 @@ def draw():
         mouseUp = True
     if mousePressed and mouseUp:
         mouseUp = False
-        global count, rect1, texti, mouse, rect1, rect2
+        global count, texti, mouse
     
 
 
@@ -314,7 +312,6 @@ def draw():
                 count = 5
             elif hover(mouse, texti[8]):
                 count = 6
-
 
 
 

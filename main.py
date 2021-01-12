@@ -4,9 +4,11 @@ import eindscherm
 from objects import *
 import uitleg
 import handleidingding as handleiding
+import drawPlayers as dp
 
 screenSize = [1080, 720]
 state = "start"
+previousState = state
 
 errorMsgCounter = 0
 errorMsg = ""
@@ -146,7 +148,9 @@ def draw():
     elif state == "createGame":
         rectMode(CORNER)
         textAlign(BASELINE)
-        puntenscherm.setup(invoerscherm.getNames())
+        if invoerscherm.getNames() != dp.getNames():
+            puntenscherm.reset(invoerscherm.getNames())
+        puntenscherm.setup()
         toNext.isSelected = False
         goBack.isSelected = False
         state = "preStartGame"
@@ -161,8 +165,12 @@ def draw():
             state = "startGame"
             toNext.isSelected = False
         elif goBack.isSelected:
-            state = "start"
-            goBack.isSelected = False
+            uitleg.draw()
+            toNext.draw()
+            goBack.draw()
+            if not mousePressed:
+                state = "start"
+                goBack.isSelected = False
         
     elif state == "startGame":
         puntenscherm.draw()
@@ -184,31 +192,34 @@ def draw():
     
     elif state == "endGameSetup":	
         noTint()
-        # eindscherm.setup(puntenscherm.dp.getPlayers())
-        eindscherm.setup()
+        eindscherm.setup(puntenscherm.dp.getPlayers())
         cursor(ARROW)
         state = "endGame"
     elif state == "endGame":
         eindscherm.draw()
+        if eindscherm.playAgain.isSelected:
+            invoerscherm.d.players = []
+            invoerscherm.setup()
+            state = "start"
     
     elif state == "manualSetup":
         handleiding.setup()
         state = "manual"
     elif state == "manual":
         handleiding.draw()
-        if goBack.isSelected:
-            goBack.isSelected = False
-            state = "start"
+        if handleiding.goBack.isSelected:
+            handleiding.draw()
+            if not mousePressed:
+                global previousState
+                goBack.isSelected = False
+                state = previousState
 
     if toManual1.isSelected or toManual2.isSelected:
         if not mousePressed:
             toManual1.isSelected = False
             toManual2.isSelected = False
+            previousState = state
             state = "manualSetup"
-    
-
-
-
     showError()
     
 def keyTyped():
@@ -248,15 +259,15 @@ def errorHandler():
             # print(players[i][0],players[i][1],playerCount)
             if players[i][1] == 'None' and players[i][0] != '' and players[i][0] != 'None':
                 errorMsgCounter = 120
-                errorMsg = players[i][0] + ' does not have a color!'
+                errorMsg = players[i][0] + ' heeft geen kleur!'
                 return True
             elif players[i][0] in ['', 'None'] and players[i][1] not in ['', 'None']:
                 errorMsgCounter = 120
-                errorMsg = players[i][1] + ' does not have a name!'
+                errorMsg = players[i][1] + ' heeft geen naam!'
                 return True
             elif players[i][0] not in ['', 'None']:
                 playerCount += 1
         if playerCount < 2:
             errorMsgCounter = 120
-            errorMsg = 'You need at least 2 people to play!'
+            errorMsg = 'Je hebt tenminste 2 spelers nodig verder te gaan!'
             return True
