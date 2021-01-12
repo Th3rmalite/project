@@ -7,6 +7,10 @@ def settings():
 
 def setup():
     global invoerScherm, toNext
+    d.cards = []
+    d.textInputs = []
+    d.players = []
+    d.colorPickers = []
     invoerScherm = Screen('invoerScherm', {})
     invoerScherm.start()
 

@@ -198,7 +198,6 @@ def draw():
     elif state == "endGame":
         eindscherm.draw()
         if eindscherm.playAgain.isSelected:
-            invoerscherm.d.players = []
             invoerscherm.setup()
             state = "start"
     
