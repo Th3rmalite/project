@@ -184,7 +184,8 @@ def draw():
     
     elif state == "endGameSetup":	
         noTint()
-        eindscherm.setup(puntenscherm.dp.getPlayers())
+        # eindscherm.setup(puntenscherm.dp.getPlayers())
+        eindscherm.setup()
         cursor(ARROW)
         state = "endGame"
     elif state == "endGame":

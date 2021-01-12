@@ -3,9 +3,11 @@ from objects import *
 import drawPlayers as dp
 import eindscherm
 
-def setup(playerList):
+def reset(playerList):
+    return dp.get_players(playerList)
+
+def setup():
     global puntenScherm, toEnd, goBack
-    dp.get_players(playerList)
     puntenScherm = Screen('punten', {})
     puntenScherm.start()
     toEnd = Button(None, {
