@@ -5,6 +5,7 @@ from objects import *
 import uitleg
 import handleidingding as handleiding
 import drawPlayers as dp
+import time
 
 screenSize = [1080, 720]
 state = "start"
@@ -198,9 +199,12 @@ def draw():
     elif state == "endGame":
         eindscherm.draw()
         if eindscherm.playAgain.isSelected:
-            invoerscherm.setup()
-            puntenscherm.reset(invoerscherm.getNames())
-            state = "start"
+            eindscherm.draw()
+            if not mousePressed:
+                time.sleep(.05)
+                invoerscherm.setup()
+                puntenscherm.reset(invoerscherm.getNames())
+                state = "start"
     
     elif state == "manualSetup":
         handleiding.setup()
