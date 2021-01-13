@@ -1,4 +1,4 @@
-# score moet hier komen te staan
+score = 
 spelers = len(score)
 colors = []
 for i in range(0,spelers):

@@ -6,6 +6,7 @@ import uitleg
 import handleidingding as handleiding
 import drawPlayers as dp
 import time
+import Brentscherm
 
 screenSize = [1080, 720]
 state = "start"
@@ -143,17 +144,32 @@ def draw():
             if not errorHandler():
                 if not mousePressed:
                     state = "brent"
+                    toNext.isSelected = False
             else:
                 toNext.isSelected = False
                 
-    elif state=="brent":
-        ##################
-        #                #
-        #   brent code   #
-        #                #
-        ##################
-        state = "createGame"
-        print("brent stukje klaar")
+    elif state=="brentSetup":
+        Brentscherm.setup()
+        Brentscherm.score = #zet hier je stukje neer vincent
+        state = "brentDraw"
+    elif state == "brentDraw":
+        Brentscherm.draw()
+        toNext.draw()
+        goBack.draw()
+        if toNext.isSelected:
+            Brentscherm.draw()
+            toNext.draw()
+            goBack.draw()
+            if not mousePressed:
+                state = 'createGame'
+                toNext.isSelected = False
+        if goBack.isSelected:
+            Brentscherm.draw()
+            toNext.draw()
+            goBack.draw()
+            if not mousePressed:
+                state = 'start'
+                goBack.isSelected = False
     
     elif state == "createGame":
         rectMode(CORNER)
