@@ -76,7 +76,6 @@ def draw_player_info():
     cursorImg = ARROW
     
     textSize(26)
-    print(players[0].pawns[0].location)
     for idx,i in enumerate(players):
         get_points(i)
         fill(255)

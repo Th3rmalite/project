@@ -142,10 +142,19 @@ def draw():
             toNext.draw()
             if not errorHandler():
                 if not mousePressed:
-                    state = "createGame"
+                    state = "brent"
             else:
                 toNext.isSelected = False
-
+                
+    elif state=="brent":
+        ##################
+        #                #
+        #   brent code   #
+        #                #
+        ##################
+        state = "createGame"
+        print("brent stukje klaar")
+    
     elif state == "createGame":
         rectMode(CORNER)
         textAlign(BASELINE)
