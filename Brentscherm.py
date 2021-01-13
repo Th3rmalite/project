@@ -1,12 +1,17 @@
-score = 
-spelers = len(score)
-colors = []
-for i in range(0,spelers):
-    colors.append(score[i][1])
-x = 75
-def setup():
+
+def setup(score):
+    global spelers, colors, x
     size(1080,720)
-    frameRate(5)
+    noTint()
+    spelers = len(score)
+    colors = []
+    for i in range(0,spelers):
+        colors.append(score[i][1])
+    x = 75
+    print('spelers ' + str(spelers))
+    rectMode(CORNER)
+    textAlign(CENTER, CENTER)
+    imageMode(CORNER)
 def draw():
     global spelers
     bord = loadImage('download.png')
@@ -39,27 +44,18 @@ def draw():
     background(255)
     fill(0)
     textSize(50)
-    if spelers > 4:
-        textSize(25)
-        text('This game is meant to be played with 4 or less players,',100,300)
-        text('You are currently over the required amount of players to play.',100,325)
-        text("I don't even know how you got this message, since it isn't possible, but good job.",100,350)
-    if spelers < 2:
-        textSize(25)
-        text('This game is meant to be played with 2 or more players,',100,300)
-        text('You are currently under the required amount of players to play.',100,325)
     if spelers == 4:
         fill(50, 50, 50)
         rect(125, 40, 850, 450)
         fill(255)
         textSize(30)
         image(bord,490,50,100,100)
-        text('Welcome to Matten!',150,125)
+        text('Welcome bij Matten!',150,125)
         textSize(35)
-        text('Have fun!',650,135)
+        text('Veel plezier!',650,135)
         textSize(20)
-        text("There's a total of 32 boardpieces",150,150)
-        text('And you may divide them between all players and place them to your likings!',150,175)
+        text("Er zijn in totaal 32 bordstukken",150,150)
+        text('Je mag ze tussen alle spelers onderverdelen en neerleggen!',150,175)
         textSize(30)        
         red_used = False
         blue_used = False
@@ -182,12 +178,12 @@ def draw():
         fill(255)
         textSize(30)
         image(bord,490,50,100,100)
-        text('Welcome to Matten!',150,125)
+        text('Welcome bij Matten!',150,125)
         textSize(35)
-        text('Have fun!',650,135)
+        text('Veel plezier!',650,135)
         textSize(20)
-        text("There's a total of 27 boardpieces",150,150)
-        text('And you may divide them between all players and place them to your likings!',150,175)
+        text("Er zijn in totaal 27 bordstukken",150,150)
+        text('Je mag ze tussen alle spelers onderverdelen en neerleggen!',150,175)
         textSize(30)
         red_used = False
         blue_used = False
@@ -310,13 +306,13 @@ def draw():
         fill(255)
         textSize(30)
         image(bord,490,50,100,100)
-        text('Welcome to Matten!',150,125)
+        text('Welcome bij Matten!',150,125)
         textSize(20)
-        text("There's a total of 20 boardpieces",150,150)
+        text("Er zijn in totaal 20 bordstukken",150,150)
         textSize(35)
-        text('Have fun!',650,135)
+        text('Veel plezier!',650,135)
         textSize(20)
-        text('And you may divide them between all players and place them to your likings!',150,175)
+        text('Je mag ze tussen alle spelers onderverdelen en neerleggen!',150,175)
         textSize(30)
         red_used = False
         blue_used = False

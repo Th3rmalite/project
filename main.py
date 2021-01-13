@@ -143,23 +143,27 @@ def draw():
             toNext.draw()
             if not errorHandler():
                 if not mousePressed:
-                    state = "brent"
+                    state = "brentSetup"
                     toNext.isSelected = False
             else:
                 toNext.isSelected = False
                 
     elif state=="brentSetup":
-        Brentscherm.setup()
-        Brentscherm.score = #zet hier je stukje neer vincent
+        Brentscherm.setup(invoerscherm.getNames())
+        print(invoerscherm.getNames())
         state = "brentDraw"
     elif state == "brentDraw":
         Brentscherm.draw()
         toNext.draw()
         goBack.draw()
+        rectMode(CORNER)
+        textAlign(LEFT, CENTER)
         if toNext.isSelected:
             Brentscherm.draw()
             toNext.draw()
             goBack.draw()
+            rectMode(CORNER)
+            textAlign(CENTER, CENTER)
             if not mousePressed:
                 state = 'createGame'
                 toNext.isSelected = False
@@ -167,6 +171,8 @@ def draw():
             Brentscherm.draw()
             toNext.draw()
             goBack.draw()
+            rectMode(CORNER)
+            textAlign(CENTER, CENTER)
             if not mousePressed:
                 state = 'start'
                 goBack.isSelected = False
@@ -195,7 +201,7 @@ def draw():
             toNext.draw()
             goBack.draw()
             if not mousePressed:
-                state = "start"
+                state = "brentSetup"
                 goBack.isSelected = False
         
     elif state == "startGame":
