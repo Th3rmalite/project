@@ -81,6 +81,9 @@ def setup():
     
     rect1 = [1040,295,30,30]
     rect2 = [10, 295, 30, 30]
+    rectMode(CORNER)
+    textAlign(CENTER, CENTER)
+    imageMode(CORNER)
 
     # inhoudsopgave
 def inhoudsopgave():
@@ -95,6 +98,7 @@ def inhoudsopgave():
     text('pagina 1', 480, 670)
     fill(0)
     text('pagina 2', 960, 670)
+    
 
     
 

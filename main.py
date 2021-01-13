@@ -260,7 +260,6 @@ def draw():
 def keyTyped():
     for i in range(4):
         invoerscherm.d.textInputs[i].addText(key)
-
     if key == TAB:
         textInputs = invoerscherm.d.textInputs
         for i in range(len(textInputs)):
