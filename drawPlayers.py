@@ -94,20 +94,20 @@ def draw_player_info():
         text(i.points, i.cardLocation[0]+130, 135 + (cardHeight+10)*idx)
         textFont(openSansBold, 20)
         text('blokkades:', i.cardLocation[0]+20, 160 + (cardHeight+10)*idx)
-        test = i.points // 5
+        Blokkades = i.points // 4
 
         i.change_to_pawn_color(i.pawns[-1])
         noStroke()
         noTint()
-        if test >= 1:
+        if Blokkades >= 1:
             image(Blok, 250, 140 + (cardHeight+10)*idx,20,20)
-        if test >= 2:
+        if Blokkades >= 2:
             image(Blok, 270, 140 + (cardHeight+10)*idx,20,20)
-        if test >= 3:
+        if Blokkades >= 3:
             image(Blok, 290, 140 + (cardHeight+10)*idx,20,20)
-        if test >= 4:
+        if Blokkades >= 4:
             image(Blok, 310, 140 + (cardHeight+10)*idx,20,20)
-        if test >= 5:
+        if Blokkades >= 5:
             image(Blok, 330, 140 + (cardHeight+10)*idx,20,20)
         
     
